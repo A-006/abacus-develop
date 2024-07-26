@@ -183,4 +183,5 @@ void Diag_Cusolver_gvd::Dngvd_complex(int N, int M, std::complex<double> *A, std
         if (d_work2 ) checkCudaErrors( cudaFree(d_work2) );
     // free the resources and destroy the handle
         this->finalize();
+        if (cusolverH) {checkCudaErrors( cusolverDnDestroy(cusolverH) );    cusolverH = NULL;}
 }
