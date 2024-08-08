@@ -39,20 +39,13 @@ void cal_psir_ylm(
         // in meshball language, is the std::vector from imcell to the center cel, plus
         // tau_in_bigcell.
         const int mcell_index = bcell_start + id;
-
-        get_grid_bigcell_distance(gt,
-                                 mcell_index ,
-                                 it, 
-                                 iat,
-                                 mt);
+        get_grid_bigcell_distance(gt,mcell_index,it, iat,mt);
 
         atom = &ucell.atoms[it];
-        get_psi_dpsi(gt, 
-                     it, 
-                     atom, 
-                     it_psi_uniform, 
-                     it_dpsi_uniform);
-
+        get_psi_dpsi(gt, it, atom, it_psi_uniform, it_dpsi_uniform);
+        std::vector<double> radial_func(atom->nw);
+        const int nw = atom->nw;
+        const bool* iw2_new = atom->iw2_new;
         // loop over the grids in the big cell
         for (int ib = 0; ib < bxyz; ib++)
         {
@@ -77,15 +70,18 @@ void cal_psir_ylm(
                 // because once the distance from atom to grid point is known,
                 // we can obtain the parameters for interpolation and
                 // store them first! these operations can save lots of efforts.
+                cal_radial_function(distance,
+                                    delta_r,
+                                    nw, 
+                                    iw2_new,
+                                    it_psi_uniform.data(), 
+                                    it_dpsi_uniform.data(), 
+                                    radial_func.data());
+                for (int iw=0;iw<atom->nw;iw++)
+                {
 
-                spl_intrp(distance,
-                            delta_r, 
-                            atom, 
-                            ylma,
-                            it_psi_uniform, 
-                            it_dpsi_uniform, 
-                            p);
-
+                    p[iw] = radial_func[iw] * ylma[atom->iw2_ylm[iw]];
+                }
             }     
         }         // end ib
     }             // end id

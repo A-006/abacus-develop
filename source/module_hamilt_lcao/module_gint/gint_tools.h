@@ -169,13 +169,13 @@ void cal_grid_atom_distance(double &distance,
  * @param it_psi_uniform psi of the it type atom
  * @param it_dpsi_uniform dpsi of the it type atom
 */
-void spl_intrp(const double distance,
-							const double delta_r,
-							Atom*& atom,
-							std::vector<double>& ylma,
-							std::vector<const double*>& it_psi_uniform,
-							std::vector<const double*>& it_dpsi_uniform,
-							double *p);
+void cal_radial_function(const double distance,
+                        const double delta_r,
+						const int wave_num,
+						const bool* wave_flag,
+						const double** it_psi_uniform,
+						const double** it_dpsi_uniform,
+						double *radial_funcs);
 /**
  * @brief Calculate the gradient of the 
  * spherical harmonic functions Ylm.

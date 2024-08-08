@@ -122,16 +122,16 @@ void cal_grid_atom_distance(double &distance,
 }
 
 
-void spl_intrp(const double distance,
-							const double delta_r,
-							Atom*& atom,
-							std::vector<double>& ylma,
-							std::vector<const double*>& it_psi_uniform,
-							std::vector<const double*>& it_dpsi_uniform,
-							double *p)
+void cal_radial_function(const double distance,
+						 const double delta_r,
+						const int wave_num,
+						const bool* wave_flag,
+						const double** it_psi_uniform,
+						const double** it_dpsi_uniform,
+						double *radial_funcs)
 {
 	const double position = distance / delta_r;
-	int ip = static_cast<int>(position);
+	const int ip = static_cast<int>(position);
 	const double dx = position - ip;
 	const double dx2 = dx * dx;
 	const double dx3 = dx2 * dx;
@@ -141,16 +141,14 @@ void spl_intrp(const double distance,
 	const double c4 = (dx3 - dx2) * delta_r;
 
 	double phi = 0;
-	for (int iw = 0; iw < atom->nw; ++iw)
+	for (int iw = 0; iw < wave_num; ++iw)
 	{
-		if (atom->iw2_new[iw])
+		if (wave_flag[iw])
 		{
-			auto psi_uniform = it_psi_uniform[iw];
-			auto dpsi_uniform = it_dpsi_uniform[iw];
-			phi = c1 * psi_uniform[ip] + c2 * dpsi_uniform[ip] // radial wave functions
-					+ c3 * psi_uniform[ip + 1] + c4 * dpsi_uniform[ip + 1];
+			phi = c1 * it_psi_uniform[iw][ip] + c2 * it_dpsi_uniform[iw][ip] // radial wave functions
+							+ c3 * it_psi_uniform[iw][ip + 1] + c4 * it_dpsi_uniform[iw][ip + 1];
 		}
-		p[iw] = phi * ylma[atom->iw2_ylm[iw]];
+		radial_funcs[iw] = phi;
 	} // end iw
 }
 
