@@ -1,4 +1,5 @@
 #include "paw_cell.h"
+#include "moudle_parameter/parameter.h"
 #include "module_base/tool_title.h"
 #include "module_base/tool_quit.h"
 #ifdef __MPI
