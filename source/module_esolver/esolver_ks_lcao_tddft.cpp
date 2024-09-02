@@ -98,14 +98,7 @@ void ESolver_KS_LCAO_TDDFT::before_all_runners(const Input_para& inp, UnitCell& 
     LCAO_domain::divide_HS_in_frag(PARAM.globalv.gamma_only_local, this->pv, kv.get_nks());
 
     // 6) initialize Density Matrix
-    dynamic_cast<elecstate::ElecStateLCAO<std::complex<double>>*>(this->pelec)
-        ->init_DM(&kv, &this->pv, GlobalV::NSPIN);
-
-    // 7) initialize Hsolver
-    if (this->phsol == nullptr)
-    {
-        this->phsol = new hsolver::HSolver<std::complex<double>>();
-    }
+    dynamic_cast<elecstate::ElecStateLCAO<std::complex<double>>*>(this->pelec)->init_DM(&kv, &this->pv, GlobalV::NSPIN);
 
     // 8) initialize the charge density
     this->pelec->charge->allocate(GlobalV::NSPIN);
@@ -166,7 +159,7 @@ void ESolver_KS_LCAO_TDDFT::hamilt2density(const int istep, const int iter, cons
                                              kv.get_nks());
         this->pelec_td->psiToRho_td(this->psi[0]);
     }
-    else if (this->phsol != nullptr)
+    else
     {
         // reset energy
         this->pelec->f_en.eband = 0.0;
@@ -179,10 +172,10 @@ void ESolver_KS_LCAO_TDDFT::hamilt2density(const int istep, const int iter, cons
             hsolver_lcao_obj.solve(this->p_hamilt, this->psi[0], this->pelec_td, PARAM.inp.ks_solver, false);
         }
     }
-    else
-    {
-        ModuleBase::WARNING_QUIT("ESolver_KS_LCAO", "HSolver has not been initialed!");
-    }
+    // else
+    // {
+    //     ModuleBase::WARNING_QUIT("ESolver_KS_LCAO", "HSolver has not been initialed!");
+    // }
 
     // print occupation of each band
     if (iter == 1 && istep <= 2)
