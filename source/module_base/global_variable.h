@@ -22,8 +22,6 @@ extern int NLOCAL;        // 1.1 // mohan add 2009-05-29
 
 extern double KSPACING[3];
 
-extern double PSEUDORCUT;
-
 extern std::string CALCULATION; // 2 "scf";"nscf" ;"symmetry"
 extern std::string ESOLVER_TYPE;
 extern int EFIELD_FLAG;   // 5 add electric field
