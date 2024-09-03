@@ -26,6 +26,7 @@
  */
 
 #define private public
+#include "module_parameter/parameter.h"
 #include "module_cell/read_pp.h"
 #include "module_cell/pseudo.h"
 #include "module_cell/atom_pseudo.h"
@@ -189,7 +190,7 @@ TEST_F(AtomSpecTest, BcastAtom2)
 	if(GlobalV::MY_RANK==0)
 	{
 		ifs.open("./support/C.upf");
-		GlobalV::PSEUDORCUT = 15.0;
+		PARAM.input.pseudo_rcut = 15.0;
 		upf.read_pseudo_upf201(ifs, atom.ncpp);
 		upf.complete_default(atom.ncpp);
 		ifs.close();
