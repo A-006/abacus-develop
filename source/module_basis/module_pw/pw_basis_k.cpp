@@ -184,14 +184,14 @@ void PW_Basis_K::setuptransform()
     if(this->xprime)    
     {
         this->ft.initfft(this->nx,this->ny,this->nz,this->lix,this->rix,this->nst,this->nplane,this->poolnproc,this->gamma_only, this->xprime);
-        this->ft1.initfft(this->nx,this->ny,this->nz,this->lix,this->rix,this->nst,this->nplane,this->poolnproc,this->gamma_only, this->xprime);
+        // this->ft1.initfft(this->nx,this->ny,this->nz,this->lix,this->rix,this->nst,this->nplane,this->poolnproc,this->gamma_only, this->xprime);
     }
     else
     {                
         this->ft.initfft(this->nx,this->ny,this->nz,this->liy,this->riy,this->nst,this->nplane,this->poolnproc,this->gamma_only, this->xprime);
     }
     this->ft.setupFFT();
-    this->ft1.setupFFT();
+    // this->ft1.setupFFT();
     ModuleBase::timer::tick(this->classname, "setuptransform");
 }
 

@@ -174,7 +174,16 @@ double* FFT_CPU<double>::get_rspace_data() const
 {
     return d_rspace;
 }
-
+template <>
+std::complex<double>* FFT_CPU<double>::get_auxr_data() const
+{
+    return z_auxr;
+}
+template <>
+std::complex<double>* FFT_CPU<double>::get_auxg_data() const
+{
+    return z_auxg;
+}
 template <>
 void FFT_CPU<double>::fftxyfor(std::complex<double>* in, std::complex<double>* out) const
 {

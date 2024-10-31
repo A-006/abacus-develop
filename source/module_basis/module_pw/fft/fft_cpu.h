@@ -27,6 +27,10 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
 
     FPTYPE* get_rspace_data() const override;
 
+    std::complex<FPTYPE>* get_auxr_data() const;
+
+    std::complex<FPTYPE>* get_auxg_data() const;
+
     void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
 
     void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
