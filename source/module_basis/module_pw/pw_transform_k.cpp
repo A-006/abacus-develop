@@ -246,8 +246,8 @@ void PW_Basis_K::recip2real(const std::complex<FPTYPE>* in,
     {
         auxg[this->igl2isz_k[igl + startig]] = in[igl];
     }
-    this->ft.fftzbac(ft.get_auxg_data<FPTYPE>(), ft.get_auxg_data<FPTYPE>());
-
+    // this->ft.fftzbac(ft.get_auxg_data<FPTYPE>(), ft.get_auxg_data<FPTYPE>());
+    this->ft1.fftzbac(ft.get_auxg_data<FPTYPE>(), ft.get_auxg_data<FPTYPE>());
     this->gathers_scatterp(this->ft.get_auxg_data<FPTYPE>(), this->ft.get_auxr_data<FPTYPE>());
 
     this->ft.fftxyc2r(ft.get_auxr_data<FPTYPE>(), ft.get_rspace_data<FPTYPE>());

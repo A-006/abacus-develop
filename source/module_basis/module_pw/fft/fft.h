@@ -1,14 +1,15 @@
 #include "fft_base.h"
 #include "module_psi/psi.h"
-#ifndef FFT_H
-#define FFT_H
-class FFT
+#ifndef FFT1_H
+#define FFT1_H
+class FFT1
 {
     public:
-        FFT();
-        FFT(std::string device_in,std::string precision_in);
-        ~FFT();
+        FFT1();
+        FFT1(std::string device_in,std::string precision_in);
+        ~FFT1();
 
+        void setfft(std::string device_in,std::string precision_in);
         void initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
                      int nproc_in, bool gamma_only_in, bool xprime_in = true, bool mpifft_in = false);
         

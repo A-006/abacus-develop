@@ -16,4 +16,4 @@ add_library(
     OBJECT
     ${fft_files}
 )
-
+target_link_libraries(fft PRIVATE -lfftw3 -lfftw3f -lfftw3l)

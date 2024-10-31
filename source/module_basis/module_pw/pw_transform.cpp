@@ -1,4 +1,4 @@
-// #include "fft.h"
+#include "fft.h"
 #include "fft/fft.h"
 #include <complex>
 #include "pw_basis.h"

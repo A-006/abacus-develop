@@ -115,8 +115,11 @@ void FFT_CPU<double>::setupFFT()
 #endif
     return;
 }
-
-
+template <>
+void FFT_CPU<double>::initfftmode(int fft_mode_in)
+{
+    this->fft_mode = fft_mode_in;
+}
 
 template <>
 void FFT_CPU<double>::clearfft(fftw_plan& plan)
