@@ -17,7 +17,7 @@ add_library(
     OBJECT
     ${objects}
 )
-
+add_subdirectory(fft)
 if(ENABLE_COVERAGE)
   add_coverage(planewave)
 endif()
