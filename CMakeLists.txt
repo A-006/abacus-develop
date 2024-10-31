@@ -694,6 +694,7 @@ add_subdirectory(source)
 target_link_libraries(
   ${ABACUS_BIN_NAME}
   base
+  fft
   parameter
   cell
   symmetry
@@ -718,7 +719,8 @@ target_link_libraries(
   esolver
   vdw
   device
-  container)
+  container
+  )
 if(ENABLE_LCAO)
   target_link_libraries(
     ${ABACUS_BIN_NAME}
