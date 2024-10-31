@@ -5,7 +5,8 @@
 #include "module_base/matrix3.h"
 #include "module_base/vector3.h"
 #include <complex>
-#include "fft.h"
+// #include "fft.h"
+#include "fft/fft.h"
 #include <cstring>
 #ifdef __MPI
 #include "mpi.h"
