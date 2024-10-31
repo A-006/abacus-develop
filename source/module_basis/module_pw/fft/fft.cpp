@@ -51,7 +51,13 @@ void FFT::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int
 {
 
     fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
+    fft_float->initfftmode(this->fft_mode);
     fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
+    fft_double->initfftmode(this->fft_mode);
+}
+void FFT::initfftmode(int fft_mode_in)
+{
+    this->fft_mode = fft_mode_in;
 }
 
 void FFT::setupFFT()

@@ -11,7 +11,8 @@
 // //#include "fftw3-mpi_mkl.h"
 // #endif
 // #endif
-
+#ifndef FFT_CPU_H
+#define FFT_CPU_H
 
 template <typename FPTYPE>
 class FFT_CPU : public FFT_BASE<FPTYPE>
@@ -19,6 +20,9 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
     public:
     FFT_CPU();
     ~FFT_CPU(); 
+
+    void initfftmode(int fft_mode_in) override;
+    
     //init fftw_plans
 	void setupFFT() override; 
 
@@ -70,3 +74,4 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
         float* s_rspace = nullptr;  // real number space for r, [nplane * nx *ny]
         double* d_rspace = nullptr; // real number space for r, [nplane * nx *ny]
 };
+#endif // FFT_CPU_H

@@ -1,4 +1,5 @@
 #include "fft_base.h"
+#include "module_psi/psi.h"
 #ifndef FFT_H
 #define FFT_H
 class FFT
@@ -7,10 +8,11 @@ class FFT
         FFT();
         FFT(std::string device_in,std::string precision_in);
         ~FFT();
-        // void clear();
 
         void initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
                      int nproc_in, bool gamma_only_in, bool xprime_in = true, bool mpifft_in = false);
+        
+        void initfftmode(int fft_mode_in);
         
         void setupFFT();
 
@@ -53,7 +55,9 @@ class FFT
         void set_precision(std::string precision_in);
 
     private:
-        char fftfalg=0;
+        int fft_mode = 0; ///< fftw mode 0: estimate, 1: measure, 2: patient, 3: exhaustive
+        bool fft_single_flag=0;
+        bool fft_double_flag=0;
         FFT_BASE<float>* fft_float=nullptr;
         FFT_BASE<double>* fft_double=nullptr;
         
