@@ -1,5 +1,9 @@
 #include "fft_cpu.h"
 #include "fftw3.h"
+#if defined(__FFTW3_MPI) && defined(__MPI)
+#include <fftw3-mpi.h>
+//#include "fftw3-mpi_mkl.h"
+#endif
 
 template <>
 FFT_CPU<double>::FFT_CPU()
@@ -11,11 +15,7 @@ FFT_CPU<double>::~FFT_CPU()
 {
 
 }
-template <>
-void FFT_CPU<double>::initfftmode(int fft_mode_in)
-{
-    this->fft_mode = fft_mode_in;
-}
+
 template <>
 void FFT_CPU<double>::setupFFT()
 {
@@ -164,11 +164,7 @@ void FFT_CPU<double>::clear()
     d_rspace = nullptr;
 }
 
-template <> 
-float* FFT_CPU<float>::get_rspace_data() const
-{
-    return s_rspace;
-}
+
 
 template <>
 double* FFT_CPU<double>::get_rspace_data() const
@@ -183,7 +179,6 @@ void FFT_CPU<double>::fftxyfor(std::complex<double>* in, std::complex<double>* o
     if (this->xprime)
     {
         fftw_execute_dft(this->planxfor1, (fftw_complex*)in, (fftw_complex*)out);
-        printf("the first element of out is %f\n",out[0].real());
         for (int i = 0; i < this->lixy + 1; ++i)
         {
             fftw_execute_dft(this->planyfor, (fftw_complex*)&in[i * npy], (fftw_complex*)&out[i * npy]);
@@ -204,10 +199,88 @@ void FFT_CPU<double>::fftxyfor(std::complex<double>* in, std::complex<double>* o
         fftw_execute_dft(this->planxfor2, (fftw_complex*)&in[rixy * nplane], (fftw_complex*)&out[rixy * nplane]);
     }
 }
+template <>
+void FFT_CPU<double>::fftxybac(std::complex<double>* in,std::complex<double>* out) const
+{
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        for (int i = 0; i < this->lixy + 1; ++i)
+        {
+            fftw_execute_dft(this->planybac, (fftw_complex*)&in[i * npy], (fftw_complex*)&out[i * npy]);
+        }
+        for (int i = rixy; i < this->nx; ++i)
+        {
+            fftw_execute_dft(this->planybac, (fftw_complex*)&in[i * npy], (fftw_complex*)&out[i * npy]);
+        }
+        fftw_execute_dft(this->planxbac1, (fftw_complex*)in, (fftw_complex*)out);
+    }
+    else
+    {
+        for (int i = 0; i < this->nx; ++i)
+        {
+            fftw_execute_dft(this->planybac, (fftw_complex*)&in[i * npy], (fftw_complex*)&out[i * npy]);
+        }
 
+        fftw_execute_dft(this->planxbac1, (fftw_complex*)in, (fftw_complex*)out);
+        fftw_execute_dft(this->planxbac2, (fftw_complex*)&in[rixy * nplane], (fftw_complex*)&out[rixy * nplane]);
+    }
+}
 template <>
 void FFT_CPU<double>::fftzfor(std::complex<double>* in, std::complex<double>* out) const
 {
     fftw_execute_dft(this->planzfor, (fftw_complex*)in, (fftw_complex*)out);
+}
+template <>
+void FFT_CPU<double>::fftzbac(std::complex<double>* in, std::complex<double>* out) const
+{
+    fftw_execute_dft(this->planzbac, (fftw_complex*)in, (fftw_complex*)out);
+}
+template <>
+void FFT_CPU<double>::fftxyr2c(double* in, std::complex<double>* out) const
+{
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        fftw_execute_dft_r2c(this->planxr2c, in, (fftw_complex*)out);
+
+        for (int i = 0; i < this->lixy + 1; ++i)
+        {
+            fftw_execute_dft(this->planyfor, (fftw_complex*)&out[i * npy], (fftw_complex*)&out[i * npy]);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < this->nx; ++i)
+        {
+            fftw_execute_dft_r2c(this->planyr2c, &in[i * npy], (fftw_complex*)&out[i * npy]);
+        }
+
+        fftw_execute_dft(this->planxfor1, (fftw_complex*)out, (fftw_complex*)out);
+    }
+}
+
+template <>
+void FFT_CPU<double>::fftxyc2r(std::complex<double> *in,double *out) const
+{
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        for (int i = 0; i < this->lixy + 1; ++i)
+        {
+            fftw_execute_dft(this->planybac, (fftw_complex*)&in[i * npy], (fftw_complex*)&in[i * npy]);
+        }
+
+        fftw_execute_dft_c2r(this->planxc2r, (fftw_complex*)in, out);
+    }
+    else
+    {
+        fftw_execute_dft(this->planxbac1, (fftw_complex*)in, (fftw_complex*)in);
+
+        for (int i = 0; i < this->nx; ++i)
+        {
+            fftw_execute_dft_c2r(this->planyc2r, (fftw_complex*)&in[i * npy], &out[i * npy]);
+        }
+    }
 }
 template FFT_CPU<double>::FFT_CPU();

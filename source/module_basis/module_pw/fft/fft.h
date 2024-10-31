@@ -13,7 +13,7 @@ class FFT
                      int nproc_in, bool gamma_only_in, bool xprime_in = true, bool mpifft_in = false);
         
         void initfftmode(int fft_mode_in);
-        
+
         void setupFFT();
 
         void clearFFT();
@@ -31,19 +31,16 @@ class FFT
         
         template <typename FPTYPE>
         void fftzfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-
         template <typename FPTYPE>
         void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-        // template <typename FPTYPE>
-        // void fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-        // template <typename FPTYPE>
-        // void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-        // template <typename FPTYPE>
-        // void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-        // template <typename FPTYPE>
-        // void fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const;
-        // template <typename FPTYPE>
-        // void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const;
+        template <typename FPTYPE>
+        void fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+        template <typename FPTYPE>
+        void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+        template <typename FPTYPE>
+        void fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const;
+        template <typename FPTYPE>
+        void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const;
 
         template <typename FPTYPE, typename Device>
         void fft3D_forward(const Device* ctx, std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;

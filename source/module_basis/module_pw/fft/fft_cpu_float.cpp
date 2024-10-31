@@ -1,6 +1,9 @@
 #include "fft_cpu.h"
-#include "fftw3.h"
 
+// #include "fftw3f.h"
+// #if defined(__FFTW3_MPI) && defined(__MPI)
+// #include "fftw3f-mpi.h"
+// //#include "fftw3-mpi_mkl.h"
 template <>
 FFT_CPU<float>::FFT_CPU()
 {
@@ -124,6 +127,12 @@ void FFT_CPU<float>::setupFFT()
     #endif
     return;
 }
+template <> 
+float* FFT_CPU<float>::get_rspace_data() const
+{
+    return s_rspace;
+}
+
 
 template <>
 void FFT_CPU<float>::fftxyfor(std::complex<float>* in, std::complex<float>* out) const
@@ -153,13 +162,67 @@ void FFT_CPU<float>::fftxyfor(std::complex<float>* in, std::complex<float>* out)
         fftwf_execute_dft(this->planfxfor2, (fftwf_complex*)&in[rixy * nplane], (fftwf_complex*)&out[rixy * nplane]);
     }
 }
+template <>
+void FFT_CPU<float>::fftxybac(std::complex<float>* in,std::complex<float> * out) const
+{
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        for (int i = 0; i < this->lixy + 1; ++i)
+        {
+            fftwf_execute_dft(this->planfybac, (fftwf_complex*)&in[i * npy], (fftwf_complex*)&out[i * npy]);
+        }
+        for (int i = rixy; i < this->nx; ++i)
+        {
+            fftwf_execute_dft(this->planfybac, (fftwf_complex*)&in[i * npy], (fftwf_complex*)&out[i * npy]);
+        }
 
+        fftwf_execute_dft(this->planfxbac1, (fftwf_complex*)in, (fftwf_complex*)out);
+    }
+    else
+    {
+        fftwf_execute_dft(this->planfxbac1, (fftwf_complex*)in, (fftwf_complex*)out);
+        fftwf_execute_dft(this->planfxbac2, (fftwf_complex*)&in[rixy * nplane], (fftwf_complex*)&out[rixy * nplane]);
+
+        for (int i = 0; i < this->nx; ++i)
+        {
+            fftwf_execute_dft(this->planfybac, (fftwf_complex*)&in[i * npy], (fftwf_complex*)&out[i * npy]);
+        }
+    }
+}
 template <>
 void FFT_CPU<float>::fftzfor(std::complex<float>* in, std::complex<float>* out) const
 {
     fftwf_execute_dft(this->planfzfor, (fftwf_complex*)in, (fftwf_complex*)out);
 }
+template <>
+void FFT_CPU<float>::fftzbac(std::complex<float>* in, std::complex<float>* out) const
+{
+    fftwf_execute_dft(this->planfzbac, (fftwf_complex*)in, (fftwf_complex*)out);
+}
+template <>
+void FFT_CPU<float>::fftxyr2c(float* in, std::complex<float>* out) const
+{
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        fftwf_execute_dft_r2c(this->planfxr2c, in, (fftwf_complex*)out);
 
+        for (int i = 0; i < this->lixy + 1; ++i)
+        {
+            fftwf_execute_dft(this->planfyfor, (fftwf_complex*)&out[i * npy], (fftwf_complex*)&out[i * npy]);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < this->nx; ++i)
+        {
+            fftwf_execute_dft_r2c(this->planfyr2c, &in[i * npy], (fftwf_complex*)&out[i * npy]);
+        }
+
+        fftwf_execute_dft(this->planfxfor1, (fftwf_complex*)out, (fftwf_complex*)out);
+    }
+}
 template <>
 void FFT_CPU<float>::clearfft(fftwf_plan& plan)
 {

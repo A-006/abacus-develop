@@ -44,16 +44,40 @@ void FFT_BASE<FPTYPE>::initfftmode(int fft_mode_in)
 template <typename FPTYPE>
 FPTYPE* FFT_BASE<FPTYPE>::get_rspace_data() const
 {
-    return nullptr;
+}
+template <typename FPTYPE>
+std::complex<FPTYPE>* FFT_BASE<FPTYPE>::get_auxr_data() const
+{
+}
+template <typename FPTYPE>
+std::complex<FPTYPE>* FFT_BASE<FPTYPE>::get_auxg_data() const
+{
 }
 template <typename FPTYPE>
 void FFT_BASE<FPTYPE>::fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
 {   
 }
 template <typename FPTYPE>
+void FFT_BASE<FPTYPE>::fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
+{
+}
+template <typename FPTYPE>
 void FFT_BASE<FPTYPE>::fftzfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
 {
 }
+template <typename FPTYPE>
+void FFT_BASE<FPTYPE>::fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
+{
+}
+template <typename FPTYPE>
+void FFT_BASE<FPTYPE>::fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const
+{
+}
+template <typename FPTYPE>
+void FFT_BASE<FPTYPE>::fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const
+{
+}
+
 template <typename FPTYPE>
 void FFT_BASE<FPTYPE>::fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
 {

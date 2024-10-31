@@ -16,20 +16,34 @@ public:
 				 int nproc_in, bool gamma_only_in, bool xprime_in = true, bool mpifft_in = false);
 
     virtual void initfftmode(int fft_mode_in);
-    
+
 	//init fftw_plans
 	virtual void setupFFT()=0; 
 
 	//destroy fftw_plans
 	virtual void cleanFFT()=0;
-
+    //clear fftw_data
     virtual void clear()=0;
     
+    // access the real space data
     virtual FPTYPE* get_rspace_data() const;
 
+    virtual std::complex<FPTYPE>* get_auxr_data() const;
+
+    virtual std::complex<FPTYPE>* get_auxg_data() const;
+
+    //forward fft in x-y direction
     virtual void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
 
+    virtual void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+
     virtual void fftzfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+    
+    virtual void fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+
+    virtual void fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const;
+
+    virtual void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const;
     
     virtual void fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
     // template <typename Device>

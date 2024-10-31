@@ -1,14 +1,8 @@
 #include "fft_base.h"
 #include "fftw3.h"
-#if defined(__FFTW3_MPI) && defined(__MPI)
-#include <fftw3-mpi.h>
-//#include "fftw3-mpi_mkl.h"
-#endif
+
 // #ifdef __ENABLE_FLOAT_FFTW
-// #include "fftw3f.h"
-// #if defined(__FFTW3_MPI) && defined(__MPI)
-// #include "fftw3f-mpi.h"
-// //#include "fftw3-mpi_mkl.h"
+
 // #endif
 // #endif
 #ifndef FFT_CPU_H
@@ -22,7 +16,7 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
     ~FFT_CPU(); 
 
     void initfftmode(int fft_mode_in) override;
-    
+
     //init fftw_plans
 	void setupFFT() override; 
 
@@ -35,7 +29,15 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
 
     void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
 
+    void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+
     void fftzfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+
+    void fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+
+    void fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const override;
+
+    void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const override;
     private:
         void clearfft(fftw_plan& plan);
         void clearfft(fftwf_plan& plan);

@@ -2,7 +2,11 @@
 #include "fft.h"
 #include "fft_cpu.h"
 // #include "fft_gpu.h"
-
+FFT::FFT()
+{
+    fft_float = nullptr;
+    fft_double = nullptr;
+}
 FFT::FFT(std::string device_in,std::string precision_in)
 {
     assert(device_in=="cpu" || device_in=="gpu");
@@ -11,7 +15,7 @@ FFT::FFT(std::string device_in,std::string precision_in)
     this->precision = precision_in;
     if (device=="cpu")
     {
-        fft_float = new FFT_CPU<float>();
+        // fft_float = new FFT_CPU<float>();
         fft_double = new FFT_CPU<double>();
     }
     else if (device=="gpu")
@@ -93,7 +97,7 @@ void FFT::clearFFT()
         fft_double->clear();
     }
 }
-
+// access the real space data
 template <>
 float* FFT::get_rspace_data() const
 {
@@ -104,6 +108,26 @@ template <>
 double* FFT::get_rspace_data() const
 {
     return fft_double->get_rspace_data();
+}
+template <>
+std::complex<float>* FFT::get_auxr_data() const
+{
+    return fft_float->get_auxr_data();
+}
+template <>
+std::complex<double>* FFT::get_auxr_data() const
+{
+    return fft_double->get_auxr_data();
+}
+template <>
+std::complex<float>* FFT::get_auxg_data() const
+{
+    return fft_float->get_auxg_data();
+}
+template <>
+std::complex<double>* FFT::get_auxg_data() const
+{
+    return fft_double->get_auxg_data();
 }
 
 template <>
@@ -123,11 +147,53 @@ void FFT::fftzfor(std::complex<float>* in, std::complex<float>* out) const
 {
     fft_float->fftzfor(in,out);
 }
-
 template <>
 void FFT::fftzfor(std::complex<double>* in, std::complex<double>* out) const
 {
     fft_double->fftzfor(in,out);
+}
+
+template <>
+void FFT::fftxybac(std::complex<float>* in, std::complex<float>* out) const
+{
+    fft_float->fftxybac(in,out);
+}
+template <>
+void FFT::fftxybac(std::complex<double>* in, std::complex<double>* out) const
+{
+    fft_double->fftxybac(in,out);
+}
+
+template <>
+void FFT::fftzbac(std::complex<float>* in, std::complex<float>* out) const
+{
+    fft_float->fftzbac(in,out);
+}
+template <>
+void FFT::fftzbac(std::complex<double>* in, std::complex<double>* out) const
+{
+    fft_double->fftzbac(in,out);
+}
+template <>
+void FFT::fftxyr2c(float* in, std::complex<float>* out) const
+{
+    fft_float->fftxyr2c(in,out);
+}
+template <>
+void FFT::fftxyr2c(double* in, std::complex<double>* out) const
+{
+    fft_double->fftxyr2c(in,out);
+}
+
+template <>
+void FFT::fftxyc2r(std::complex<float>* in, float* out) const
+{
+    fft_float->fftxyc2r(in,out);
+}
+template <>
+void FFT::fftxyc2r(std::complex<double>* in, double* out) const
+{
+    fft_double->fftxyc2r(in,out);
 }
 
 template <>

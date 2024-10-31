@@ -2,7 +2,7 @@ list(APPEND fft_files
     fft.cpp
     fft_base.cpp
     fft_cpu.cpp
-    fft_cpu_float.cpp
+    # fft_cpu_float.cpp
 )
 
 # if (USE_CUDA)
@@ -16,5 +16,4 @@ add_library(
     OBJECT
     ${fft_files}
 )
-message(${fft_files})
 
