@@ -15,7 +15,7 @@ FFT1::FFT1(std::string device_in,std::string precision_in)
     this->precision = precision_in;
     if (device=="cpu")
     {
-        // fft_float = new FFT_CPU<float>();
+        fft_float = new FFT_CPU<float>();
         fft_double = new FFT_CPU<double>();
     }
     else if (device=="gpu")
@@ -57,7 +57,7 @@ void FFT1::setfft(std::string device_in,std::string precision_in)
     this->precision = precision_in;
     if (device=="cpu")
     {
-        // fft_float = new FFT_CPU<float>();
+        fft_float = new FFT_CPU<float>();
         fft_double = new FFT_CPU<double>();
     }
     else if (device=="gpu")
@@ -70,11 +70,10 @@ void FFT1::setfft(std::string device_in,std::string precision_in)
 void FFT1::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
                      int nproc_in, bool gamma_only_in, bool xprime_in , bool mpifft_in)
 {
-
-    // fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
-    // fft_float->initfftmode(this->fft_mode);
-    fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
+    fft_float->initfftmode(this->fft_mode);
+    fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
     fft_double->initfftmode(this->fft_mode);
+    fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
 }
 void FFT1::initfftmode(int fft_mode_in)
 {
@@ -83,18 +82,14 @@ void FFT1::initfftmode(int fft_mode_in)
 
 void FFT1::setupFFT()
 {
-    if (precision=="single")
-    {
-        fft_float->setupFFT();
-    }
-    else if (precision=="double")
+    if (precision=="double")
     {
         fft_double->setupFFT();
     }
-    else if (precision=="mixing")
+    else if (precision=="single")
     {
-        fft_float->setupFFT();
         fft_double->setupFFT();
+        fft_float->setupFFT();
     }
 }
 

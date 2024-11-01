@@ -60,7 +60,7 @@ class FFT1
         FFT_BASE<double>* fft_double=nullptr;
         
         std::string device = "cpu";
-        std::string precision = "mixing";
+        std::string precision = "double";
 };   
 
 #endif // FFT_H

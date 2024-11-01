@@ -43,7 +43,7 @@ void FFT_CPU<float>::setupFFT()
     if (!this->mpifft)
     {
         c_auxg = (std::complex<float>*)fftwf_malloc(sizeof(fftwf_complex) * this->maxgrids); 
-        c_auxr = (std::complex<float>*)fftwf_malloc(sizeof(fftwf_complex) * maxgrids);
+        c_auxr = (std::complex<float>*)fftwf_malloc(sizeof(fftwf_complex) * this->maxgrids);
         s_rspace = (float*)c_auxg;
         //---------------------------------------------------------
         //                              1 D
@@ -132,8 +132,16 @@ float* FFT_CPU<float>::get_rspace_data() const
 {
     return s_rspace;
 }
-
-
+template <>
+std::complex<float>* FFT_CPU<float>::get_auxr_data() const
+{
+    return c_auxr;
+}
+template <>
+std::complex<float>* FFT_CPU<float>::get_auxg_data() const
+{
+    return c_auxg;
+}
 template <>
 void FFT_CPU<float>::fftxyfor(std::complex<float>* in, std::complex<float>* out) const
 {
@@ -221,6 +229,31 @@ void FFT_CPU<float>::fftxyr2c(float* in, std::complex<float>* out) const
         }
 
         fftwf_execute_dft(this->planfxfor1, (fftwf_complex*)out, (fftwf_complex*)out);
+    }
+}
+template <>
+void FFT_CPU<float>::fftxyc2r(std::complex<float>* in, float* out) const
+{
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        for (int i = 0; i < this->lixy + 1; ++i)
+        {
+            fftwf_execute_dft(this->planfybac, (fftwf_complex*)&in[i * npy], (fftwf_complex*)&in[i * npy]);
+        }
+
+        fftwf_execute_dft_c2r(this->planfxc2r, (fftwf_complex*)in, out);
+    }
+    else
+    {
+        fftwf_execute_dft(this->planfxfor1, (fftwf_complex*)in, (fftwf_complex*)in);
+
+        for (int i = 0; i < this->nx; ++i)
+        {
+            fftwf_execute_dft(this->planfybac, (fftwf_complex*)&in[i * npy], (fftwf_complex*)&in[i * npy]);
+        }
+
+        fftwf_execute_dft_c2r(this->planfyc2r, (fftwf_complex*)in, out);
     }
 }
 template <>
