@@ -1,4 +1,4 @@
-#include "fft.h"
+// #include "fft.h"
 #include "fft/fft.h"
 #include <complex>
 #include "pw_basis.h"
@@ -199,11 +199,6 @@ template <typename FPTYPE>
 void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const bool add, const FPTYPE factor) const
 {
     ModuleBase::timer::tick(this->classname, "recip2real");
-    if constexpr (std::is_same<FPTYPE, float>::value) {
-        printf("float value: %f\n", static_cast<float>(factor));
-    } else if constexpr (std::is_same<FPTYPE, double>::value) {
-        printf("double value: %lf\n", static_cast<double>(factor));
-    }
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static, 4096/sizeof(FPTYPE))
 #endif
