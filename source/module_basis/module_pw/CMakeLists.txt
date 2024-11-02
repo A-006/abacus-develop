@@ -17,7 +17,6 @@ add_library(
     OBJECT
     ${objects}
 )
-add_subdirectory(fft)
 target_link_libraries(planewave PRIVATE fft)
 if(ENABLE_COVERAGE)
   add_coverage(planewave)
