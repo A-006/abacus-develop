@@ -58,6 +58,9 @@ add_library(
     module_mixing/plain_mixing.cpp
     module_mixing/pulay_mixing.cpp
     module_mixing/broyden_mixing.cpp
+    module_fft/fft.cpp
+    module_fft/fft_base.cpp
+    module_fft/fft_cpu.cpp
     ${LIBM_SRC}
 )
 
