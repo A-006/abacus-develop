@@ -694,7 +694,6 @@ add_subdirectory(source)
 target_link_libraries(
   ${ABACUS_BIN_NAME}
   base
-  fft
   parameter
   cell
   symmetry
