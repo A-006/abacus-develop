@@ -27,7 +27,7 @@
 #define private public
 #include "../pw_basis_k.h"
 #include "../pw_basis.h"
-#include "../fft.h"
+#include "module_base/fft/fft.h"
 #undef private
 #undef protected
 
