@@ -1,7 +1,7 @@
 #include "fft_base.h"
 // #include "module_psi/psi.h"
-#ifndef FFT1_H
-#define FFT1_H
+#ifndef FFT_H
+#define FFT_H
 class FFT
 {
     public:

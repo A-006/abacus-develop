@@ -1,7 +1,12 @@
 #include <cassert>
 #include "fft.h"
 #include "fft_cpu.h"
+#if defined(__CUDA)
 #include "fft_cuda.h"
+#endif
+#if defined(__ROCM)
+#include "fft_rcom.h"
+#endif
 #include "module_base/module_device/device.h"
 // #include "fft_gpu.h"
 FFT::FFT()
