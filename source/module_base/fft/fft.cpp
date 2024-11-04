@@ -1,7 +1,7 @@
 #include <cassert>
 #include "fft.h"
 #include "fft_cpu.h"
-
+#include "fft_cuda.h"
 #include "module_base/module_device/device.h"
 // #include "fft_gpu.h"
 FFT::FFT()
@@ -21,10 +21,14 @@ FFT::FFT(std::string device_in,std::string precision_in)
         fft_double = new FFT_CPU<double>();
     }
     else if (device=="gpu")
-    {
-        
-        // fft_float = new FFT_GPU<float>();
-        // fft_double = new FFT_GPU<double>();
+    {        
+        #if defined(__ROCM)
+            fft_float = new FFT_RCOM<float>();
+            fft_double = new FFT_RCOM<double>();
+        #elif defined(__CUDA)
+            fft_float = new FFT_CUDA<float>();
+            fft_double = new FFT_CUDA<double>();
+        #endif
     }
 }
 
@@ -63,10 +67,14 @@ void FFT::setfft(std::string device_in,std::string precision_in)
         fft_double = new FFT_CPU<double>();
     }
     else if (device=="gpu")
-    {
-        
-        // fft_float = new FFT_GPU<float>();
-        // fft_double = new FFT_GPU<double>();
+    {      
+        #if defined(__ROCM)
+            fft_float = new FFT_RCOM<float>();
+            fft_double = new FFT_RCOM<double>();
+        #elif defined(__CUDA)
+            fft_float = new FFT_CUDA<float>();
+            fft_double = new FFT_CUDA<double>();
+        #endif
     }
 }
 void FFT::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 

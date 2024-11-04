@@ -11,6 +11,17 @@ list(APPEND FFT_SRC
   fft/fft_cpu_float.cpp
 )
 endif()
+if (USE_CUDA)
+  list(APPEND FFT_SRC
+    fft/fft_cuda.cpp
+  )
+endif()
+
+if (USE_ROCM)
+  list(APPEND FFT_SRC
+    fft/fft_rocm.cpp
+  )
+endif()
 add_library(
     base
     OBJECT
