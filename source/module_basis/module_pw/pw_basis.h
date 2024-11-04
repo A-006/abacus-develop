@@ -243,7 +243,6 @@ public:
     int ng_xeq0 = 0; //only used when xprime = true, number of g whose gx = 0
     int nmaxgr=0; // Gamma_only: max between npw and (nrxx+1)/2, others: max between npw and nrxx
                 // Thus complex<double>[nmaxgr] is able to contain either reciprocal or real data
-    // FFT ft;
     FFT ft1;
     FFT1 ft;
     //The position of pointer in and out can be equal(in-place transform) or different(out-of-place transform).

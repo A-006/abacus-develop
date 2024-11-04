@@ -15,9 +15,9 @@ PW_Basis::PW_Basis()
 
 PW_Basis::PW_Basis(std::string device_, std::string precision_) : device(std::move(device_)), precision(std::move(precision_)) {
     classname="PW_Basis";
-    this->ft.setfft(this->device,this->precision);
-    this->ft.set_device(this->device);
-    this->ft.set_precision(this->precision);
+    this->ft.setfft("cpu",this->precision);
+    this->ft1.set_device(this->device);
+    this->ft1.set_precision(this->precision);
 }
 
 PW_Basis:: ~PW_Basis()
