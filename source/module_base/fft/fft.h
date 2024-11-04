@@ -1,5 +1,5 @@
 #include "fft_base.h"
-#include "module_psi/psi.h"
+// #include "module_psi/psi.h"
 #ifndef FFT1_H
 #define FFT1_H
 class FFT
@@ -45,8 +45,8 @@ class FFT
 
         template <typename FPTYPE, typename Device>
         void fft3D_forward(const Device* ctx, std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-        // template <typename FPTYPE, typename Device>
-        // void fft3D_backward(const Device* ctx, std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+        template <typename FPTYPE, typename Device>
+        void fft3D_backward(const Device* ctx, std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
 
         void set_device(std::string device_in); 
 

@@ -1,6 +1,8 @@
 #include <cassert>
 #include "fft.h"
 #include "fft_cpu.h"
+
+#include "module_base/module_device/device.h"
 // #include "fft_gpu.h"
 FFT::FFT()
 {
@@ -155,7 +157,16 @@ std::complex<double>* FFT::get_auxg_data() const
 {
     return fft_double->get_auxg_data();
 }
-
+template <>
+std::complex<float>* FFT::get_auxr_3d_data() const
+{
+    return fft_float->get_auxr_3d_data();
+}
+template <>
+std::complex<double>* FFT::get_auxr_3d_data() const
+{
+    return fft_double->get_auxr_3d_data();
+}
 template <>
 void FFT::fftxyfor(std::complex<float>* in, std::complex<float>* out) const
 {
@@ -223,13 +234,23 @@ void FFT::fftxyc2r(std::complex<double>* in, double* out) const
 }
 
 template <>
-void  FFT::fft3D_forward(const char* ctx, std::complex<float>* in, std::complex<float>* out) const
+void  FFT::fft3D_forward(const base_device::DEVICE_GPU* ctx, std::complex<float>* in, std::complex<float>* out) const
 {
     fft_float->fft3D_forward(in, out);
 }
 
 template <>
-void  FFT::fft3D_forward(const char* ctx, std::complex<double>* in, std::complex<double>* out) const
+void  FFT::fft3D_forward(const base_device::DEVICE_GPU* ctx, std::complex<double>* in, std::complex<double>* out) const
 {
     fft_double->fft3D_forward(in, out);
+}
+template <>
+void  FFT::fft3D_backward(const base_device::DEVICE_GPU* ctx, std::complex<float>* in, std::complex<float>* out) const
+{
+    fft_float->fft3D_backward(in, out);
+}
+template <>
+void  FFT::fft3D_backward(const base_device::DEVICE_GPU* ctx, std::complex<double>* in, std::complex<double>* out) const
+{
+    fft_double->fft3D_backward(in, out);
 }

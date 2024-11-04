@@ -54,6 +54,10 @@ std::complex<FPTYPE>* FFT_BASE<FPTYPE>::get_auxg_data() const
 {
 }
 template <typename FPTYPE>
+std::complex<FPTYPE>* FFT_BASE<FPTYPE>::get_auxr_3d_data() const
+{
+}
+template <typename FPTYPE>
 void FFT_BASE<FPTYPE>::fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
 {   
 }
@@ -77,9 +81,12 @@ template <typename FPTYPE>
 void FFT_BASE<FPTYPE>::fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const
 {
 }
-
 template <typename FPTYPE>
 void FFT_BASE<FPTYPE>::fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
+{
+}
+template <typename FPTYPE> 
+void FFT_BASE<FPTYPE>::fft3D_backward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const
 {
 }
 template FFT_BASE<float>::FFT_BASE();

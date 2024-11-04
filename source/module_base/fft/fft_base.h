@@ -32,6 +32,8 @@ public:
 
     virtual std::complex<FPTYPE>* get_auxg_data() const;
 
+    virtual std::complex<FPTYPE>* get_auxr_3d_data() const;
+
     //forward fft in x-y direction
     virtual void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
 
@@ -46,8 +48,8 @@ public:
     virtual void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const;
     
     virtual void fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
-    // template <typename Device>
-    // virtual void fft3D_forward(const Device* ctx, std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
+
+    virtual void fft3D_backward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const;
 
 protected:
     int initflag = 0; // 0: not initialized; 1: initialized
