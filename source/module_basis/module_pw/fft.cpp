@@ -38,6 +38,9 @@ void FFT::clear()
 void FFT::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, int nproc_in,
                   bool gamma_only_in, bool xprime_in, bool mpifft_in)
 {
+    this->nx = nx_in;
+    this->ny = ny_in;
+    this->nz = nz_in;
 #if defined(__CUDA) || defined(__ROCM)
         if (this->device == "gpu")
         {
@@ -45,10 +48,6 @@ void FFT::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int
             resmem_zd_op()(gpu_ctx, this->z_auxr_3d, this->nx * this->ny * this->nz);
         }
 #endif // defined(__CUDA) || defined(__ROCM)
-    }
-    else
-    {
-    }
 }
 
 void FFT::setupFFT()
