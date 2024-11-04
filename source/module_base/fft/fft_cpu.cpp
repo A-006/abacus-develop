@@ -167,8 +167,6 @@ void FFT_CPU<double>::clear()
     d_rspace = nullptr;
 }
 
-
-
 template <>
 double* FFT_CPU<double>::get_rspace_data() const
 {
@@ -295,4 +293,15 @@ void FFT_CPU<double>::fftxyc2r(std::complex<double> *in,double *out) const
         }
     }
 }
+template <>
+FFT_CPU<float>::FFT_CPU()
+{
+
+}
+template <>
+FFT_CPU<float>::~FFT_CPU()
+{
+
+}
+template FFT_CPU<float>::FFT_CPU();
 template FFT_CPU<double>::FFT_CPU();

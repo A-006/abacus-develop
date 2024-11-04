@@ -85,10 +85,29 @@ void FFT1::setfft(std::string device_in,std::string precision_in)
 void FFT1::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
                      int nproc_in, bool gamma_only_in, bool xprime_in , bool mpifft_in)
 {
-    fft_float->initfftmode(this->fft_mode);
-    fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
-    fft_double->initfftmode(this->fft_mode);
-    fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
+    if (this->precision=="single")
+    {
+        float_flag = 1;
+    }
+    else if (this->precision=="double")
+    {
+        double_flag = 1;
+    }
+    else if (this->precision=="mixing")
+    {
+        float_flag = 1;
+        double_flag = 1;
+    }
+    if (float_flag)
+    {
+        fft_float->initfftmode(this->fft_mode);
+        fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
+    }
+    if (double_flag)
+    {
+        fft_double->initfftmode(this->fft_mode);
+        fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
+    }
 }
 void FFT1::initfftmode(int fft_mode_in)
 {
@@ -97,46 +116,38 @@ void FFT1::initfftmode(int fft_mode_in)
 
 void FFT1::setupFFT()
 {
-    if (precision=="double")
+    if (double_flag)
     {
         fft_double->setupFFT();
     }
-    else if (precision=="single")
+    if (float_flag)
     {
-        fft_double->setupFFT();
         fft_float->setupFFT();
     }
 }
 
 void FFT1::clearFFT()
 {
-    if (precision=="single")
+    if (double_flag)
     {
-        fft_float->clear();
+        fft_double->cleanFFT();
     }
-    else if (precision=="double")
+    if (float_flag)
     {
-        fft_double->clear();
-    }
-    else if (precision=="mixing")
-    {
-        fft_float->clear();
-        fft_double->clear();
+        fft_float->cleanFFT();
     }
 }
 void FFT1::clear()
 {
-    // this->clearFFT();
-    // if (fft_float!=nullptr)
-    // {
-    //     delete fft_float;
-    //     fft_float=nullptr;
-    // }
-    // if (fft_double!=nullptr)
-    // {
-    //     delete fft_double;
-    //     fft_double=nullptr;
-    // }
+    this->clearFFT();
+    if (float_flag)
+    {
+        fft_float->clear();
+    }
+    if (double_flag)
+    {
+        fft_double->clear();
+    }
 }
 // access the real space data
 template <>

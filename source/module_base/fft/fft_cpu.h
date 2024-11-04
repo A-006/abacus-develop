@@ -12,36 +12,36 @@ template <typename FPTYPE>
 class FFT_CPU : public FFT_BASE<FPTYPE>
 {
     public:
-    FFT_CPU();
-    ~FFT_CPU(); 
+    __attribute__((weak)) FFT_CPU();
+    __attribute__((weak)) ~FFT_CPU(); 
 
-    void initfftmode(int fft_mode_in) override;
+    __attribute__((weak)) void initfftmode(int fft_mode_in);
 
     //init fftw_plans
-	void setupFFT() override; 
+	__attribute__((weak)) void setupFFT() override; 
 
 	// void initplan(const unsigned int& flag = 0);
-    void cleanFFT() override;
+    __attribute__((weak)) void cleanFFT() override;
 
-    void clear() override;
+    __attribute__((weak)) void clear() override;
 
-    FPTYPE* get_rspace_data() const override;
+    __attribute__((weak)) FPTYPE* get_rspace_data() const override;
 
-    std::complex<FPTYPE>* get_auxr_data() const;
+    __attribute__((weak)) std::complex<FPTYPE>* get_auxr_data() const;
 
-    std::complex<FPTYPE>* get_auxg_data() const;
+    __attribute__((weak)) std::complex<FPTYPE>* get_auxg_data() const;
 
-    void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+    __attribute__((weak)) void fftxyfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
 
-    void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+    __attribute__((weak)) void fftxybac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
 
-    void fftzfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+    __attribute__((weak)) void fftzfor(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
 
-    void fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+    __attribute__((weak)) void fftzbac(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
 
-    void fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const override;
+    __attribute__((weak)) void fftxyr2c(FPTYPE* in, std::complex<FPTYPE>* out) const override;
 
-    void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const override;
+    __attribute__((weak)) void fftxyc2r(std::complex<FPTYPE>* in, FPTYPE* out) const override;
     private:
         void clearfft(fftw_plan& plan);
         void clearfft(fftwf_plan& plan);
