@@ -78,14 +78,10 @@ void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in
     if (this->precision=="single")
     {
         float_flag = true;
+        double_flag = true;
     }
     else if (this->precision=="double")
     {
-        double_flag = true;
-    }
-    else if (this->precision=="mixing")
-    {
-        float_flag = true;
         double_flag = true;
     }
     if (float_flag)
