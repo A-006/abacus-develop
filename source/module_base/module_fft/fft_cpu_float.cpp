@@ -127,7 +127,7 @@ void FFT_CPU<float>::clearfft(fftw_plan& plan)
     if (plan)
     {
         fftw_destroy_plan(plan);
-        plan = NULL;
+        plan = nullptr;
     }
 }
 
