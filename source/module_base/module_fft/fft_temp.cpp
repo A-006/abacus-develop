@@ -74,13 +74,13 @@ void FFT_TEMP::setfft(std::string device_in,std::string precision_in)
     }
     else if (device=="gpu")
     {      
-        #if defined(__ROCM)
-            fft_float = new FFT_RCOM<float>();
-            fft_double = new FFT_RCOM<double>();
-        #elif defined(__CUDA)
-            fft_float = new FFT_CUDA<float>();
-            fft_double = new FFT_CUDA<double>();
-        #endif
+        // #if defined(__ROCM)
+        //     fft_float = new FFT_RCOM<float>();
+        //     fft_double = new FFT_RCOM<double>();
+        // #elif defined(__CUDA)
+        //     fft_float = new FFT_CUDA<float>();
+        //     fft_double = new FFT_CUDA<double>();
+        // #endif
     }
 }
 void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
