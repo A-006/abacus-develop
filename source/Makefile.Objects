@@ -25,6 +25,7 @@ VPATH=./src_global:\
 ./module_base/module_container/ATen/ops:\
 ./module_base/module_device:\
 ./module_base/module_mixing:\
+./moudle_base/module_fft:\
 ./module_md:\
 ./module_basis/module_pw:\
 ./module_esolver:\
@@ -166,7 +167,8 @@ OBJS_BASE=abfs-vector3_order.o\
     broyden_mixing.o\
     memory_op.o\
     device.o\
-
+    fft_base.o\
+    fft_temp.o\
 
 OBJS_CELL=atom_pseudo.o\
     atom_spec.o\
@@ -411,8 +413,6 @@ OBJS_PSI_INITIALIZER=psi_initializer.o\
                      psi_initializer_nao_random.o\
 
 OBJS_PW=fft.o\
-    fft_base.o\
-    fft_temp.o\
     pw_basis.o\
     pw_basis_k.o\
     pw_basis_sup.o\
