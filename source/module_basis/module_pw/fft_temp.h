@@ -1,13 +1,13 @@
 #include "fft_base.h"
 // #include "module_psi/psi.h"
-#ifndef FFT1_H
-#define FFT1_H
-class FFT1
+#ifndef FFT_TEMP_H
+#define FFT_TEMP_H
+class FFT_TEMP
 {
     public:
-        FFT1();
-        FFT1(std::string device_in,std::string precision_in);
-        ~FFT1();
+        FFT_TEMP();
+        FFT_TEMP(std::string device_in,std::string precision_in);
+        ~FFT_TEMP();
 
         void setfft(std::string device_in,std::string precision_in);
         void initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
