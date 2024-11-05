@@ -18,10 +18,11 @@ void FFT_BASE<FPTYPE>::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int
     this->fftny = this->ny = ny_in;
     if (this->gamma_only)
     {
-        if (xprime)
+        if (xprime) {
             this->fftnx = int(nx / 2) + 1;
-        else
+        } else {
             this->fftny = int(ny / 2) + 1;
+}
     }
     this->nz = nz_in;
     this->ns = ns_in;
