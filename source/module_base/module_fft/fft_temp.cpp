@@ -12,8 +12,6 @@
 // #include "fft_gpu.h"
 FFT_TEMP::FFT_TEMP()
 {
-    fft_float = nullptr;
-    fft_double = nullptr;
 }
 FFT_TEMP::FFT_TEMP(std::string device_in,std::string precision_in)
 {

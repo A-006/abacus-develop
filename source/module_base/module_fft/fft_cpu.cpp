@@ -7,15 +7,20 @@
 
 template <>
 FFT_CPU<double>::FFT_CPU()
-{
-    
+{   
 }
 template <>
 FFT_CPU<double>::~FFT_CPU()
 {
-
 }
-
+template <>
+FFT_CPU<float>::FFT_CPU()
+{
+}
+template <>
+FFT_CPU<float>::~FFT_CPU()
+{
+}
 template <>
 void FFT_CPU<double>::setupFFT()
 {
@@ -293,15 +298,8 @@ void FFT_CPU<double>::fftxyc2r(std::complex<double> *in,double *out) const
         }
     }
 }
-template <>
-FFT_CPU<float>::FFT_CPU()
-{
 
-}
-template <>
-FFT_CPU<float>::~FFT_CPU()
-{
-
-}
 template FFT_CPU<float>::FFT_CPU();
+template FFT_CPU<float>::~FFT_CPU();
 template FFT_CPU<double>::FFT_CPU();
+template FFT_CPU<double>::~FFT_CPU();

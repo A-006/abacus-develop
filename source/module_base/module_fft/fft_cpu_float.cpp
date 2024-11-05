@@ -293,5 +293,3 @@ void FFT_CPU<float>::fftxyc2r(std::complex<float>* in, float* out) const
         fftwf_execute_dft_c2r(this->planfyc2r, (fftwf_complex*)in, out);
     }
 }
-// template FFT_CPU<float>::~FFT_CPU();
-// template FFT_CPU<float>::FFT_CPU();
