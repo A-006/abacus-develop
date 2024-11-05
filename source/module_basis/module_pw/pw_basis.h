@@ -243,6 +243,7 @@ public:
     int nmaxgr=0; // Gamma_only: max between npw and (nrxx+1)/2, others: max between npw and nrxx
                 // Thus complex<double>[nmaxgr] is able to contain either reciprocal or real data
     FFT ft;
+    FFT1 ft1;
     //The position of pointer in and out can be equal(in-place transform) or different(out-of-place transform).
 
     template <typename FPTYPE>
