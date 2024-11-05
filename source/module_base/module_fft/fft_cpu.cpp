@@ -134,7 +134,6 @@ void FFT_CPU<double>::clearfft(fftw_plan& plan)
 template <>
 void FFT_CPU<double>::cleanFFT()
 {
-    printf("in the double cleanFFT\n");
     clearfft(planzfor);
     clearfft(planzbac);
     clearfft(planxfor1);
@@ -189,6 +188,7 @@ void FFT_CPU<double>::fftxyfor(std::complex<double>* in, std::complex<double>* o
     if (this->xprime)
     {
         fftw_execute_dft(this->planxfor1, (fftw_complex*)in, (fftw_complex*)out);
+
         for (int i = 0; i < this->lixy + 1; ++i)
         {
             fftw_execute_dft(this->planyfor, (fftw_complex*)&in[i * npy], (fftw_complex*)&out[i * npy]);
@@ -227,13 +227,13 @@ void FFT_CPU<double>::fftxybac(std::complex<double>* in,std::complex<double>* ou
     }
     else
     {
+        fftw_execute_dft(this->planxbac1, (fftw_complex*)in, (fftw_complex*)out);
+        fftw_execute_dft(this->planxbac2, (fftw_complex*)&in[rixy * nplane], (fftw_complex*)&out[rixy * nplane]);
+
         for (int i = 0; i < this->nx; ++i)
         {
             fftw_execute_dft(this->planybac, (fftw_complex*)&in[i * npy], (fftw_complex*)&out[i * npy]);
         }
-
-        fftw_execute_dft(this->planxbac1, (fftw_complex*)in, (fftw_complex*)out);
-        fftw_execute_dft(this->planxbac2, (fftw_complex*)&in[rixy * nplane], (fftw_complex*)&out[rixy * nplane]);
     }
 }
 template <>

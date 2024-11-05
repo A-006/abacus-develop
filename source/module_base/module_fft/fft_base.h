@@ -8,8 +8,8 @@ class FFT_BASE
 {
 public:
 
-	__attribute__((weak)) FFT_BASE();
-	virtual __attribute__((weak)) ~FFT_BASE(); 
+	FFT_BASE();
+	virtual  ~FFT_BASE(); 
 	
 	// init parameters of fft
 	virtual void initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 

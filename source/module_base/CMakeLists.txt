@@ -8,7 +8,7 @@ list (APPEND LIBM_SRC
 endif()
 if (ENABLE_FLOAT_FFTW)
   list (APPEND FFT_SRC
-    module_fft/fftw_float.cpp
+    module_fft/fft_cpu_float.cpp
   )
 endif()
 add_library(

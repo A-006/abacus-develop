@@ -12,8 +12,8 @@ template <typename FPTYPE>
 class FFT_CPU : public FFT_BASE<FPTYPE>
 {
     public:
-    __attribute__((weak)) FFT_CPU();
-    __attribute__((weak)) ~FFT_CPU(); 
+    FFT_CPU();
+    ~FFT_CPU(); 
 
     __attribute__((weak)) void initfftmode(int fft_mode_in);
 

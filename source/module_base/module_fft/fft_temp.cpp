@@ -40,16 +40,6 @@ FFT_TEMP::FFT_TEMP(std::string device_in,std::string precision_in)
 
 FFT_TEMP::~FFT_TEMP()
 {
-    if (float_flag)
-    {
-        delete fft_float;
-        fft_float=nullptr;
-    }
-    if (double_flag)
-    {
-        delete fft_double;
-        fft_double=nullptr;
-    }
 }
 
 void FFT_TEMP::set_device(std::string device_in)
@@ -67,6 +57,11 @@ void FFT_TEMP::setfft(std::string device_in,std::string precision_in)
     assert(precision_in=="single" || precision_in=="double" || precision_in=="mixing");
     this->device = device_in;
     this->precision = precision_in;
+
+}
+void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
+                     int nproc_in, bool gamma_only_in, bool xprime_in , bool mpifft_in)
+{
     if (device=="cpu")
     {
         fft_float = new FFT_CPU<float>();
@@ -82,22 +77,18 @@ void FFT_TEMP::setfft(std::string device_in,std::string precision_in)
         //     fft_double = new FFT_CUDA<double>();
         // #endif
     }
-}
-void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
-                     int nproc_in, bool gamma_only_in, bool xprime_in , bool mpifft_in)
-{
     if (this->precision=="single")
     {
-        float_flag = 1;
+        float_flag = true;
     }
     else if (this->precision=="double")
     {
-        double_flag = 1;
+        double_flag = true;
     }
     else if (this->precision=="mixing")
     {
-        float_flag = 1;
-        double_flag = 1;
+        float_flag = true;
+        double_flag = true;
     }
     if (float_flag)
     {
@@ -148,6 +139,18 @@ void FFT_TEMP::clear()
     if (double_flag)
     {
         fft_double->clear();
+    }
+    if (fft_float!=nullptr)
+    {
+        delete fft_float;
+        fft_float=nullptr;
+        float_flag = false;
+    }
+    if (fft_double!=nullptr)
+    {
+        delete fft_double;
+        fft_double=nullptr;
+        double_flag = false;
     }
 }
 // access the real space data
