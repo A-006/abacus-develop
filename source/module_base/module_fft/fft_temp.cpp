@@ -65,26 +65,24 @@ void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in
         fft_float = new FFT_CPU<float>();
         fft_double = new FFT_CPU<double>();
     }
-    else if (device=="gpu")
-    {      
-        // #if defined(__ROCM)
-        //     fft_float = new FFT_RCOM<float>();
-        //     fft_double = new FFT_RCOM<double>();
-        // #elif defined(__CUDA)
-        //     fft_float = new FFT_CUDA<float>();
-        //     fft_double = new FFT_CUDA<double>();
-        // #endif
-    }
+
     if (this->precision=="single")
     {
         float_flag = true;
+        #ifdef __ENABLE_FLOAT_FFTW
+        float_define = true;
+        #endif
+        float_flag = float_define & float_flag;
         double_flag = true;
+        
+        
     }
     else if (this->precision=="double")
     {
         double_flag = true;
     }
-    if (float_flag)
+
+    if (float_flag && float_define)
     {
         fft_float->initfftmode(this->fft_mode);
         fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);

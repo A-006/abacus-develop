@@ -12,6 +12,7 @@ namespace ModulePW
 PW_Basis_K::PW_Basis_K()
 {
     classname="PW_Basis_K";
+    this->ft1.setfft("cpu",this->precision);
 }
 PW_Basis_K::~PW_Basis_K()
 {
