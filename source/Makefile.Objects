@@ -169,6 +169,7 @@ OBJS_BASE=abfs-vector3_order.o\
     device.o\
     fft_temp.o\
     fft_base.o\
+    fft_cpu.o\
 
 OBJS_CELL=atom_pseudo.o\
     atom_spec.o\
