@@ -64,6 +64,9 @@ void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in
     {
         fft_float = new FFT_CPU<float>();
         fft_double = new FFT_CPU<double>();
+        #ifndef __ENABLE_FLOAT_FFTW
+            float_define = false;
+        #endif
     }
     if (device=="gpu")
     {
@@ -77,12 +80,7 @@ void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in
     }
     if (this->precision=="single")
     {
-        float_flag = true;
-        #if defined (__ENABLE_FLOAT_FFTW) || defined(__CUDA) || defined(__ROCM)
-        float_define = true;
-        #endif
-
-        float_flag = float_define & float_flag;
+        float_flag = float_define;
         double_flag = true;
     }
     else if (this->precision=="double")

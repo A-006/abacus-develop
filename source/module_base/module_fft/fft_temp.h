@@ -55,7 +55,7 @@ class FFT_TEMP
     private:
         int fft_mode = 0; ///< fftw mode 0: estimate, 1: measure, 2: patient, 3: exhaustive
         bool float_flag=false;
-        bool float_define=false;
+        bool float_define=true;
         bool double_flag=false;
         FFT_BASE<float>* fft_float=nullptr;
         FFT_BASE<double>* fft_double=nullptr;
