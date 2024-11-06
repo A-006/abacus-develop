@@ -77,7 +77,7 @@ void FFT_RCOM<float>::fft3D_forward(std::complex<float>* in, std::complex<float>
                               reinterpret_cast<hipfftComplex*>(out), HIPFFT_FORWARD));
 }
 template <>
-void FFT_RCOM<double>::fft3D_backward(std::complex<double>* in, std::complex<double>* out) const
+void FFT_RCOM<double>::fft3D_forward(std::complex<double>* in, std::complex<double>* out) const
 {
     CHECK_CUFFT(hipfftExecZ2Z(this->z_handle, reinterpret_cast<hipfftDoubleComplex*>(in),
                               reinterpret_cast<hipfftDoubleComplex*>(out), HIPFFT_FORWARD));
@@ -89,10 +89,12 @@ void FFT_RCOM<float>::fft3D_backward(std::complex<float>* in, std::complex<float
                               reinterpret_cast<hipfftComplex*>(out), HIPFFT_BACKWARD));
 }
 template <>
-void FFT_RCOM<double>::fft3D_forward(std::complex<double>* in, std::complex<double>* out) const
+void FFT_RCOM<double>::fft3D_backward(std::complex<double>* in, std::complex<double>* out) const
 {
     CHECK_CUFFT(hipfftExecZ2Z(this->z_handle, reinterpret_cast<hipfftDoubleComplex*>(in),
                               reinterpret_cast<hipfftDoubleComplex*>(out), HIPFFT_BACKWARD));
 }
+
+
 template FFT_RCOM<float>::FFT_RCOM();
 template FFT_RCOM<double>::FFT_RCOM();
