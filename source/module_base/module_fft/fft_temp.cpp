@@ -2,12 +2,12 @@
 #include "fft_temp.h"
 #include "fft_cpu.h"
 #include "module_base/module_device/device.h"
-// #if defined(__CUDA)
-// #include "fft_cuda.h"
-// #endif
-// #if defined(__ROCM)
-// #include "fft_rcom.h"
-// #endif
+#if defined(__CUDA)
+#include "fft_cuda.h"
+#endif
+#if defined(__ROCM)
+#include "fft_rcom.h"
+#endif
 
 // #include "fft_gpu.h"
 FFT_TEMP::FFT_TEMP()
@@ -19,11 +19,11 @@ FFT_TEMP::FFT_TEMP(std::string device_in,std::string precision_in)
     assert(precision_in=="single" || precision_in=="double" || precision_in=="mixing");
     this->device = device_in;
     this->precision = precision_in;
-    if (device=="cpu")
-    {
-        fft_float = new FFT_CPU<float>();
-        fft_double = new FFT_CPU<double>();
-    }
+    // if (device=="cpu")
+    // {
+    //     fft_float = new FFT_CPU<float>();
+    //     fft_double = new FFT_CPU<double>();
+    // }
     // else if (device=="gpu")
     // {        
     //     #if defined(__ROCM)
@@ -65,17 +65,25 @@ void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in
         fft_float = new FFT_CPU<float>();
         fft_double = new FFT_CPU<double>();
     }
-
+    if (device=="gpu")
+    {
+        #if defined(__ROCM)
+            fft_float = new FFT_RCOM<float>();
+            fft_double = new FFT_RCOM<double>();
+        #elif defined(__CUDA)
+            fft_float = new FFT_CUDA<float>();
+            fft_double = new FFT_CUDA<double>();
+        #endif
+    }
     if (this->precision=="single")
     {
         float_flag = true;
-        #ifdef __ENABLE_FLOAT_FFTW
+        #if defined (__ENABLE_FLOAT_FFTW) || defined(__CUDA) || defined(__ROCM)
         float_define = true;
         #endif
+
         float_flag = float_define & float_flag;
         double_flag = true;
-        
-        
     }
     else if (this->precision=="double")
     {
