@@ -1,4 +1,7 @@
 add_definitions(-D__NORMAL)
+if (USE_CUDA)
+  list (APPEND FFT_SRC ../../../module_base/module_fft/fft_cuda.cpp)
+endif()
 AddTest(
   TARGET pw_test
   LIBS parameter ${math_libs} planewave device 
@@ -6,6 +9,7 @@ AddTest(
           ../../../module_base/mymath.cpp ../../../module_base/timer.cpp ../../../module_base/memory.cpp ../../../module_base/blas_connector.cpp 
           ../../../module_base/libm/branred.cpp ../../../module_base/libm/sincos.cpp 
           ../../../module_base/module_fft/fft_base.cpp ../../../module_base/module_fft/fft_temp.cpp ../../../module_base/module_fft/fft_cpu.cpp
+          ${FFT_SRC}
       #     ../../../module_psi/kernels/psi_memory_op.cpp 
           ../../../module_base/module_device/memory_op.cpp
           depend_mock.cpp pw_test.cpp test1-1-1.cpp test1-1-2.cpp test1-2.cpp test1-3.cpp test1-4.cpp  test1-5.cpp
