@@ -11,6 +11,11 @@ if (ENABLE_FLOAT_FFTW)
     module_fft/fft_cpu_float.cpp
   )
 endif()
+if (USE_CUDA)
+  list (APPEND FFT_SRC
+    module_fft/fft_cuda.cpp
+  )
+endif()
 add_library(
     base
     OBJECT

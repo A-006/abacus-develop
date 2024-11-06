@@ -37,6 +37,11 @@ void FFT_BASE<FPTYPE>::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int
     const int nsz = this->nz * this->ns;
     this->maxgrids = (nsz > nrxx) ? nsz : nrxx;
 }
+template <typename FPTYPE>
+void FFT_BASE<FPTYPE>::initfftmode(int fft_mode_in)
+{
+    this->fft_mode = fft_mode_in;
+}
 
 template FFT_BASE<float>::FFT_BASE();
 template FFT_BASE<double>::FFT_BASE();

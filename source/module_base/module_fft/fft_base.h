@@ -15,7 +15,7 @@ public:
 	virtual void initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
 				 int nproc_in, bool gamma_only_in, bool xprime_in = true, bool mpifft_in = false);
 
-    virtual __attribute__((weak)) void initfftmode(int fft_mode_in);
+    virtual void initfftmode(int fft_mode_in);
 
 	//init fftw_plans
 	virtual void setupFFT()=0; 

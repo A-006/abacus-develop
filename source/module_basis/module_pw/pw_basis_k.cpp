@@ -12,7 +12,6 @@ namespace ModulePW
 PW_Basis_K::PW_Basis_K()
 {
     classname="PW_Basis_K";
-    this->ft1.setfft("cpu",this->precision);
 }
 PW_Basis_K::~PW_Basis_K()
 {
@@ -182,6 +181,7 @@ void PW_Basis_K::setuptransform()
     this->setupIndGk();
     this->ft.clear();
     this->ft1.clear();
+    this->ft1.setfft(this->device,this->precision);
     if(this->xprime){
         this->ft.initfft(this->nx,this->ny,this->nz,this->lix,this->rix,this->nst,this->nplane,this->poolnproc,this->gamma_only, this->xprime);
         this->ft1.initfft(this->nx,this->ny,this->nz,this->lix,this->rix,this->nst,this->nplane,this->poolnproc,this->gamma_only, this->xprime);
