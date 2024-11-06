@@ -82,7 +82,7 @@ void ESolver_FP::before_all_runners(const Input_para& inp, UnitCell& cell)
 
     this->pw_rho->initparameters(false, 4.0 * inp.ecutwfc);
     this->pw_rho->ft.fft_mode = inp.fft_mode;
-    this->pw_rho->ft.fft_mode = inp.fft_mode;
+    this->pw_rho->ft1.initfftmode(inp.fft_mode);
     this->pw_rho->setuptransform();
     this->pw_rho->collect_local_pw();
     this->pw_rho->collect_uniqgg();
