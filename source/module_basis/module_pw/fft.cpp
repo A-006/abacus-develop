@@ -72,10 +72,11 @@ void FFT::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int
     this->fftny = this->ny = ny_in;
     if (this->gamma_only)
     {
-        if (xprime)
+        if (xprime) {
             this->fftnx = int(nx / 2) + 1;
-        else
+        } else {
             this->fftny = int(ny / 2) + 1;
+}
     }
     this->nz = nz_in;
     this->ns = ns_in;
@@ -353,62 +354,62 @@ void FFT::cleanFFT()
     if (planzfor)
     {
         fftw_destroy_plan(planzfor);
-        planzfor = NULL;
+        planzfor = nullptr;
     }
     if (planzbac)
     {
         fftw_destroy_plan(planzbac);
-        planzbac = NULL;
+        planzbac = nullptr;
     }
     if (planxfor1)
     {
         fftw_destroy_plan(planxfor1);
-        planxfor1 = NULL;
+        planxfor1 = nullptr;
     }
     if (planxbac1)
     {
         fftw_destroy_plan(planxbac1);
-        planxbac1 = NULL;
+        planxbac1 = nullptr;
     }
     if (planxfor2)
     {
         fftw_destroy_plan(planxfor2);
-        planxfor2 = NULL;
+        planxfor2 = nullptr;
     }
     if (planxbac2)
     {
         fftw_destroy_plan(planxbac2);
-        planxbac2 = NULL;
+        planxbac2 = nullptr;
     }
     if (planyfor)
     {
         fftw_destroy_plan(planyfor);
-        planyfor = NULL;
+        planyfor = nullptr;
     }
     if (planybac)
     {
         fftw_destroy_plan(planybac);
-        planybac = NULL;
+        planybac = nullptr;
     }
     if (planxr2c)
     {
         fftw_destroy_plan(planxr2c);
-        planxr2c = NULL;
+        planxr2c = nullptr;
     }
     if (planxc2r)
     {
         fftw_destroy_plan(planxc2r);
-        planxc2r = NULL;
+        planxc2r = nullptr;
     }
     if (planyr2c)
     {
         fftw_destroy_plan(planyr2c);
-        planyr2c = NULL;
+        planyr2c = nullptr;
     }
     if (planyc2r)
     {
         fftw_destroy_plan(planyc2r);
-        planyc2r = NULL;
+        planyc2r = nullptr;
     }
 
     // fftw_destroy_plan(this->plan3dforward);
