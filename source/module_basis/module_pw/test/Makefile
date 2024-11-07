@@ -2,7 +2,7 @@
 # Please set
 # e.g. make CXX=mpiicpc or make CXX=icpc
 #======================================================================
-CXX = mpiicpc
+CXX = mpiicpx
 # mpiicpc:   compile intel parallel version
 # icpc:      compile intel sequential version
 # mpicxx:    compile gnu parallel version
@@ -25,7 +25,7 @@ GTEST_DIR = /home/qianrui/gnucompile/g_gtest
 # Compiler information 
 #==========================
 HONG = -D__NORMAL
-INCLUDES = -I. -I../../../
+INCLUDES = -I. -I../../../ -I../../../module_base/module_container
 LIBS = 
 OPTS = -Ofast -march=native -std=c++11 -m64  ${INCLUDES}
 OBJ_DIR = obj
@@ -94,7 +94,7 @@ endif
 ##==========================
 ## GTEST 
 ##==========================
-GTESTOPTS = -I${GTEST_DIR}/include -L${GTEST_DIR}/lib -lgtest -lpthread
+GTESTOPTS = -I/usr/local/gtest/include -L/home/ubuntu/desktop/github/googletest/lib -lgtest -lpthread
 
 
 
@@ -103,6 +103,8 @@ GTESTOPTS = -I${GTEST_DIR}/include -L${GTEST_DIR}/lib -lgtest -lpthread
 #==========================
 VPATH=../../../module_base\
 ../../../module_base/module_device\
+../../../module_base/module_container/ATen/core\
+../../../module_base/module_container/ATen\
 :../
 
 MATH_OBJS0=matrix.o\
@@ -123,7 +125,8 @@ pw_basis_sup.o\
 pw_transform_k.o\
 memory.o\
 memory_op.o\
-depend_mock.o
+depend_mock.o\
+tensor.o\
 
 OTHER_OBJS0=
 

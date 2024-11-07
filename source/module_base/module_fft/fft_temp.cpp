@@ -9,6 +9,11 @@
 // #include "fft_rcom.h"
 // #endif
 
+template<typename FFT_BASE, typename... Args>
+std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
+{
+    return std::unique_ptr<FFT_BASE>(new FFT_BASE(std::forward<Args>(args)...));
+}
 // #include "fft_gpu.h"
 FFT_TEMP::FFT_TEMP()
 {
@@ -21,8 +26,8 @@ FFT_TEMP::FFT_TEMP(std::string device_in,std::string precision_in)
     this->precision = precision_in;
     if (device=="cpu")
     {
-        fft_float = new FFT_CPU<float>();
-        fft_double = new FFT_CPU<double>();
+        fft_float = make_unique<FFT_CPU<float>>();
+        fft_double = make_unique<FFT_CPU<double>>();
     }
     // else if (device=="gpu")
     // {        
@@ -62,17 +67,29 @@ void FFT_TEMP::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in
 {
     if (device=="cpu")
     {
-        fft_float = new FFT_CPU<float>();
-        fft_double = new FFT_CPU<double>();
+        fft_float = make_unique<FFT_CPU<float>>();
+        fft_double = make_unique<FFT_CPU<double>>();
+        // fft_double = new FFT_CPU<double>();
+        #ifndef __ENABLE_FLOAT_FFTW
+            float_define = false;
+        #endif
     }
-
+    if (device=="gpu")
+    {
+        // #if defined(__ROCM)
+        //     fft_float = new FFT_RCOM<float>();
+        //     fft_double = new FFT_RCOM<double>();
+        // #elif defined(__CUDA)
+        //     fft_float = make_unique<FFT_CUDA<float>>();
+        //     fft_double = make_unique<FFT_CUDA<double>>();
+        // #endif
+    }
     if (this->precision=="single")
     {
-        float_flag = true;
-        #ifdef __ENABLE_FLOAT_FFTW
-        float_define = true;
+        #ifndef __ENABLE_FLOAT_FFTW
+        float_define = false;
         #endif
-        float_flag = float_define & float_flag;
+        float_flag = float_flag;
         double_flag = true;
         
         
@@ -132,18 +149,18 @@ void FFT_TEMP::clear()
     {
         fft_double->clear();
     }
-    if (fft_float!=nullptr)
-    {
-        delete fft_float;
-        fft_float=nullptr;
-        float_flag = false;
-    }
-    if (fft_double!=nullptr)
-    {
-        delete fft_double;
-        fft_double=nullptr;
-        double_flag = false;
-    }
+    // if (fft_float!=nullptr)
+    // {
+    //     delete fft_float;
+    //     fft_float=nullptr;
+    //     float_flag = false;
+    // }
+    // if (fft_double!=nullptr)
+    // {
+    //     delete fft_double;
+    //     fft_double=nullptr;
+    //     double_flag = false;
+    // }
 }
 // access the real space data
 template <>

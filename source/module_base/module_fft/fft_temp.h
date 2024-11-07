@@ -1,4 +1,5 @@
 #include "fft_base.h"
+#include <memory>
 // #include "module_psi/psi.h"
 #ifndef FFT_TEMP_H
 #define FFT_TEMP_H
@@ -57,8 +58,9 @@ class FFT_TEMP
         bool float_flag=false;
         bool float_define=false;
         bool double_flag=false;
-        FFT_BASE<float>* fft_float=nullptr;
-        FFT_BASE<double>* fft_double=nullptr;
+        // FFT_BASE<float>* fft_float=nullptr; // Remove the qualified name and use a raw pointer instead
+        std::shared_ptr<FFT_BASE<float>> fft_float=nullptr;
+        std::shared_ptr<FFT_BASE<double>> fft_double=nullptr;
         
         std::string device = "cpu";
         std::string precision = "double";
