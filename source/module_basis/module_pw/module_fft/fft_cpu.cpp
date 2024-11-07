@@ -23,6 +23,46 @@ FFT_CPU<float>::~FFT_CPU()
 {
 }
 template <>
+FFT_CPU<float>::FFT_CPU(const int fft_mode_in)
+{
+    this->fft_mode = fft_mode_in;
+}
+template <>
+FFT_CPU<double>::FFT_CPU(const int fft_mode_in)
+{
+    this->fft_mode = fft_mode_in;
+}
+
+template <>
+void FFT_CPU<double>::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
+				 int nproc_in, bool gamma_only_in, bool xprime_in, bool mpifft_in)
+{
+    this->gamma_only = gamma_only_in;
+    this->xprime = xprime_in;
+    this->fftnx = this->nx = nx_in;
+    this->fftny = this->ny = ny_in;
+    if (this->gamma_only)
+    {
+        if (xprime) {
+            this->fftnx = int(nx / 2) + 1;
+        } else {
+            this->fftny = int(ny / 2) + 1;
+        }
+    }
+    this->nz = nz_in;
+    this->ns = ns_in;
+    this->lixy = lixy_in;
+    this->rixy = rixy_in;
+    this->nplane = nplane_in;
+    this->nproc = nproc_in;
+    this->mpifft = mpifft_in;
+    this->nxy = this->nx * this->ny;
+    this->fftnxy = this->fftnx * this->fftny;
+    const int nrxx = this->nxy * this->nplane;
+    const int nsz = this->nz * this->ns;
+    this->maxgrids = (nsz > nrxx) ? nsz : nrxx;
+}
+template <>
 void FFT_CPU<double>::setupFFT()
 {
     
@@ -44,8 +84,8 @@ void FFT_CPU<double>::setupFFT()
     default:
         break;
     }
-    if (!this->mpifft)
-    {
+    // if (!this->mpifft)
+    // {
         z_auxg = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
         z_auxr = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
         d_rspace = (double*)z_auxg;
@@ -109,22 +149,8 @@ void FFT_CPU<double>::setupFFT()
                                                     1, (fftw_complex*)z_auxr, embed, this->nplane, 1, FFTW_BACKWARD, flag);
             }
         }
-    }
-#if defined(__FFTW3_MPI) && defined(__MPI)
-    else
-    {
-        // this->initplan_mpi();
-        // if (this->precision == "single") {
-        //     this->initplanf_mpi();
-        // }
-    }
-#endif
+    // }
     return;
-}
-template <>
-void FFT_CPU<double>::initfftmode(int fft_mode_in)
-{
-    this->fft_mode = fft_mode_in;
 }
 
 template <>

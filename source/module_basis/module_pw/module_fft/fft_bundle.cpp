@@ -67,14 +67,23 @@ void FFT_Bundle::setfft(std::string device_in,std::string precision_in)
 void FFT_Bundle::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
                      int nproc_in, bool gamma_only_in, bool xprime_in , bool mpifft_in)
 {
+    if (this->precision=="single")
+    {
+        #ifndef __ENABLE_FLOAT_FFTW
+        float_define = false;
+        #endif
+        float_flag = float_define;
+        double_flag = true;
+    }
+    if (this->precision=="double")
+    {
+        double_flag = true;
+    }
+
     if (device=="cpu")
     {
-        fft_float = make_unique<FFT_CPU<float>>();
-        fft_double = make_unique<FFT_CPU<double>>();
-        // fft_double = new FFT_CPU<double>();
-        #ifndef __ENABLE_FLOAT_FFTW
-            float_define = false;
-        #endif
+        fft_float = make_unique<FFT_CPU<float>>(this->fft_mode);
+        fft_double = make_unique<FFT_CPU<double>>(this->fft_mode);
     }
     if (device=="gpu")
     {
@@ -86,29 +95,12 @@ void FFT_Bundle::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_
         //     fft_double = make_unique<FFT_CUDA<double>>();
         // #endif
     }
-    if (this->precision=="single")
+    if (float_flag)
     {
-        #ifndef __ENABLE_FLOAT_FFTW
-        float_define = false;
-        #endif
-        float_flag = float_flag;
-        double_flag = true;
-        
-        
-    }
-    else if (this->precision=="double")
-    {
-        double_flag = true;
-    }
-
-    if (float_flag && float_define)
-    {
-        fft_float->initfftmode(this->fft_mode);
         fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
     }
     if (double_flag)
     {
-        fft_double->initfftmode(this->fft_mode);
         fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
     }
 }

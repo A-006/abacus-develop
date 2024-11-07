@@ -18,6 +18,7 @@ list(APPEND objects
     module_fft/fft_base.cpp
     module_fft/fft_bundle.cpp
     module_fft/fft_cpu.cpp
+    ${FFT_SRC}
 )
 
 add_library(
