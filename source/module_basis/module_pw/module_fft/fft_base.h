@@ -3,6 +3,8 @@
 #include "fftw3.h"
 #ifndef FFT_BASE_H
 #define FFT_BASE_H
+namespace ModulePW
+{
 template <typename FPTYPE>
 class FFT_BASE
 {
@@ -77,4 +79,5 @@ public:
     void set_precision(std::string precision_);
 
 };
+}
 #endif // FFT_BASE_H

@@ -56,6 +56,12 @@ ModulePW::FFT::FFT()
 ModulePW::FFT::~FFT()
 {
 }
+ModulePW::FFT_TEMP::FFT_TEMP()
+{
+}
+ModulePW::FFT_TEMP::~FFT_TEMP()
+{
+}
 void ModulePW::PW_Basis::initgrids(double, ModuleBase::Matrix3, double)
 {
 }

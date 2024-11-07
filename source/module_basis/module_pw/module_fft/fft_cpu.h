@@ -7,7 +7,8 @@
 // #endif
 #ifndef FFT_CPU_H
 #define FFT_CPU_H
-
+namespace ModulePW
+{
 template <typename FPTYPE>
 class FFT_CPU : public FFT_BASE<FPTYPE>
 {
@@ -80,4 +81,5 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
         float* s_rspace = nullptr;  // real number space for r, [nplane * nx *ny]
         double* d_rspace = nullptr; // real number space for r, [nplane * nx *ny]
 };
+}
 #endif // FFT_CPU_H

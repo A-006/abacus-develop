@@ -4,7 +4,8 @@
 #include <fftw3-mpi.h>
 //#include "fftw3-mpi_mkl.h"
 #endif
-
+namespace ModulePW
+{
 template <>
 FFT_CPU<double>::FFT_CPU()
 {   
@@ -303,3 +304,4 @@ template FFT_CPU<float>::FFT_CPU();
 template FFT_CPU<float>::~FFT_CPU();
 template FFT_CPU<double>::FFT_CPU();
 template FFT_CPU<double>::~FFT_CPU();
+}

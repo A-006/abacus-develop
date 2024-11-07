@@ -6,11 +6,6 @@ list (APPEND LIBM_SRC
   libm/sincos.cpp
 )
 endif()
-if (ENABLE_FLOAT_FFTW)
-  list (APPEND FFT_SRC
-    module_fft/fft_cpu_float.cpp
-  )
-endif()
 add_library(
     base
     OBJECT
@@ -62,11 +57,7 @@ add_library(
     module_mixing/plain_mixing.cpp
     module_mixing/pulay_mixing.cpp
     module_mixing/broyden_mixing.cpp
-    module_fft/fft_base.cpp
-    module_fft/fft_temp.cpp
-    module_fft/fft_cpu.cpp
     ${LIBM_SRC}
-    ${FFT_SRC}
 )
 
 add_subdirectory(module_container)

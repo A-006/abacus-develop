@@ -4,7 +4,7 @@ pseudo_dir      ../../../tests/PP_ORB
 symmetry        1	
 #Parameters  (Accuracy)
 basis_type      pw
-ecutwfc         60 
+ecutwfc         20 
 scf_thr         1e-7
 scf_nmax        100
 device          cpu

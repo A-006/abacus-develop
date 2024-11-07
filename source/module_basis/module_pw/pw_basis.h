@@ -6,7 +6,7 @@
 #include "module_base/vector3.h"
 #include <complex>
 #include "fft.h"
-#include "module_base/module_fft/fft_temp.h"
+#include "module_fft/fft_temp.h"
 #include <cstring>
 #ifdef __MPI
 #include "mpi.h"

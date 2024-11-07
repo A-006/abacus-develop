@@ -4,7 +4,8 @@ namespace ModulePW {
 
 PW_Basis::PW_Basis(){};
 PW_Basis::~PW_Basis(){};
-
+FFT_TEMP::FFT_TEMP(){};
+FFT_TEMP::~FFT_TEMP(){};
 void PW_Basis::initgrids(
     const double lat0_in, // unit length (unit in bohr)
     const ModuleBase::Matrix3

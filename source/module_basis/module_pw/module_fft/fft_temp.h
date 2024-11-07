@@ -3,6 +3,8 @@
 // #include "module_psi/psi.h"
 #ifndef FFT_TEMP_H
 #define FFT_TEMP_H
+namespace ModulePW
+{
 class FFT_TEMP
 {
     public:
@@ -65,5 +67,6 @@ class FFT_TEMP
         std::string device = "cpu";
         std::string precision = "double";
 };   
-
+} // namespace ModulePW
 #endif // FFT_H
+

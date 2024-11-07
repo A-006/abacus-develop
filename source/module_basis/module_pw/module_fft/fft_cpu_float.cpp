@@ -4,7 +4,8 @@
 // #if defined(__FFTW3_MPI) && defined(__MPI)
 // #include "fftw3f-mpi.h"
 // //#include "fftw3-mpi_mkl.h"
-
+namespace ModulePW
+{
 template <>
 void FFT_CPU<float>::initfftmode(int fft_mode_in)
 {
@@ -292,4 +293,5 @@ void FFT_CPU<float>::fftxyc2r(std::complex<float>* in, float* out) const
 
         fftwf_execute_dft_c2r(this->planfyc2r, (fftwf_complex*)in, out);
     }
+}
 }

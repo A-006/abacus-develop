@@ -14,6 +14,8 @@ std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
 {
     return std::unique_ptr<FFT_BASE>(new FFT_BASE(std::forward<Args>(args)...));
 }
+namespace ModulePW
+{
 // #include "fft_gpu.h"
 FFT_TEMP::FFT_TEMP()
 {
@@ -290,4 +292,5 @@ template <>
 void  FFT_TEMP::fft3D_backward(const base_device::DEVICE_GPU* ctx, std::complex<double>* in, std::complex<double>* out) const
 {
     fft_double->fft3D_backward(in, out);
+}
 }
