@@ -5,12 +5,12 @@
 #define FFT_TEMP_H
 namespace ModulePW
 {
-class FFT_TEMP
+class FFT_Bundle
 {
     public:
-        FFT_TEMP();
-        FFT_TEMP(std::string device_in,std::string precision_in);
-        ~FFT_TEMP();
+        FFT_Bundle();
+        FFT_Bundle(std::string device_in,std::string precision_in);
+        ~FFT_Bundle();
 
         void setfft(std::string device_in,std::string precision_in);
         void initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
