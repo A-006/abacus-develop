@@ -60,6 +60,8 @@ add_library(
     ${LIBM_SRC}
 )
 
+target_link_libraries(base PUBLIC container)
+
 add_subdirectory(module_container)
 
 if(ENABLE_COVERAGE)
