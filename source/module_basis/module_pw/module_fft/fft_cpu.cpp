@@ -1,9 +1,5 @@
 #include "fft_cpu.h"
 #include "fftw3.h"
-#if defined(__FFTW3_MPI) && defined(__MPI)
-#include <fftw3-mpi.h>
-//#include "fftw3-mpi_mkl.h"
-#endif
 namespace ModulePW
 {
 template <>
@@ -33,9 +29,17 @@ FFT_CPU<double>::FFT_CPU(const int fft_mode_in)
     this->fft_mode = fft_mode_in;
 }
 
-template <>
-void FFT_CPU<double>::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
-				 int nproc_in, bool gamma_only_in, bool xprime_in, bool mpifft_in)
+template <typename FPTYPE>
+void FFT_CPU<FPTYPE>::initfft(int nx_in, 
+                              int ny_in, 
+                              int nz_in, 
+                              int lixy_in, 
+                              int rixy_in, 
+                              int ns_in, 
+                              int nplane_in, 
+				              int nproc_in, 
+                              bool gamma_only_in, 
+                              bool xprime_in)
 {
     this->gamma_only = gamma_only_in;
     this->xprime = xprime_in;
@@ -44,9 +48,9 @@ void FFT_CPU<double>::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int 
     if (this->gamma_only)
     {
         if (xprime) {
-            this->fftnx = int(nx / 2) + 1;
+            this->fftnx = int(this->nx / 2) + 1;
         } else {
-            this->fftny = int(ny / 2) + 1;
+            this->fftny = int(this->ny / 2) + 1;
         }
     }
     this->nz = nz_in;
@@ -55,7 +59,6 @@ void FFT_CPU<double>::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int 
     this->rixy = rixy_in;
     this->nplane = nplane_in;
     this->nproc = nproc_in;
-    this->mpifft = mpifft_in;
     this->nxy = this->nx * this->ny;
     this->fftnxy = this->fftnx * this->fftny;
     const int nrxx = this->nxy * this->nplane;

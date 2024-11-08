@@ -16,7 +16,6 @@ std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
 }
 namespace ModulePW
 {
-// #include "fft_gpu.h"
 FFT_Bundle::FFT_Bundle()
 {
 }
@@ -26,11 +25,6 @@ FFT_Bundle::FFT_Bundle(std::string device_in,std::string precision_in)
     assert(precision_in=="single" || precision_in=="double" || precision_in=="mixing");
     this->device = device_in;
     this->precision = precision_in;
-    // if (device=="cpu")
-    // {
-    //     fft_float = make_unique<FFT_CPU<float>>();
-    //     fft_double = make_unique<FFT_CPU<double>>();
-    // }
 }
 
 FFT_Bundle::~FFT_Bundle()
@@ -54,8 +48,17 @@ void FFT_Bundle::setfft(std::string device_in,std::string precision_in)
     this->precision = precision_in;
 
 }
-void FFT_Bundle::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int ns_in, int nplane_in, 
-                     int nproc_in, bool gamma_only_in, bool xprime_in , bool mpifft_in)
+void FFT_Bundle::initfft(int nx_in, 
+                         int ny_in, 
+                         int nz_in, 
+                         int lixy_in, 
+                         int rixy_in, 
+                         int ns_in, 
+                         int nplane_in, 
+                         int nproc_in, 
+                         bool gamma_only_in, 
+                         bool xprime_in , 
+                         bool mpifft_in)
 {
     if (this->precision=="single")
     {
@@ -74,6 +77,14 @@ void FFT_Bundle::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_
     {
         fft_float = make_unique<FFT_CPU<float>>(this->fft_mode);
         fft_double = make_unique<FFT_CPU<double>>(this->fft_mode);
+        if (float_flag)
+        {
+            fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in);
+        }
+        if (double_flag)
+        {
+            fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in);
+        }
     }
     if (device=="gpu")
     {
@@ -85,14 +96,7 @@ void FFT_Bundle::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_
         //     fft_double = make_unique<FFT_CUDA<double>>();
         // #endif
     }
-    if (float_flag)
-    {
-        fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
-    }
-    if (double_flag)
-    {
-        fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in,mpifft_in);
-    }
+
 }
 void FFT_Bundle::initfftmode(int fft_mode_in)
 {
