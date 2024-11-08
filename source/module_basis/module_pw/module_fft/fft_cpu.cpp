@@ -84,8 +84,6 @@ void FFT_CPU<double>::setupFFT()
     default:
         break;
     }
-    // if (!this->mpifft)
-    // {
         z_auxg = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
         z_auxr = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
         d_rspace = (double*)z_auxg;
@@ -149,7 +147,6 @@ void FFT_CPU<double>::setupFFT()
                                                     1, (fftw_complex*)z_auxr, embed, this->nplane, 1, FFTW_BACKWARD, flag);
             }
         }
-    // }
     return;
 }
 

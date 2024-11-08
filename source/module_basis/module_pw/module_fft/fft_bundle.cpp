@@ -26,20 +26,10 @@ FFT_Bundle::FFT_Bundle(std::string device_in,std::string precision_in)
     assert(precision_in=="single" || precision_in=="double" || precision_in=="mixing");
     this->device = device_in;
     this->precision = precision_in;
-    if (device=="cpu")
-    {
-        fft_float = make_unique<FFT_CPU<float>>();
-        fft_double = make_unique<FFT_CPU<double>>();
-    }
-    // else if (device=="gpu")
-    // {        
-    //     #if defined(__ROCM)
-    //         fft_float = new FFT_RCOM<float>();
-    //         fft_double = new FFT_RCOM<double>();
-    //     #elif defined(__CUDA)
-    //         fft_float = new FFT_CUDA<float>();
-    //         fft_double = new FFT_CUDA<double>();
-    //     #endif
+    // if (device=="cpu")
+    // {
+    //     fft_float = make_unique<FFT_CPU<float>>();
+    //     fft_double = make_unique<FFT_CPU<double>>();
     // }
 }
 
@@ -143,18 +133,6 @@ void FFT_Bundle::clear()
     {
         fft_double->clear();
     }
-    // if (fft_float!=nullptr)
-    // {
-    //     delete fft_float;
-    //     fft_float=nullptr;
-    //     float_flag = false;
-    // }
-    // if (fft_double!=nullptr)
-    // {
-    //     delete fft_double;
-    //     fft_double=nullptr;
-    //     double_flag = false;
-    // }
 }
 // access the real space data
 template <>

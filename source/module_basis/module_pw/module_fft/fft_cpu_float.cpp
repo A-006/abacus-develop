@@ -1,9 +1,5 @@
 #include "fft_cpu.h"
 
-// #include "fftw3f.h"
-// #if defined(__FFTW3_MPI) && defined(__MPI)
-// #include "fftw3f-mpi.h"
-// //#include "fftw3-mpi_mkl.h"
 namespace ModulePW
 {
 template <>
@@ -56,8 +52,8 @@ void FFT_CPU<float>::setupFFT()
     default:
         break;
     }
-    if (!this->mpifft)
-    {
+    // if (!this->mpifft)
+    // {
         c_auxg = (std::complex<float>*)fftwf_malloc(sizeof(fftwf_complex) * this->maxgrids); 
         c_auxr = (std::complex<float>*)fftwf_malloc(sizeof(fftwf_complex) * this->maxgrids);
         s_rspace = (float*)c_auxg;
@@ -131,16 +127,6 @@ void FFT_CPU<float>::setupFFT()
                                         (fftwf_complex*)c_auxr, embed, this->nplane, 1, FFTW_BACKWARD, flag);
             }
         }
-        }
-    #if defined(__FFTW3_MPI) && defined(__MPI)
-        else
-        {
-            // this->initplan_mpi();
-            // if (this->precision == "single") {
-            //     this->initplanf_mpi();
-            // }
-        }
-    #endif
     return;
 }
 
@@ -308,14 +294,12 @@ void FFT_CPU<float>::fftxyc2r(std::complex<float>* in, float* out) const
     }
     else
     {
-        fftwf_execute_dft(this->planfxfor1, (fftwf_complex*)in, (fftwf_complex*)in);
+        fftwf_execute_dft(this->planfxbac1, (fftwf_complex*)in, (fftwf_complex*)in);
 
         for (int i = 0; i < this->nx; ++i)
         {
-            fftwf_execute_dft(this->planfybac, (fftwf_complex*)&in[i * npy], (fftwf_complex*)&in[i * npy]);
+            fftwf_execute_dft_c2r(this->planfyc2r, (fftwf_complex*)&in[i * npy], &out[i * npy]);
         }
-
-        fftwf_execute_dft_c2r(this->planfyc2r, (fftwf_complex*)in, out);
     }
 }
 }
