@@ -94,7 +94,7 @@ endif
 ##==========================
 ## GTEST 
 ##==========================
-GTESTOPTS = -I/usr/local/gtest/include -L/home/ubuntu/desktop/github/googletest/lib -lgtest -lpthread
+GTESTOPTS = -I${GTEST_DIR}/include -L${GTEST_DIR}/lib -lgtest -lpthread
 
 
 
@@ -105,7 +105,8 @@ VPATH=../../../module_base\
 ../../../module_base/module_device\
 ../../../module_base/module_container/ATen/core\
 ../../../module_base/module_container/ATen\
-:../
+../../../module_parameter\
+../\
 
 MATH_OBJS0=matrix.o\
 matrix3.o\
@@ -126,7 +127,11 @@ pw_transform_k.o\
 memory.o\
 memory_op.o\
 depend_mock.o\
-tensor.o\
+parameter.o\
+fft_base.o\
+fft_bundle.o\
+fft_cpu.o\
+
 
 OTHER_OBJS0=
 
