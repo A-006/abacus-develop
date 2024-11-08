@@ -29,13 +29,13 @@ void PW_Basis::real2recip(const std::complex<FPTYPE>* in,
 #endif
     for(int ir = 0 ; ir < this->nrxx ; ++ir)
     {
-        this->ft1.get_auxr_data<FPTYPE>()[ir] = in[ir];
+        this->fft_bundle.get_auxr_data<FPTYPE>()[ir] = in[ir];
     }
-    this->ft1.fftxyfor(ft1.get_auxr_data<FPTYPE>(),ft1.get_auxr_data<FPTYPE>());
+    this->fft_bundle.fftxyfor(fft_bundle.get_auxr_data<FPTYPE>(),fft_bundle.get_auxr_data<FPTYPE>());
 
-    this->gatherp_scatters(this->ft1.get_auxr_data<FPTYPE>(), this->ft1.get_auxg_data<FPTYPE>());
+    this->gatherp_scatters(this->fft_bundle.get_auxr_data<FPTYPE>(), this->fft_bundle.get_auxg_data<FPTYPE>());
     
-    this->ft1.fftzfor(ft1.get_auxg_data<FPTYPE>(),ft1.get_auxg_data<FPTYPE>());
+    this->fft_bundle.fftzfor(fft_bundle.get_auxg_data<FPTYPE>(),fft_bundle.get_auxg_data<FPTYPE>());
 
     if(add)
     {
@@ -45,7 +45,7 @@ void PW_Basis::real2recip(const std::complex<FPTYPE>* in,
 #endif
         for(int ig = 0 ; ig < this->npw ; ++ig)
         {
-            out[ig] += tmpfac * this->ft1.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
+            out[ig] += tmpfac * this->fft_bundle.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
         }
     }
     else
@@ -56,7 +56,7 @@ void PW_Basis::real2recip(const std::complex<FPTYPE>* in,
 #endif
         for(int ig = 0 ; ig < this->npw ; ++ig)
         {
-            out[ig] = tmpfac * this->ft1.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
+            out[ig] = tmpfac * this->fft_bundle.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
         }
     }
     ModuleBase::timer::tick(this->classname, "real2recip");
@@ -83,11 +83,11 @@ void PW_Basis::real2recip(const FPTYPE* in, std::complex<FPTYPE>* out, const boo
         {
             for(int ipy = 0 ; ipy < npy ; ++ipy)
             {
-                this->ft1.get_rspace_data<FPTYPE>()[ix*npy + ipy] = in[ix*npy + ipy];
+                this->fft_bundle.get_rspace_data<FPTYPE>()[ix*npy + ipy] = in[ix*npy + ipy];
             }
         }
 
-        this->ft1.fftxyr2c(ft1.get_rspace_data<FPTYPE>(),ft1.get_auxr_data<FPTYPE>());
+        this->fft_bundle.fftxyr2c(fft_bundle.get_rspace_data<FPTYPE>(),fft_bundle.get_auxr_data<FPTYPE>());
     }
     else
     {
@@ -96,13 +96,13 @@ void PW_Basis::real2recip(const FPTYPE* in, std::complex<FPTYPE>* out, const boo
 #endif
         for(int ir = 0 ; ir < this->nrxx ; ++ir)
         {
-            this->ft1.get_auxr_data<FPTYPE>()[ir] = std::complex<FPTYPE>(in[ir],0);
+            this->fft_bundle.get_auxr_data<FPTYPE>()[ir] = std::complex<FPTYPE>(in[ir],0);
         }
-        this->ft1.fftxyfor(ft1.get_auxr_data<FPTYPE>(),ft1.get_auxr_data<FPTYPE>());
+        this->fft_bundle.fftxyfor(fft_bundle.get_auxr_data<FPTYPE>(),fft_bundle.get_auxr_data<FPTYPE>());
     }
-    this->gatherp_scatters(this->ft1.get_auxr_data<FPTYPE>(), this->ft1.get_auxg_data<FPTYPE>());
+    this->gatherp_scatters(this->fft_bundle.get_auxr_data<FPTYPE>(), this->fft_bundle.get_auxg_data<FPTYPE>());
     
-    this->ft1.fftzfor(ft1.get_auxg_data<FPTYPE>(),ft1.get_auxg_data<FPTYPE>());
+    this->fft_bundle.fftzfor(fft_bundle.get_auxg_data<FPTYPE>(),fft_bundle.get_auxg_data<FPTYPE>());
 
     if(add)
     {
@@ -112,7 +112,7 @@ void PW_Basis::real2recip(const FPTYPE* in, std::complex<FPTYPE>* out, const boo
 #endif
         for(int ig = 0 ; ig < this->npw ; ++ig)
         {
-            out[ig] += tmpfac * this->ft1.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
+            out[ig] += tmpfac * this->fft_bundle.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
         }
     }
     else
@@ -123,7 +123,7 @@ void PW_Basis::real2recip(const FPTYPE* in, std::complex<FPTYPE>* out, const boo
 #endif
         for(int ig = 0 ; ig < this->npw ; ++ig)
         {
-            out[ig] = tmpfac * this->ft1.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
+            out[ig] = tmpfac * this->fft_bundle.get_auxg_data<FPTYPE>()[this->ig2isz[ig]];
         }
     }
     ModuleBase::timer::tick(this->classname, "real2recip");
@@ -149,7 +149,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in,
 #endif
     for(int i = 0 ; i < this->nst * this->nz ; ++i)
     {
-        ft1.get_auxg_data<FPTYPE>()[i] = std::complex<FPTYPE>(0, 0);
+        fft_bundle.get_auxg_data<FPTYPE>()[i] = std::complex<FPTYPE>(0, 0);
     }
 
 #ifdef _OPENMP
@@ -157,13 +157,13 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in,
 #endif
     for(int ig = 0 ; ig < this->npw ; ++ig)
     {
-        this->ft1.get_auxg_data<FPTYPE>()[this->ig2isz[ig]] = in[ig];
+        this->fft_bundle.get_auxg_data<FPTYPE>()[this->ig2isz[ig]] = in[ig];
     }
-    this->ft1.fftzbac(ft1.get_auxg_data<FPTYPE>(), ft1.get_auxg_data<FPTYPE>());
+    this->fft_bundle.fftzbac(fft_bundle.get_auxg_data<FPTYPE>(), fft_bundle.get_auxg_data<FPTYPE>());
 
-    this->gathers_scatterp(this->ft1.get_auxg_data<FPTYPE>(),this->ft1.get_auxr_data<FPTYPE>());
+    this->gathers_scatterp(this->fft_bundle.get_auxg_data<FPTYPE>(),this->fft_bundle.get_auxr_data<FPTYPE>());
 
-    this->ft1.fftxybac(ft1.get_auxr_data<FPTYPE>(),ft1.get_auxr_data<FPTYPE>());
+    this->fft_bundle.fftxybac(fft_bundle.get_auxr_data<FPTYPE>(),fft_bundle.get_auxr_data<FPTYPE>());
     
     if(add)
     {
@@ -172,7 +172,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in,
 #endif
         for(int ir = 0 ; ir < this->nrxx ; ++ir)
         {
-            out[ir] += factor * this->ft1.get_auxr_data<FPTYPE>()[ir];
+            out[ir] += factor * this->fft_bundle.get_auxr_data<FPTYPE>()[ir];
         }
     }
     else
@@ -182,7 +182,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in,
 #endif
         for(int ir = 0 ; ir < this->nrxx ; ++ir)
         {
-            out[ir] = this->ft1.get_auxr_data<FPTYPE>()[ir];
+            out[ir] = this->fft_bundle.get_auxr_data<FPTYPE>()[ir];
         }
     }
     ModuleBase::timer::tick(this->classname, "recip2real");
@@ -204,7 +204,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const boo
 #endif
     for(int i = 0 ; i < this->nst * this->nz ; ++i)
     {
-        ft1.get_auxg_data<FPTYPE>()[i] = std::complex<double>(0, 0);
+        fft_bundle.get_auxg_data<FPTYPE>()[i] = std::complex<double>(0, 0);
     }
 
 #ifdef _OPENMP
@@ -212,15 +212,15 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const boo
 #endif
     for(int ig = 0 ; ig < this->npw ; ++ig)
     {
-        this->ft1.get_auxg_data<FPTYPE>()[this->ig2isz[ig]] = in[ig];
+        this->fft_bundle.get_auxg_data<FPTYPE>()[this->ig2isz[ig]] = in[ig];
     }
-    this->ft1.fftzbac(ft1.get_auxg_data<FPTYPE>(), ft1.get_auxg_data<FPTYPE>());
+    this->fft_bundle.fftzbac(fft_bundle.get_auxg_data<FPTYPE>(), fft_bundle.get_auxg_data<FPTYPE>());
 
-    this->gathers_scatterp(this->ft1.get_auxg_data<FPTYPE>(), this->ft1.get_auxr_data<FPTYPE>());
+    this->gathers_scatterp(this->fft_bundle.get_auxg_data<FPTYPE>(), this->fft_bundle.get_auxr_data<FPTYPE>());
 
     if(this->gamma_only)
     {
-        this->ft1.fftxyc2r(ft1.get_auxr_data<FPTYPE>(),ft1.get_rspace_data<FPTYPE>());
+        this->fft_bundle.fftxyc2r(fft_bundle.get_auxr_data<FPTYPE>(),fft_bundle.get_rspace_data<FPTYPE>());
 
         // r2c in place
         const int npy = this->ny * this->nplane;
@@ -234,7 +234,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const boo
             {
                 for(int ipy = 0 ; ipy < npy ; ++ipy)
                 {
-                    out[ix*npy + ipy] += factor * this->ft1.get_rspace_data<FPTYPE>()[ix*npy + ipy];
+                    out[ix*npy + ipy] += factor * this->fft_bundle.get_rspace_data<FPTYPE>()[ix*npy + ipy];
                 }
             }
         }
@@ -247,14 +247,14 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const boo
             {
                 for(int ipy = 0 ; ipy < npy ; ++ipy)
                 {
-                    out[ix*npy + ipy] = this->ft1.get_rspace_data<FPTYPE>()[ix*npy + ipy];
+                    out[ix*npy + ipy] = this->fft_bundle.get_rspace_data<FPTYPE>()[ix*npy + ipy];
                 }
             }
         }
     }
     else
     {
-        this->ft1.fftxybac(ft1.get_auxr_data<FPTYPE>(),ft1.get_auxr_data<FPTYPE>());
+        this->fft_bundle.fftxybac(fft_bundle.get_auxr_data<FPTYPE>(),fft_bundle.get_auxr_data<FPTYPE>());
         if(add)
         {
 #ifdef _OPENMP
@@ -262,7 +262,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const boo
 #endif
             for(int ir = 0 ; ir < this->nrxx ; ++ir)
             {
-                out[ir] += factor * this->ft1.get_auxr_data<FPTYPE>()[ir].real();
+                out[ir] += factor * this->fft_bundle.get_auxr_data<FPTYPE>()[ir].real();
             }
         }
         else
@@ -272,7 +272,7 @@ void PW_Basis::recip2real(const std::complex<FPTYPE>* in, FPTYPE* out, const boo
 #endif
             for(int ir = 0 ; ir < this->nrxx ; ++ir)
             {
-                out[ir] = this->ft1.get_auxr_data<FPTYPE>()[ir].real();
+                out[ir] = this->fft_bundle.get_auxr_data<FPTYPE>()[ir].real();
             }
         }
     }

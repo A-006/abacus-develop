@@ -87,69 +87,69 @@ void FFT_CPU<double>::setupFFT()
     default:
         break;
     }
-        z_auxg = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
-        z_auxr = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
-        d_rspace = (double*)z_auxg;
-        this->planzfor = fftw_plan_many_dft(1, &this->nz, this->ns, (fftw_complex*)z_auxg, &this->nz, 1, this->nz,
-                                        (fftw_complex*)z_auxg, &this->nz, 1, this->nz, FFTW_FORWARD, flag);
+    z_auxg = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
+    z_auxr = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * this->maxgrids);
+    d_rspace = (double*)z_auxg;
+    this->planzfor = fftw_plan_many_dft(1, &this->nz, this->ns, (fftw_complex*)z_auxg, &this->nz, 1, this->nz,
+                                    (fftw_complex*)z_auxg, &this->nz, 1, this->nz, FFTW_FORWARD, flag);
 
-        this->planzbac = fftw_plan_many_dft(1, &this->nz, this->ns, (fftw_complex*)z_auxg, &this->nz, 1, this->nz,
-                                            (fftw_complex*)z_auxg, &this->nz, 1, this->nz, FFTW_BACKWARD, flag);
+    this->planzbac = fftw_plan_many_dft(1, &this->nz, this->ns, (fftw_complex*)z_auxg, &this->nz, 1, this->nz,
+                                        (fftw_complex*)z_auxg, &this->nz, 1, this->nz, FFTW_BACKWARD, flag);
 
-        //---------------------------------------------------------
-        //                              2 D - XY
-        //---------------------------------------------------------
-        // 1D+1D is much faster than 2D FFT!
-        // in-place fft is better for c2c and out-of-place fft is better for c2r
-        int* embed = nullptr;
-        int npy = this->nplane * this->ny;
-        if (this->xprime)
+    //---------------------------------------------------------
+    //                              2 D - XY
+    //---------------------------------------------------------
+    // 1D+1D is much faster than 2D FFT!
+    // in-place fft is better for c2c and out-of-place fft is better for c2r
+    int* embed = nullptr;
+    int npy = this->nplane * this->ny;
+    if (this->xprime)
+    {
+        this->planyfor = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed,this->nplane, 1,
+                                            (fftw_complex*)z_auxr, embed,this->nplane, 1, FFTW_FORWARD, flag);
+        this->planybac = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed,this->nplane, 1,
+                                            (fftw_complex*)z_auxr, embed,this->nplane, 1, FFTW_BACKWARD, flag);
+        if (this->gamma_only)
         {
-            this->planyfor = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed,this->nplane, 1,
-                                                (fftw_complex*)z_auxr, embed,this->nplane, 1, FFTW_FORWARD, flag);
-            this->planybac = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed,this->nplane, 1,
-                                                (fftw_complex*)z_auxr, embed,this->nplane, 1, FFTW_BACKWARD, flag);
-            if (this->gamma_only)
-            {
-                this->planxr2c = fftw_plan_many_dft_r2c(1, &this->nx, npy, d_rspace, embed, npy, 1, (fftw_complex*)z_auxr,
-                                                        embed, npy, 1, flag);
-                this->planxc2r = fftw_plan_many_dft_c2r(1, &this->nx, npy, (fftw_complex*)z_auxr, embed, npy, 1, d_rspace,
-                                                        embed, npy, 1, flag);
-            }
-            else
-            {
-                this->planxfor1 = fftw_plan_many_dft(1, &this->nx, npy, (fftw_complex*)z_auxr, embed, npy, 1,
-                                                    (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
-                this->planxbac1 = fftw_plan_many_dft(1, &this->nx, npy, (fftw_complex*)z_auxr, embed, npy, 1,
-                                                    (fftw_complex*)z_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
-            }
+            this->planxr2c = fftw_plan_many_dft_r2c(1, &this->nx, npy, d_rspace, embed, npy, 1, (fftw_complex*)z_auxr,
+                                                    embed, npy, 1, flag);
+            this->planxc2r = fftw_plan_many_dft_c2r(1, &this->nx, npy, (fftw_complex*)z_auxr, embed, npy, 1, d_rspace,
+                                                    embed, npy, 1, flag);
         }
         else
         {
-            this->planxfor1 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->lixy + 1), (fftw_complex*)z_auxr, embed, npy,
-                                                1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
-            this->planxbac1 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->lixy + 1), (fftw_complex*)z_auxr, embed, npy,
-                                                1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
-            if (this->gamma_only)
-            {
-                this->planyr2c = fftw_plan_many_dft_r2c(1, &this->ny, this->nplane, d_rspace, embed, this->nplane, 1,
-                                                        (fftw_complex*)z_auxr, embed, this->nplane, 1, flag);
-                this->planyc2r = fftw_plan_many_dft_c2r(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed,
-                                                        this->nplane, 1, d_rspace, embed, this->nplane, 1, flag);
-            }
-            else
-            {
-
-                this->planxfor2 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->ny - this->rixy), (fftw_complex*)z_auxr, embed,
-                                                    npy, 1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
-                this->planxbac2 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->ny - this->rixy), (fftw_complex*)z_auxr, embed,
-                                                    npy, 1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
-                this->planyfor = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed, this->nplane,
-                                                    1, (fftw_complex*)z_auxr, embed, this->nplane, 1, FFTW_FORWARD, flag);
-                this->planybac = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed, this->nplane,
-                                                    1, (fftw_complex*)z_auxr, embed, this->nplane, 1, FFTW_BACKWARD, flag);
-            }
+            this->planxfor1 = fftw_plan_many_dft(1, &this->nx, npy, (fftw_complex*)z_auxr, embed, npy, 1,
+                                                (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
+            this->planxbac1 = fftw_plan_many_dft(1, &this->nx, npy, (fftw_complex*)z_auxr, embed, npy, 1,
+                                                (fftw_complex*)z_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
         }
+    }
+    else
+    {
+        this->planxfor1 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->lixy + 1), (fftw_complex*)z_auxr, embed, npy,
+                                            1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
+        this->planxbac1 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->lixy + 1), (fftw_complex*)z_auxr, embed, npy,
+                                            1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
+        if (this->gamma_only)
+        {
+            this->planyr2c = fftw_plan_many_dft_r2c(1, &this->ny, this->nplane, d_rspace, embed, this->nplane, 1,
+                                                    (fftw_complex*)z_auxr, embed, this->nplane, 1, flag);
+            this->planyc2r = fftw_plan_many_dft_c2r(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed,
+                                                    this->nplane, 1, d_rspace, embed, this->nplane, 1, flag);
+        }
+        else
+        {
+
+            this->planxfor2 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->ny - this->rixy), (fftw_complex*)z_auxr, embed,
+                                                npy, 1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
+            this->planxbac2 = fftw_plan_many_dft(1, &this->nx, this->nplane * (this->ny - this->rixy), (fftw_complex*)z_auxr, embed,
+                                                npy, 1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
+            this->planyfor = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed, this->nplane,
+                                                1, (fftw_complex*)z_auxr, embed, this->nplane, 1, FFTW_FORWARD, flag);
+            this->planybac = fftw_plan_many_dft(1, &this->ny, this->nplane, (fftw_complex*)z_auxr, embed, this->nplane,
+                                                1, (fftw_complex*)z_auxr, embed, this->nplane, 1, FFTW_BACKWARD, flag);
+        }
+    }
     return;
 }
 
