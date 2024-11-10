@@ -25,9 +25,9 @@ VPATH=./src_global:\
 ./module_base/module_container/ATen/ops:\
 ./module_base/module_device:\
 ./module_base/module_mixing:\
-./module_base/module_fft:\
 ./module_md:\
 ./module_basis/module_pw:\
+./module_basis/module_pw/module_fft:\
 ./module_esolver:\
 ./module_hsolver:\
 ./module_hsolver/kernels:\
@@ -50,6 +50,7 @@ VPATH=./src_global:\
 ./module_hamilt_pw/hamilt_stodft:\
 ./module_hamilt_pw/hamilt_pwdft/operator_pw:\
 ./module_hamilt_pw/hamilt_pwdft/kernels:\
+./module_hamilt_pw/hamilt_stodft/kernels:\
 ./module_hamilt_lcao/module_hcontainer:\
 ./module_hamilt_lcao/hamilt_lcaodft:\
 ./module_hamilt_lcao/module_tddft:\
@@ -167,9 +168,6 @@ OBJS_BASE=abfs-vector3_order.o\
     broyden_mixing.o\
     memory_op.o\
     device.o\
-    fft_temp.o\
-    fft_base.o\
-    fft_cpu.o\
 
 OBJS_CELL=atom_pseudo.o\
     atom_spec.o\
@@ -233,6 +231,7 @@ OBJS_ELECSTAT_LCAO=elecstate_lcao.o\
       elecstate_lcao_tddft.o\
       elecstate_lcao_cal_tau.o\
       density_matrix.o\
+      density_matrix_io.o\
       cal_dm_psi.o\
 
 OBJS_ESOLVER=esolver.o\
@@ -298,6 +297,7 @@ OBJS_HAMILT=hamilt_pw.o\
     operator_pw.o\
     ekinetic_pw.o\
     ekinetic_op.o\
+    hpsi_norm_op.o\
     veff_pw.o\
     veff_op.o\
     nonlocal_pw.o\
@@ -414,6 +414,9 @@ OBJS_PSI_INITIALIZER=psi_initializer.o\
                      psi_initializer_nao_random.o\
 
 OBJS_PW=fft.o\
+    fft_bundle.o\
+    fft_base.o\
+    fft_cpu.o\
     pw_basis.o\
     pw_basis_k.o\
     pw_basis_sup.o\
@@ -574,8 +577,6 @@ OBJS_LCAO=evolve_elec.o\
       stress_tools.o\
       edm.o\
       pulay_force_stress_center2.o\
-	  fvnl_dbeta_gamma.o\
-	  fvnl_dbeta_k.o\
 	  grid_init.o\
       spar_dh.o\
       spar_exx.o\
