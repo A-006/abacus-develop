@@ -95,11 +95,11 @@ void FFT_Bundle::initfft(int nx_in,
             fft_double = make_unique<FFT_RCOM<double>>;
         #elif defined(__CUDA)
             fft_float = make_unique<FFT_CUDA<float>>();
+            fft_float->initfft(nx_in,ny_in,nz_in);
             fft_double = make_unique<FFT_CUDA<double>>();
+            fft_double->initfft(nx_in,ny_in,nz_in);
         #endif
-        printf("FFT_Bundle::initfft: device is gpu\n");
     }
-    printf("the device is %s\n",device.c_str());
 
 }
 void FFT_Bundle::initfftmode(int fft_mode_in)

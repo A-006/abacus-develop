@@ -9,6 +9,15 @@ template <typename FPTYPE>
 FFT_RCOM<FPTYPE>::~FFT_RCOM()
 {
 }
+template <typename FPTYPE>
+void FFT_RCOM<FPTYPE>::initfft(int nx_in, 
+                               int ny_in, 
+                               int nz_in)
+{
+    this->nx = nx_in;
+    this->ny = ny_in;
+    this->nz = nz_in;
+}
 template <>
 void FFT_RCOM<float>::setupFFT()
 {

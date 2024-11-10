@@ -19,6 +19,10 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
 
         void cleanFFT() override;
 
+        void initfft(int nx_in, 
+                     int ny_in, 
+                     int nz_in) override;
+                     
         std::complex<FPTYPE>* get_auxr_3d_data() const override;
         
         void fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
