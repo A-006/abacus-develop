@@ -75,8 +75,8 @@ std::complex<double>* FFT_CUDA<double>::get_auxr_3d_data() const
 template <>
 void FFT_CUDA<float>::fft3D_forward(std::complex<float>* in, std::complex<float>* out) const
 {
-    CHECK_CUFFT(cufftExecC2C(this->c_handle, reinterpret_cast<cufftComplex*>(in), reinterpret_cast<cufftComplex*>(out),
-                             CUFFT_FORWARD));
+    CHECK_CUFFT(cufftExecC2C(this->c_handle, reinterpret_cast<cufftComplex*>(in), 
+                             reinterpret_cast<cufftComplex*>(out),CUFFT_FORWARD));
 }
 template <>
 void FFT_CUDA<double>::fft3D_forward(std::complex<double>* in, std::complex<double>* out) const

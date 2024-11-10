@@ -88,6 +88,8 @@ void FFT_Bundle::initfft(int nx_in,
     }
     else if (device=="gpu")
     {
+        float_flag=true;
+        double_flag=true;
         #if defined(__ROCM)
             fft_float = make_unique<FFT_RCOM<float>>;
             fft_double = make_unique<FFT_RCOM<double>>;
@@ -95,7 +97,9 @@ void FFT_Bundle::initfft(int nx_in,
             fft_float = make_unique<FFT_CUDA<float>>();
             fft_double = make_unique<FFT_CUDA<double>>();
         #endif
+        printf("FFT_Bundle::initfft: device is gpu\n");
     }
+    printf("the device is %s\n",device.c_str());
 
 }
 void FFT_Bundle::initfftmode(int fft_mode_in)

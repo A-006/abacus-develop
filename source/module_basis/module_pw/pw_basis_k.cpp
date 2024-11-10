@@ -12,7 +12,8 @@ namespace ModulePW
 PW_Basis_K::PW_Basis_K()
 {
     classname="PW_Basis_K";
-    this->fft_bundle.setfft("cpu",this->precision);
+    this->fft_bundle.setfft(this->device,this->precision);
+    printf("PW_Basis_K the device is %s\n",this->device.c_str());
 }
 PW_Basis_K::~PW_Basis_K()
 {
