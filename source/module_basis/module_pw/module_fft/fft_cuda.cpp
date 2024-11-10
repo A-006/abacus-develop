@@ -1,6 +1,8 @@
 #include "fft_cuda.h"
 #include "module_base/module_device/memory_op.h"
 #include "module_hamilt_pw/hamilt_pwdft/global.h"
+namespace ModulePW
+{
 template <typename FPTYPE>
 FFT_CUDA<FPTYPE>::FFT_CUDA()
 {
@@ -95,7 +97,6 @@ void FFT_CUDA<double>::fft3D_backward(std::complex<double>* in, std::complex<dou
     CHECK_CUFFT(cufftExecZ2Z(this->z_handle, reinterpret_cast<cufftDoubleComplex*>(in),
                              reinterpret_cast<cufftDoubleComplex*>(out), CUFFT_INVERSE));
 }
-
-
 template FFT_CUDA<float>::FFT_CUDA();
 template FFT_CUDA<double>::FFT_CUDA();
+}// namespace ModulePW

@@ -4,6 +4,8 @@
 
 #ifndef FFT_CUDA_H
 #define FFT_CUDA_H
+namespace ModulePW
+{
 template <typename FPTYPE>
 class FFT_CUDA : public FFT_BASE<FPTYPE>
 {
@@ -30,4 +32,5 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
         std::complex<double>* z_auxr_3d = nullptr; // fft space
 
 };
+} // namespace ModulePW
 #endif
