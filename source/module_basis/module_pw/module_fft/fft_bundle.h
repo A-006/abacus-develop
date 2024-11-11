@@ -206,8 +206,8 @@ class FFT_Bundle
         bool float_flag=false;
         bool float_define=true;
         bool double_flag=false;
-        std::shared_ptr<FFT_BASE<float>> fft_float=nullptr;
-        std::shared_ptr<FFT_BASE<double>> fft_double=nullptr;
+        std::unique_ptr<FFT_BASE<float>> fft_float=nullptr;
+        std::unique_ptr<FFT_BASE<double>> fft_double=nullptr;
         
         std::string device = "cpu";
         std::string precision = "double";

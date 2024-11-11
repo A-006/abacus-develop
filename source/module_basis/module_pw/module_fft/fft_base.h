@@ -10,8 +10,8 @@ class FFT_BASE
 {
 public:
 
-	FFT_BASE();
-	virtual  ~FFT_BASE(); 
+	FFT_BASE(){};
+	virtual  ~FFT_BASE(){}; 
 	
     /**
      * @brief Initialize the fft parameters As virtual function.
@@ -159,5 +159,9 @@ protected:
     int ny=0;
     int nz=0;
 };
+template FFT_BASE<float>::FFT_BASE();
+template FFT_BASE<double>::FFT_BASE();
+template FFT_BASE<float>::~FFT_BASE();
+template FFT_BASE<double>::~FFT_BASE();
 }
 #endif // FFT_BASE_H

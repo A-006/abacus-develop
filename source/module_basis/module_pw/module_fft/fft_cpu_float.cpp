@@ -30,16 +30,39 @@ void FFT_CPU<float>::setupFFT()
     //                              1 D
     //---------------------------------------------------------
 
-    //               fftw_plan_many_dft(int rank,          const int *n,       int howmany,
+    //               fftw_plan_many_dft(int rank,          
+    //                                  const int *n,       int howmany,
     //					                fftw_complex *in,  const int *inembed, int istride, int idist,
     //					                fftw_complex *out, const int *onembed, int ostride, int odist, int sign, unsigned
     //flags);
 
-    this->planfzfor = fftwf_plan_many_dft(1, &this->nz, this->ns, (fftwf_complex*)c_auxg, &this->nz, 1, this->nz,
-                                        (fftwf_complex*)c_auxg, &this->nz, 1, this->nz, FFTW_FORWARD, flag);
+    this->planfzfor = fftwf_plan_many_dft(1, 
+                                          &this->nz, 
+                                          this->ns, 
+                                          (fftwf_complex*)c_auxg, 
+                                          &this->nz, 
+                                          1, 
+                                          this->nz,
+                                          (fftwf_complex*)c_auxg, 
+                                          &this->nz, 
+                                          1, 
+                                          this->nz, 
+                                          FFTW_FORWARD, 
+                                          flag);
 
-    this->planfzbac = fftwf_plan_many_dft(1, &this->nz, this->ns, (fftwf_complex*)c_auxg, &this->nz, 1, this->nz,
-                                        (fftwf_complex*)c_auxg, &this->nz, 1, this->nz, FFTW_BACKWARD, flag);
+    this->planfzbac = fftwf_plan_many_dft(1, 
+                                          &this->nz, 
+                                          this->ns, 
+                                          (fftwf_complex*)c_auxg, 
+                                          &this->nz, 
+                                          1, 
+                                          this->nz,
+                                          (fftwf_complex*)c_auxg, 
+                                          &this->nz, 
+                                          1, 
+                                          this->nz, 
+                                          FFTW_BACKWARD, 
+                                          flag);
     //---------------------------------------------------------
     //                              2 D
     //---------------------------------------------------------
@@ -48,52 +71,196 @@ void FFT_CPU<float>::setupFFT()
     int npy = this->nplane * this->ny;
     if (this->xprime)
     {
-        this->planfyfor = fftwf_plan_many_dft(1, &this->ny, this->nplane, (fftwf_complex*)c_auxr, embed, nplane, 1,
-                                            (fftwf_complex*)c_auxr, embed, nplane, 1, FFTW_FORWARD, flag);
-        this->planfybac = fftwf_plan_many_dft(1, &this->ny, this->nplane, (fftwf_complex*)c_auxr, embed, nplane, 1,
-                                            (fftwf_complex*)c_auxr, embed, nplane, 1, FFTW_BACKWARD, flag);
+        this->planfyfor = fftwf_plan_many_dft(1, 
+                                              &this->ny, 
+                                              this->nplane, 
+                                              (fftwf_complex*)c_auxr, 
+                                              embed, 
+                                              nplane, 
+                                              1,
+                                              (fftwf_complex*)c_auxr, 
+                                              embed, 
+                                              nplane, 
+                                              1, 
+                                              FFTW_FORWARD, 
+                                              flag);
+        this->planfybac = fftwf_plan_many_dft(1, 
+                                              &this->ny, 
+                                              this->nplane, 
+                                              (fftwf_complex*)c_auxr, 
+                                              embed, 
+                                              nplane, 
+                                              1,
+                                              (fftwf_complex*)c_auxr, 
+                                              embed, nplane, 
+                                              1, 
+                                              FFTW_BACKWARD, 
+                                              flag);
         if (this->gamma_only)
         {
-            this->planfxr2c = fftwf_plan_many_dft_r2c(1, &this->nx, npy, s_rspace, embed, npy, 1,
-                                                    (fftwf_complex*)c_auxr, embed, npy, 1, flag);
-            this->planfxc2r = fftwf_plan_many_dft_c2r(1, &this->nx, npy, (fftwf_complex*)c_auxr, embed, npy, 1,
-                                                    s_rspace, embed, npy, 1, flag);
+            this->planfxr2c = fftwf_plan_many_dft_r2c(1, 
+                                                      &this->nx, 
+                                                      npy, 
+                                                      s_rspace, 
+                                                      embed, 
+                                                      npy, 
+                                                      1,
+                                                      (fftwf_complex*)c_auxr, 
+                                                      embed, npy, 
+                                                      1, 
+                                                      flag);
+            this->planfxc2r = fftwf_plan_many_dft_c2r(1, 
+                                                      &this->nx, 
+                                                      npy, 
+                                                      (fftwf_complex*)c_auxr, 
+                                                      embed, 
+                                                      npy,  
+                                                      1,
+                                                      s_rspace, 
+                                                      embed, 
+                                                      npy, 
+                                                      1, 
+                                                      flag);
         }
         else
         {
-            this->planfxfor1 = fftwf_plan_many_dft(1, &this->nx, npy, (fftwf_complex*)c_auxr, embed, npy, 1,
-                                                (fftwf_complex*)c_auxr, embed, npy, 1, FFTW_FORWARD, flag);
-            this->planfxbac1 = fftwf_plan_many_dft(1, &this->nx, npy, (fftwf_complex*)c_auxr, embed, npy, 1,
-                                                (fftwf_complex*)c_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
+            this->planfxfor1 = fftwf_plan_many_dft(1, 
+                                                   &this->nx, 
+                                                   npy, 
+                                                   (fftwf_complex*)c_auxr, 
+                                                   embed, 
+                                                   npy, 
+                                                   1,
+                                                   (fftwf_complex*)c_auxr, 
+                                                   embed, 
+                                                   npy, 
+                                                   1, 
+                                                   FFTW_FORWARD, 
+                                                   flag);
+            this->planfxbac1 = fftwf_plan_many_dft(1, 
+                                                   &this->nx, 
+                                                   npy, 
+                                                   (fftwf_complex*)c_auxr, 
+                                                   embed, 
+                                                   npy, 
+                                                   1,
+                                                   (fftwf_complex*)c_auxr, 
+                                                   embed, 
+                                                   npy, 
+                                                   1, 
+                                                   FFTW_BACKWARD, 
+                                                   flag);
         }
     }
     else
     {
-        this->planfxfor1 = fftwf_plan_many_dft(1, &this->nx, this->nplane * (lixy + 1), (fftwf_complex*)c_auxr, embed,
-                                            npy, 1, (fftwf_complex*)c_auxr, embed, npy, 1, FFTW_FORWARD, flag);
-        this->planfxbac1 = fftwf_plan_many_dft(1, &this->nx, this->nplane * (lixy + 1), (fftwf_complex*)c_auxr, embed,
-                                            npy, 1, (fftwf_complex*)c_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
+        this->planfxfor1 = fftwf_plan_many_dft(1, 
+                                               &this->nx, 
+                                               this->nplane * (lixy + 1), 
+                                               (fftwf_complex*)c_auxr, 
+                                               embed,
+                                               npy, 
+                                               1, 
+                                               (fftwf_complex*)c_auxr, 
+                                               embed, 
+                                               npy, 
+                                               1, 
+                                               FFTW_FORWARD, 
+                                               flag);
+        this->planfxbac1 = fftwf_plan_many_dft(1, 
+                                               &this->nx, 
+                                               this->nplane * (lixy + 1), 
+                                               (fftwf_complex*)c_auxr, 
+                                               embed,
+                                               npy, 
+                                               1, 
+                                               (fftwf_complex*)c_auxr, 
+                                               embed, 
+                                               npy, 
+                                               1, 
+                                               FFTW_BACKWARD, 
+                                               flag);
         if (this->gamma_only)
         {
-            this->planfyr2c = fftwf_plan_many_dft_r2c(1, &this->ny, this->nplane, s_rspace, embed, this->nplane, 1,
-                                                    (fftwf_complex*)c_auxr, embed, this->nplane, 1, flag);
-            this->planfyc2r = fftwf_plan_many_dft_c2r(1, &this->ny, this->nplane, (fftwf_complex*)c_auxr, embed,
-                                                    this->nplane, 1, s_rspace, embed, this->nplane, 1, flag);
+            this->planfyr2c = fftwf_plan_many_dft_r2c(1, 
+                                                      &this->ny, 
+                                                      this->nplane, 
+                                                      s_rspace, 
+                                                      embed, 
+                                                      this->nplane, 
+                                                      1,
+                                                      (fftwf_complex*)c_auxr, 
+                                                      embed, 
+                                                      this->nplane, 
+                                                      1, 
+                                                      flag);
+            this->planfyc2r = fftwf_plan_many_dft_c2r(1, 
+                                                      &this->ny, 
+                                                      this->nplane, 
+                                                      (fftwf_complex*)c_auxr, 
+                                                      embed,
+                                                      this->nplane, 
+                                                      1, 
+                                                      s_rspace, 
+                                                      embed, 
+                                                      this->nplane, 
+                                                      1, 
+                                                      flag);
         }
         else
         {
-            this->planfxfor2
-                = fftwf_plan_many_dft(1, &this->nx, this->nplane * (this->ny - rixy), (fftwf_complex*)c_auxr, embed,
-                                    npy, 1, (fftwf_complex*)c_auxr, embed, npy, 1, FFTW_FORWARD, flag);
-            this->planfxbac2
-                = fftwf_plan_many_dft(1, &this->nx, this->nplane * (this->ny - rixy), (fftwf_complex*)c_auxr, embed,
-                                    npy, 1, (fftwf_complex*)c_auxr, embed, npy, 1, FFTW_BACKWARD, flag);
-            this->planfyfor
-                = fftwf_plan_many_dft(1, &this->ny, this->nplane, (fftwf_complex*)c_auxr, embed, this->nplane, 1,
-                                    (fftwf_complex*)c_auxr, embed, this->nplane, 1, FFTW_FORWARD, flag);
-            this->planfybac
-                = fftwf_plan_many_dft(1, &this->ny, this->nplane, (fftwf_complex*)c_auxr, embed, this->nplane, 1,
-                                    (fftwf_complex*)c_auxr, embed, this->nplane, 1, FFTW_BACKWARD, flag);
+            this->planfxfor2 = fftwf_plan_many_dft(1, 
+                                                  &this->nx, 
+                                                  this->nplane * (this->ny - rixy), 
+                                                  (fftwf_complex*)c_auxr, 
+                                                  embed,
+                                                  npy, 
+                                                  1, 
+                                                  (fftwf_complex*)c_auxr, 
+                                                  embed, 
+                                                  npy, 
+                                                  1, 
+                                                  FFTW_FORWARD, 
+                                                  flag);
+            this->planfxbac2 = fftwf_plan_many_dft(1, 
+                                                   &this->nx, 
+                                                   this->nplane * (this->ny - rixy), 
+                                                   (fftwf_complex*)c_auxr, 
+                                                   embed,
+                                                   npy, 
+                                                   1, 
+                                                   (fftwf_complex*)c_auxr, 
+                                                   embed, 
+                                                   npy, 
+                                                   1, 
+                                                   FFTW_BACKWARD, 
+                                                   flag);
+            this->planfyfor = fftwf_plan_many_dft(1, 
+                                                  &this->ny, 
+                                                  this->nplane, 
+                                                  (fftwf_complex*)c_auxr, 
+                                                  embed, 
+                                                  this->nplane, 
+                                                  1,
+                                                  (fftwf_complex*)c_auxr, 
+                                                  embed, 
+                                                  this->nplane, 
+                                                  1, 
+                                                  FFTW_FORWARD, 
+                                                  flag);
+            this->planfybac = fftwf_plan_many_dft(1, 
+                                                  &this->ny, 
+                                                  this->nplane, 
+                                                  (fftwf_complex*)c_auxr, 
+                                                  embed, 
+                                                  this->nplane, 
+                                                  1,
+                                                  (fftwf_complex*)c_auxr, 
+                                                  embed, 
+                                                  this->nplane, 
+                                                  1, 
+                                                  FFTW_BACKWARD, 
+                                                  flag);
         }
     }
     return;

@@ -79,11 +79,29 @@ void FFT_Bundle::initfft(int nx_in,
         fft_double = make_unique<FFT_CPU<double>>(this->fft_mode);
         if (float_flag)
         {
-            fft_float->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in);
+            fft_float->initfft(nx_in,
+                               ny_in,
+                               nz_in,
+                               lixy_in,
+                               rixy_in,
+                               ns_in,
+                               nplane_in,
+                               nproc_in,
+                               gamma_only_in,
+                               xprime_in);
         }
         if (double_flag)
         {
-            fft_double->initfft(nx_in,ny_in,nz_in,lixy_in,rixy_in,ns_in,nplane_in,nproc_in,gamma_only_in,xprime_in);
+            fft_double->initfft(nx_in,
+                                ny_in,
+                                nz_in,
+                                lixy_in,
+                                rixy_in,
+                                ns_in,
+                                nplane_in,
+                                nproc_in,
+                                gamma_only_in,
+                                xprime_in);
         }
     }
     if (device=="gpu")
@@ -138,133 +156,134 @@ void FFT_Bundle::clear()
         fft_double->clear();
     }
 }
-// access the real space data
-template <>
-float* FFT_Bundle::get_rspace_data() const
-{
-    return fft_float->get_rspace_data();
-}
+
 
 template <>
-double* FFT_Bundle::get_rspace_data() const
-{
-    return fft_double->get_rspace_data();
-}
-template <>
-std::complex<float>* FFT_Bundle::get_auxr_data() const
-{
-    return fft_float->get_auxr_data();
-}
-template <>
-std::complex<double>* FFT_Bundle::get_auxr_data() const
-{
-    return fft_double->get_auxr_data();
-}
-template <>
-std::complex<float>* FFT_Bundle::get_auxg_data() const
-{
-    return fft_float->get_auxg_data();
-}
-template <>
-std::complex<double>* FFT_Bundle::get_auxg_data() const
-{
-    return fft_double->get_auxg_data();
-}
-template <>
-std::complex<float>* FFT_Bundle::get_auxr_3d_data() const
-{
-    return fft_float->get_auxr_3d_data();
-}
-template <>
-std::complex<double>* FFT_Bundle::get_auxr_3d_data() const
-{
-    return fft_double->get_auxr_3d_data();
-}
-template <>
-void FFT_Bundle::fftxyfor(std::complex<float>* in, std::complex<float>* out) const
+void FFT_Bundle::fftxyfor(std::complex<float>* in, 
+                          std::complex<float>* out) const
 {
     fft_float->fftxyfor(in,out);
 }
 
 template <>
-void FFT_Bundle::fftxyfor(std::complex<double>* in, std::complex<double>* out) const
+void FFT_Bundle::fftxyfor(std::complex<double>* in,
+                          std::complex<double>* out) const
 {
     fft_double->fftxyfor(in,out);
 }
 
 template <>
-void FFT_Bundle::fftzfor(std::complex<float>* in, std::complex<float>* out) const
+void FFT_Bundle::fftzfor(std::complex<float>* in, 
+                         std::complex<float>* out) const
 {
     fft_float->fftzfor(in,out);
 }
 template <>
-void FFT_Bundle::fftzfor(std::complex<double>* in, std::complex<double>* out) const
+void FFT_Bundle::fftzfor(std::complex<double>* in, 
+                         std::complex<double>* out) const
 {
     fft_double->fftzfor(in,out);
 }
 
 template <>
-void FFT_Bundle::fftxybac(std::complex<float>* in, std::complex<float>* out) const
+void FFT_Bundle::fftxybac(std::complex<float>* in, 
+                          std::complex<float>* out) const
 {
     fft_float->fftxybac(in,out);
 }
 template <>
-void FFT_Bundle::fftxybac(std::complex<double>* in, std::complex<double>* out) const
+void FFT_Bundle::fftxybac(std::complex<double>* in, 
+                          std::complex<double>* out) const
 {
     fft_double->fftxybac(in,out);
 }
 
 template <>
-void FFT_Bundle::fftzbac(std::complex<float>* in, std::complex<float>* out) const
+void FFT_Bundle::fftzbac(std::complex<float>* in, 
+                         std::complex<float>* out) const
 {
     fft_float->fftzbac(in,out);
 }
 template <>
-void FFT_Bundle::fftzbac(std::complex<double>* in, std::complex<double>* out) const
+void FFT_Bundle::fftzbac(std::complex<double>* in, 
+                         std::complex<double>* out) const
 {
     fft_double->fftzbac(in,out);
 }
 template <>
-void FFT_Bundle::fftxyr2c(float* in, std::complex<float>* out) const
+void FFT_Bundle::fftxyr2c(float* in, 
+                          std::complex<float>* out) const
 {
     fft_float->fftxyr2c(in,out);
 }
 template <>
-void FFT_Bundle::fftxyr2c(double* in, std::complex<double>* out) const
+void FFT_Bundle::fftxyr2c(double* in, 
+                          std::complex<double>* out) const
 {
     fft_double->fftxyr2c(in,out);
 }
 
 template <>
-void FFT_Bundle::fftxyc2r(std::complex<float>* in, float* out) const
+void FFT_Bundle::fftxyc2r(std::complex<float>* in, 
+                          float* out) const
 {
     fft_float->fftxyc2r(in,out);
 }
 template <>
-void FFT_Bundle::fftxyc2r(std::complex<double>* in, double* out) const
+void FFT_Bundle::fftxyc2r(std::complex<double>* in, 
+                          double* out) const
 {
     fft_double->fftxyc2r(in,out);
 }
 
 template <>
-void  FFT_Bundle::fft3D_forward(const base_device::DEVICE_GPU* ctx, std::complex<float>* in, std::complex<float>* out) const
+void  FFT_Bundle::fft3D_forward(const base_device::DEVICE_GPU* ctx, 
+                                std::complex<float>* in, 
+                                std::complex<float>* out) const
 {
     fft_float->fft3D_forward(in, out);
 }
 
 template <>
-void  FFT_Bundle::fft3D_forward(const base_device::DEVICE_GPU* ctx, std::complex<double>* in, std::complex<double>* out) const
+void  FFT_Bundle::fft3D_forward(const base_device::DEVICE_GPU* ctx, 
+                                std::complex<double>* in, 
+                                std::complex<double>* out) const
 {
     fft_double->fft3D_forward(in, out);
 }
 template <>
-void  FFT_Bundle::fft3D_backward(const base_device::DEVICE_GPU* ctx, std::complex<float>* in, std::complex<float>* out) const
+void  FFT_Bundle::fft3D_backward(const base_device::DEVICE_GPU* ctx, 
+                                std::complex<float>* in, 
+                                std::complex<float>* out) const
 {
     fft_float->fft3D_backward(in, out);
 }
 template <>
-void  FFT_Bundle::fft3D_backward(const base_device::DEVICE_GPU* ctx, std::complex<double>* in, std::complex<double>* out) const
+void  FFT_Bundle::fft3D_backward(const base_device::DEVICE_GPU* ctx, 
+                                 std::complex<double>* in, 
+                                 std::complex<double>* out) const
 {
     fft_double->fft3D_backward(in, out);
 }
+
+// access the real space data
+template <> float* 
+FFT_Bundle::get_rspace_data() const {return fft_float->get_rspace_data();}
+template <> double* 
+FFT_Bundle::get_rspace_data() const {return fft_double->get_rspace_data();}
+
+template <> std::complex<float>* 
+FFT_Bundle::get_auxr_data() const {return fft_float->get_auxr_data();}
+template <> std::complex<double>* 
+FFT_Bundle::get_auxr_data() const{return fft_double->get_auxr_data();}
+
+template <> std::complex<float>* 
+FFT_Bundle::get_auxg_data() const{return fft_float->get_auxg_data();}
+template <> std::complex<double>* 
+FFT_Bundle::get_auxg_data() const{return fft_double->get_auxg_data();}
+
+template <> std::complex<float>* 
+FFT_Bundle::get_auxr_3d_data() const{return fft_float->get_auxr_3d_data();}
+template <> std::complex<double>* 
+FFT_Bundle::get_auxr_3d_data() const {return fft_double->get_auxr_3d_data();}
 }
