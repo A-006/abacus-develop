@@ -319,7 +319,6 @@ void FFT_CPU<double>::cleanFFT()
     clearfft(planyc2r);
 }
 
-
 template <>
 void FFT_CPU<double>::clear()
 {

@@ -14,7 +14,7 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
 {
     public:
     FFT_CPU(){};
-    FFT_CPU(const int fft_mode_in){this->fft_mode = fft_mode_in;};
+    FFT_CPU(const int fft_mode_in):fft_mode(fft_mode_in){};
     ~FFT_CPU(){}; 
 
     /**
@@ -66,10 +66,10 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
     FPTYPE* get_rspace_data() const override;
 
     __attribute__((weak)) 
-    std::complex<FPTYPE>* get_auxr_data() const;
+    std::complex<FPTYPE>* get_auxr_data() const override;
 
     __attribute__((weak)) 
-    std::complex<FPTYPE>* get_auxg_data() const;
+    std::complex<FPTYPE>* get_auxg_data() const override;
 
     /**
      * @brief Forward FFT in x-y direction
