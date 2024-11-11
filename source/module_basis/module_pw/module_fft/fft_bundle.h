@@ -18,7 +18,8 @@ class FFT_Bundle
          * the function will check the input device and precision, 
          * and set the device and precision.
          */
-        FFT_Bundle(std::string device_in,std::string precision_in):device(device_in),precision(precision_in){};
+        FFT_Bundle(std::string device_in,std::string precision_in)
+        :device(device_in),precision(precision_in){};
         
         /**
          * @brief Set device and precision.
@@ -202,8 +203,8 @@ class FFT_Bundle
         bool float_flag=false;
         bool float_define=true;
         bool double_flag=false;
-        std::unique_ptr<FFT_BASE<float>> fft_float=nullptr;
-        std::unique_ptr<FFT_BASE<double>> fft_double=nullptr;
+        std::shared_ptr<FFT_BASE<float>> fft_float=nullptr;
+        std::shared_ptr<FFT_BASE<double>> fft_double=nullptr;
         
         std::string device = "cpu";
         std::string precision = "double";

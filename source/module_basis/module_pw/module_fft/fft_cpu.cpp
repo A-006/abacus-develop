@@ -247,7 +247,12 @@ void FFT_CPU<double>::setupFFT()
                                                 (fftw_complex*)z_auxr, 
                                                 embed,
                                                 npy, 
-                                                1, (fftw_complex*)z_auxr, embed, npy, 1, FFTW_FORWARD, flag);
+                                                1, (fftw_complex*)z_auxr, 
+                                                embed, 
+                                                npy, 
+                                                1, 
+                                                FFTW_FORWARD, 
+                                                flag);
             this->planxbac2 = fftw_plan_many_dft(1, 
                                                  &this->nx, 
                                                  this->nplane * (this->ny - this->rixy), 
@@ -449,9 +454,9 @@ void FFT_CPU<double>::fftxyc2r(std::complex<double> *in,double *out) const
 template <> double* 
 FFT_CPU<double>::get_rspace_data() const {return d_rspace;}
 template <> std::complex<double>* 
-FFT_CPU<double>::get_auxr_data() const {return z_auxr;}
+FFT_CPU<double>::get_auxr_data()   const {return z_auxr;}
 template <> std::complex<double>* 
-FFT_CPU<double>::get_auxg_data() const {return z_auxg;}
+FFT_CPU<double>::get_auxg_data()   const {return z_auxg;}
 
 template FFT_CPU<float>::FFT_CPU();
 template FFT_CPU<float>::~FFT_CPU();

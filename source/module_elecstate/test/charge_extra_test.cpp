@@ -70,12 +70,6 @@ FFT::FFT()
 FFT::~FFT()
 {
 }
-FFT_Bundle::FFT_Bundle()
-{
-}
-FFT_Bundle::~FFT_Bundle()
-{
-}
 void PW_Basis::initgrids(const double lat0_in, const ModuleBase::Matrix3 latvec_in, const double gridecut)
 {
 }

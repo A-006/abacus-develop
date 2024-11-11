@@ -311,21 +311,7 @@ void FFT_CPU<float>::clear()
     s_rspace = nullptr;
 }
 
-template <>
-float* FFT_CPU<float>::get_rspace_data() const
-{
-    return s_rspace;
-}
-template <>
-std::complex<float>* FFT_CPU<float>::get_auxr_data() const
-{
-    return c_auxr;
-}
-template <>
-std::complex<float>* FFT_CPU<float>::get_auxg_data() const
-{
-    return c_auxg;
-}
+
 template <>
 void FFT_CPU<float>::fftxyfor(std::complex<float>* in, std::complex<float>* out) const
 {
@@ -438,4 +424,10 @@ void FFT_CPU<float>::fftxyc2r(std::complex<float>* in, float* out) const
         }
     }
 }
+template <> float* 
+FFT_CPU<float>::get_rspace_data() const {return s_rspace;}
+template <> std::complex<float>* 
+FFT_CPU<float>::get_auxr_data()   const {return c_auxr;}
+template <> std::complex<float>* 
+FFT_CPU<float>::get_auxg_data()   const {return c_auxg;}
 }
