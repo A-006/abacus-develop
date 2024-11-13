@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ABACUS executable path
-abacus=abacus
+abacus=/home/ubuntu/desktop/github/abacus/abacus-develop/build/abacus
 # number of MPI processes
 np=4
 nt=$OMP_NUM_THREADS # number of OpenMP threads, default is $OMP_NUM_THREADS
@@ -12,7 +12,7 @@ stress_threshold=0.001
 # check accuracy
 ca=8
 # specify the test cases file
-cases_file=CASES_CPU.txt
+cases_file=CASES_GPU.txt
 # regex of case name
 case='^[^#].*_.*$'
 # enable AddressSanitizer

@@ -4,14 +4,6 @@
 namespace ModulePW
 {
 template <typename FPTYPE>
-FFT_CUDA<FPTYPE>::FFT_CUDA()
-{
-}
-template <typename FPTYPE>
-FFT_CUDA<FPTYPE>::~FFT_CUDA()
-{
-}
-template <typename FPTYPE>
 void FFT_CUDA<FPTYPE>::initfft(int nx_in, 
                                int ny_in, 
                                int nz_in)
@@ -71,41 +63,48 @@ void FFT_CUDA<double>::clear()
         z_auxr_3d = nullptr;
     }
 }
+
 template <>
-std::complex<float>* FFT_CUDA<float>::get_auxr_3d_data() const
+void FFT_CUDA<float>::fft3D_forward(std::complex<float>* in, 
+                                    std::complex<float>* out) const
 {
-    return this->c_auxr_3d;
+    CHECK_CUFFT(cufftExecC2C(this->c_handle, 
+                             reinterpret_cast<cufftComplex*>(in), 
+                             reinterpret_cast<cufftComplex*>(out),
+                             CUFFT_FORWARD));
 }
 template <>
-std::complex<double>* FFT_CUDA<double>::get_auxr_3d_data() const
+void FFT_CUDA<double>::fft3D_forward(std::complex<double>* in, 
+                                     std::complex<double>* out) const
 {
-    return this->z_auxr_3d;
+    CHECK_CUFFT(cufftExecZ2Z(this->z_handle, 
+                             reinterpret_cast<cufftDoubleComplex*>(in),
+                             reinterpret_cast<cufftDoubleComplex*>(out), 
+                             CUFFT_FORWARD));
 }
 template <>
-void FFT_CUDA<float>::fft3D_forward(std::complex<float>* in, std::complex<float>* out) const
+void FFT_CUDA<float>::fft3D_backward(std::complex<float>* in, 
+                                     std::complex<float>* out) const
 {
-    CHECK_CUFFT(cufftExecC2C(this->c_handle, reinterpret_cast<cufftComplex*>(in), 
-                             reinterpret_cast<cufftComplex*>(out),CUFFT_FORWARD));
-}
-template <>
-void FFT_CUDA<double>::fft3D_forward(std::complex<double>* in, std::complex<double>* out) const
-{
-    CHECK_CUFFT(cufftExecZ2Z(this->z_handle, reinterpret_cast<cufftDoubleComplex*>(in),
-                             reinterpret_cast<cufftDoubleComplex*>(out), CUFFT_FORWARD));
-}
-template <>
-void FFT_CUDA<float>::fft3D_backward(std::complex<float>* in, std::complex<float>* out) const
-{
-    CHECK_CUFFT(cufftExecC2C(this->c_handle, reinterpret_cast<cufftComplex*>(in), 
-                             reinterpret_cast<cufftComplex*>(out),CUFFT_INVERSE));
+    CHECK_CUFFT(cufftExecC2C(this->c_handle, 
+                             reinterpret_cast<cufftComplex*>(in), 
+                             reinterpret_cast<cufftComplex*>(out),
+                             CUFFT_INVERSE));
 }
 
 template <>
-void FFT_CUDA<double>::fft3D_backward(std::complex<double>* in, std::complex<double>* out) const
+void FFT_CUDA<double>::fft3D_backward(std::complex<double>* in, 
+                                      std::complex<double>* out) const
 {
-    CHECK_CUFFT(cufftExecZ2Z(this->z_handle, reinterpret_cast<cufftDoubleComplex*>(in),
-                             reinterpret_cast<cufftDoubleComplex*>(out), CUFFT_INVERSE));
+    CHECK_CUFFT(cufftExecZ2Z(this->z_handle, 
+                             reinterpret_cast<cufftDoubleComplex*>(in),
+                             reinterpret_cast<cufftDoubleComplex*>(out), 
+                             CUFFT_INVERSE));
 }
+template <> std::complex<float>* 
+FFT_CUDA<float>::get_auxr_3d_data()  const {return this->c_auxr_3d;}
+template <> std::complex<double>* 
+FFT_CUDA<double>::get_auxr_3d_data() const {return this->z_auxr_3d;}
 template FFT_CUDA<float>::FFT_CUDA();
 template FFT_CUDA<double>::FFT_CUDA();
 }// namespace ModulePW

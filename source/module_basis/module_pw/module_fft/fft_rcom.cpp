@@ -1,14 +1,8 @@
 #include "fft_rcom.h"
 #include "module_base/module_device/memory_op.h"
 #include "module_hamilt_pw/hamilt_pwdft/global.h"
-template <typename FPTYPE>
-FFT_RCOM<FPTYPE>::FFT_RCOM()
+namespace ModulePW
 {
-}
-template <typename FPTYPE>
-FFT_RCOM<FPTYPE>::~FFT_RCOM()
-{
-}
 template <typename FPTYPE>
 void FFT_RCOM<FPTYPE>::initfft(int nx_in, 
                                int ny_in, 
@@ -70,40 +64,46 @@ void FFT_RCOM<double>::clear()
     }
 }
 template <>
-std::complex<float>* FFT_RCOM<float>::get_auxr_3d_data() const
+void FFT_RCOM<float>::fft3D_forward(std::complex<float>* in, 
+                                    std::complex<float>* out) const
 {
-    return this->c_auxr_3d;
+    CHECK_CUFFT(hipfftExecC2C(this->c_handle, 
+                              reinterpret_cast<hipfftComplex*>(in),
+                              reinterpret_cast<hipfftComplex*>(out), 
+                              HIPFFT_FORWARD));
 }
 template <>
-std::complex<double>* FFT_RCOM<double>::get_auxr_3d_data() const
+void FFT_RCOM<double>::fft3D_forward(std::complex<double>* in, 
+                                     std::complex<double>* out) const
 {
-    return this->z_auxr_3d;
+    CHECK_CUFFT(hipfftExecZ2Z(this->z_handle, 
+                              reinterpret_cast<hipfftDoubleComplex*>(in),
+                              reinterpret_cast<hipfftDoubleComplex*>(out), 
+                              HIPFFT_FORWARD));
 }
 template <>
-void FFT_RCOM<float>::fft3D_forward(std::complex<float>* in, std::complex<float>* out) const
+void FFT_RCOM<float>::fft3D_backward(std::complex<float>* in, 
+                                     std::complex<float>* out) const
 {
-    CHECK_CUFFT(hipfftExecC2C(this->c_handle, reinterpret_cast<hipfftComplex*>(in),
-                              reinterpret_cast<hipfftComplex*>(out), HIPFFT_FORWARD));
+    CHECK_CUFFT(hipfftExecC2C(this->c_handle, 
+                              reinterpret_cast<hipfftComplex*>(in),
+                              reinterpret_cast<hipfftComplex*>(out), 
+                              HIPFFT_BACKWARD));
 }
 template <>
-void FFT_RCOM<double>::fft3D_forward(std::complex<double>* in, std::complex<double>* out) const
+void FFT_RCOM<double>::fft3D_backward(std::complex<double>* in, 
+                                      std::complex<double>* out) const
 {
-    CHECK_CUFFT(hipfftExecZ2Z(this->z_handle, reinterpret_cast<hipfftDoubleComplex*>(in),
-                              reinterpret_cast<hipfftDoubleComplex*>(out), HIPFFT_FORWARD));
+    CHECK_CUFFT(hipfftExecZ2Z(this->z_handle, 
+                              reinterpret_cast<hipfftDoubleComplex*>(in),
+                              reinterpret_cast<hipfftDoubleComplex*>(out), 
+                              HIPFFT_BACKWARD));
 }
-template <>
-void FFT_RCOM<float>::fft3D_backward(std::complex<float>* in, std::complex<float>* out) const
-{
-    CHECK_CUFFT(hipfftExecC2C(this->c_handle, reinterpret_cast<hipfftComplex*>(in),
-                              reinterpret_cast<hipfftComplex*>(out), HIPFFT_BACKWARD));
-}
-template <>
-void FFT_RCOM<double>::fft3D_backward(std::complex<double>* in, std::complex<double>* out) const
-{
-    CHECK_CUFFT(hipfftExecZ2Z(this->z_handle, reinterpret_cast<hipfftDoubleComplex*>(in),
-                              reinterpret_cast<hipfftDoubleComplex*>(out), HIPFFT_BACKWARD));
-}
-
+template <> std::complex<float>* 
+FFT_RCOM<float>::get_auxr_3d_data()  const {return this->c_auxr_3d;}
+template <> std::complex<double>* 
+FFT_RCOM<double>::get_auxr_3d_data() const {return this->z_auxr_3d;}
 
 template FFT_RCOM<float>::FFT_RCOM();
 template FFT_RCOM<double>::FFT_RCOM();
+}// namespace ModulePW
