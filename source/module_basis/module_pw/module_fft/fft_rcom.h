@@ -40,14 +40,16 @@ class FFT_ROCM : public FFT_BASE<FPTYPE>
          * @param in  input data, complex FPTYPE
          * @param out  output data, complex FPTYPE
          */
-        void fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+        void fft3D_forward(std::complex<FPTYPE>* in, 
+                           std::complex<FPTYPE>* out) const override;
 
         /**
          * @brief Backward FFT in 3D for ROCM
          * @param in  input data, complex FPTYPE
          * @param out  output data, complex FPTYPE
          */
-        void fft3D_backward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+        void fft3D_backward(std::complex<FPTYPE>* in, 
+                            std::complex<FPTYPE>* out) const override;
     private:
         hipfftHandle c_handle = {};
         hipfftHandle z_handle = {};

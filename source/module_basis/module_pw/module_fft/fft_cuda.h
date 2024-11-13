@@ -43,7 +43,8 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
          * 
          * This function performs the forward FFT in 3D.
          */
-        void fft3D_forward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+        void fft3D_forward(std::complex<FPTYPE>* in, 
+                           std::complex<FPTYPE>* out) const override;
         /**
          * @brief Backward FFT in 3D
          * @param in  input data, complex FPTYPE
@@ -51,7 +52,8 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
          * 
          * This function performs the backward FFT in 3D.
          */
-        void fft3D_backward(std::complex<FPTYPE>* in, std::complex<FPTYPE>* out) const override;
+        void fft3D_backward(std::complex<FPTYPE>* in, 
+                            std::complex<FPTYPE>* out) const override;
     private:
         cufftHandle c_handle = {};
         cufftHandle z_handle = {};
