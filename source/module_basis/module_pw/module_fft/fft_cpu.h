@@ -13,9 +13,9 @@ template <typename FPTYPE>
 class FFT_CPU : public FFT_BASE<FPTYPE>
 {
     public:
-    FFT_CPU();
-    FFT_CPU(const int fft_mode_in);
-    ~FFT_CPU(); 
+    FFT_CPU(){};
+    FFT_CPU(const int fft_mode_in):fft_mode(fft_mode_in){};
+    ~FFT_CPU(){}; 
 
     /**
      * @brief Initialize the fft parameters.
@@ -66,10 +66,10 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
     FPTYPE* get_rspace_data() const override;
 
     __attribute__((weak)) 
-    std::complex<FPTYPE>* get_auxr_data() const;
+    std::complex<FPTYPE>* get_auxr_data() const override;
 
     __attribute__((weak)) 
-    std::complex<FPTYPE>* get_auxg_data() const;
+    std::complex<FPTYPE>* get_auxg_data() const override;
 
     /**
      * @brief Forward FFT in x-y direction
@@ -158,7 +158,6 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
          * @brief rixy: the right edge of the pw ball in the x or y direction
          */
         int rixy=0;
-        
         /**
          * @brief xprime: whether xprime is used,when do recip2real, x-fft will 
          * be done last and when doing real2recip, x-fft will be done first; 

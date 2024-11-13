@@ -10,8 +10,8 @@ class FFT_BASE
 {
 public:
 
-	FFT_BASE();
-	virtual  ~FFT_BASE(); 
+	FFT_BASE(){};
+	virtual  ~FFT_BASE(){}; 
 	
     /**
      * @brief Initialize the fft parameters As virtual function.

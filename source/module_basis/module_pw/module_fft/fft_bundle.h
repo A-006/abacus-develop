@@ -8,7 +8,8 @@ namespace ModulePW
 class FFT_Bundle
 {
     public:
-        FFT_Bundle();
+        FFT_Bundle(){};
+        ~FFT_Bundle(){};
         /**
          * @brief Constructor with device and precision.
          * @param device_in  device type, cpu or gpu.
@@ -17,9 +18,9 @@ class FFT_Bundle
          * the function will check the input device and precision, 
          * and set the device and precision.
          */
-        FFT_Bundle(std::string device_in,std::string precision_in);
-        ~FFT_Bundle();
-
+        FFT_Bundle(std::string device_in,std::string precision_in)
+        :device(device_in),precision(precision_in){};
+        
         /**
          * @brief Set device and precision.
          * @param device_in  device type, cpu or gpu.
@@ -68,7 +69,7 @@ class FFT_Bundle
          * the function will initialize the fft mode.
          */
 
-        void initfftmode(int fft_mode_in);
+        void initfftmode(int fft_mode_in){this->fft_mode = fft_mode_in;}
 
         void setupFFT();
 
@@ -197,12 +198,8 @@ class FFT_Bundle
                             std::complex<FPTYPE>* in, 
                             std::complex<FPTYPE>* out) const;
 
-        void set_device(std::string device_in); 
-
-        void set_precision(std::string precision_in);
-
     private:
-        int  fft_mode = 0; ///< fftw mode 0: estimate, 1: measure, 2: patient, 3: exhaustive
+        int  fft_mode = 0; 
         bool float_flag=false;
         bool float_define=true;
         bool double_flag=false;
