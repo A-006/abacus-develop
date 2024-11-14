@@ -22,7 +22,10 @@ void FFT_Bundle::setfft(std::string device_in,std::string precision_in)
     this->device = device_in;
     this->precision = precision_in;
 }
-
+FFT_Bundle::~FFT_Bundle()
+{
+    this->clear();
+}
 void FFT_Bundle::initfft(int nx_in, 
                          int ny_in, 
                          int nz_in, 
