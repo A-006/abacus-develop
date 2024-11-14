@@ -2,6 +2,7 @@
 #include "fft_bundle.h"
 #include "fft_cpu.h"
 #include "module_base/module_device/device.h"
+
 #if defined(__CUDA)
 #include "fft_cuda.h"
 #endif
@@ -87,7 +88,9 @@ void FFT_Bundle::initfft(int nx_in,
         double_flag=true;
         #if defined(__ROCM)
             fft_float = make_unique<FFT_RCOM<float>>;
+            fft_float->initfft(nx_in,ny_in,nz_in);
             fft_double = make_unique<FFT_RCOM<double>>;
+            fft_double->initfft(nx_in,ny_in,nz_in);
         #elif defined(__CUDA)
             fft_float = make_unique<FFT_CUDA<float>>();
             fft_float->initfft(nx_in,ny_in,nz_in);

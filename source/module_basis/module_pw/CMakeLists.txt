@@ -13,6 +13,7 @@ if (USE_ROCM)
     module_fft/fft_rcom.cpp
   )
 endif()
+
 list(APPEND objects
     fft.cpp
     pw_basis.cpp
