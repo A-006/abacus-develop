@@ -1,7 +1,4 @@
 add_definitions(-D__NORMAL)
-if (USE_CUDA)
-  list (APPEND FFT_SRC ../../../module_base/module_fft/fft_cuda.cpp)
-endif()
 AddTest(
   TARGET pw_test
   LIBS parameter ${math_libs} planewave device 
