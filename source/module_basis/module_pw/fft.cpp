@@ -91,34 +91,6 @@ void FFT::initfft(int nx_in, int ny_in, int nz_in, int lixy_in, int rixy_in, int
     const int nrxx = this->nxy * this->nplane;
     const int nsz = this->nz * this->ns;
     int maxgrids = (nsz > nrxx) ? nsz : nrxx;
-    if (!this->mpifft)
-    {
-        // z_auxg = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * maxgrids);
-        // z_auxr = (std::complex<double>*)fftw_malloc(sizeof(fftw_complex) * maxgrids);
-        // ModuleBase::Memory::record("FFT::grid", 2 * sizeof(fftw_complex) * maxgrids);
-        // d_rspace = (double*)z_auxg;
-        // auxr_3d = static_cast<std::complex<double> *>(
-        //     fftw_malloc(sizeof(fftw_complex) * (this->nx * this->ny * this->nz)));
-#if defined(__CUDA) || defined(__ROCM)
-        if (this->device == "gpu")
-        {
-            resmem_cd_op()(gpu_ctx, this->c_auxr_3d, this->nx * this->ny * this->nz);
-            resmem_zd_op()(gpu_ctx, this->z_auxr_3d, this->nx * this->ny * this->nz);
-        }
-#endif // defined(__CUDA) || defined(__ROCM)
-// #if defined(__ENABLE_FLOAT_FFTW)
-//         if (this->precision == "single")
-//         {
-//             c_auxg = (std::complex<float>*)fftw_malloc(sizeof(fftwf_complex) * maxgrids);
-//             c_auxr = (std::complex<float>*)fftw_malloc(sizeof(fftwf_complex) * maxgrids);
-//             ModuleBase::Memory::record("FFT::grid_s", 2 * sizeof(fftwf_complex) * maxgrids);
-//             s_rspace = (float*)c_auxg;
-//         }
-// #endif // defined(__ENABLE_FLOAT_FFTW)
-    }
-    else
-    {
-    }
 }
 
 void FFT::setupFFT()
