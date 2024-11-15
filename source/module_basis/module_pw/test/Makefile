@@ -27,7 +27,7 @@ GTEST_DIR = /home/qianrui/gnucompile/g_gtest
 HONG = -D__NORMAL
 INCLUDES = -I. -I../../../ -I../../../module_base/module_container
 LIBS = 
-OPTS = -Ofast -march=native -std=c++11 -m64  ${INCLUDES}
+OPTS = -Ofast -march=native -std=c++11 -m64  ${INCLUDES} -w -g
 OBJ_DIR = obj
 LIBNAME = libpw.a
 GEN     = OFF

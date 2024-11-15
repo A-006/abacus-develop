@@ -57,5 +57,7 @@ class FFT_ROCM : public FFT_BASE<FPTYPE>
         mutable std::complex<double>* z_auxr_3d = nullptr; // fft space
 
 };
+template FFT_RCOM<float>::FFT_RCOM();
+template FFT_RCOM<double>::FFT_RCOM();
 }// namespace ModulePW
 #endif

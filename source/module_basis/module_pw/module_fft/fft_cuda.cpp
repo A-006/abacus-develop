@@ -105,7 +105,4 @@ template <> std::complex<float>*
 FFT_CUDA<float>::get_auxr_3d_data()  const {return this->c_auxr_3d;}
 template <> std::complex<double>* 
 FFT_CUDA<double>::get_auxr_3d_data() const {return this->z_auxr_3d;}
-
-template FFT_CUDA<float>::FFT_CUDA();
-template FFT_CUDA<double>::FFT_CUDA();
 }// namespace ModulePW

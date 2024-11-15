@@ -103,7 +103,4 @@ template <> std::complex<float>*
 FFT_RCOM<float>::get_auxr_3d_data()  const {return this->c_auxr_3d;}
 template <> std::complex<double>* 
 FFT_RCOM<double>::get_auxr_3d_data() const {return this->z_auxr_3d;}
-
-template FFT_RCOM<float>::FFT_RCOM();
-template FFT_RCOM<double>::FFT_RCOM();
 }// namespace ModulePW

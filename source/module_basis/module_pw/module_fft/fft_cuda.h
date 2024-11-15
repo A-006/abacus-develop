@@ -62,5 +62,7 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
         std::complex<double>* z_auxr_3d = nullptr; // fft space
 
 };
+template FFT_CUDA<float>::FFT_CUDA();
+template FFT_CUDA<double>::FFT_CUDA();
 } // namespace ModulePW
 #endif
