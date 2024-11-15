@@ -44,10 +44,10 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
                  int nproc_in, 
                  bool gamma_only_in, 
                  bool xprime_in = true) override;
+
 	__attribute__((weak)) 
     void setupFFT() override; 
 
-	// void initplan(const unsigned int& flag = 0);
     __attribute__((weak)) 
     void cleanFFT() override;
 

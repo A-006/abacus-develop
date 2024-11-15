@@ -106,6 +106,7 @@ VPATH=../../../module_base\
 ../../../module_base/module_container/ATen/core\
 ../../../module_base/module_container/ATen\
 ../../../module_parameter\
+../module_fft\
 ../\
 
 MATH_OBJS0=matrix.o\

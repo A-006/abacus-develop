@@ -3,6 +3,42 @@
 namespace ModulePW
 {
 template <>
+void FFT_CPU<float>::initfft(int nx_in, 
+                              int ny_in, 
+                              int nz_in, 
+                              int lixy_in, 
+                              int rixy_in, 
+                              int ns_in, 
+                              int nplane_in, 
+				              int nproc_in, 
+                              bool gamma_only_in, 
+                              bool xprime_in)
+{
+    this->gamma_only = gamma_only_in;
+    this->xprime = xprime_in;
+    this->fftnx = this->nx = nx_in;
+    this->fftny = this->ny = ny_in;
+    if (this->gamma_only)
+    {
+        if (xprime) {
+            this->fftnx = int(this->nx / 2) + 1;
+        } else {
+            this->fftny = int(this->ny / 2) + 1;
+        }
+    }
+    this->nz = nz_in;
+    this->ns = ns_in;
+    this->lixy = lixy_in;
+    this->rixy = rixy_in;
+    this->nplane = nplane_in;
+    this->nproc = nproc_in;
+    this->nxy = this->nx * this->ny;
+    this->fftnxy = this->fftnx * this->fftny;
+    const int nrxx = this->nxy * this->nplane;
+    const int nsz = this->nz * this->ns;
+    this->maxgrids = (nsz > nrxx) ? nsz : nrxx;
+}
+template <>
 void FFT_CPU<float>::setupFFT()
 {
     unsigned int flag = FFTW_ESTIMATE;
@@ -267,11 +303,11 @@ void FFT_CPU<float>::setupFFT()
 }
 
 template <>
-void FFT_CPU<float>::clearfft(fftw_plan& plan)
+void FFT_CPU<float>::clearfft(fftwf_plan& plan)
 {
     if (plan)
     {
-        fftw_destroy_plan(plan);
+        fftwf_destroy_plan(plan);
         plan = nullptr;
     }
 }
@@ -279,18 +315,18 @@ void FFT_CPU<float>::clearfft(fftw_plan& plan)
 template <>
 void FFT_CPU<float>::cleanFFT()
 {
-    clearfft(planzfor);
-    clearfft(planzbac);
-    clearfft(planxfor1);
-    clearfft(planxbac1);
-    clearfft(planxfor2);
-    clearfft(planxbac2);
-    clearfft(planyfor);
-    clearfft(planybac);
-    clearfft(planxr2c);
-    clearfft(planxc2r);
-    clearfft(planyr2c);
-    clearfft(planyc2r);
+    clearfft(planfzfor);
+    clearfft(planfzbac);
+    clearfft(planfxfor1);
+    clearfft(planfxbac1);
+    clearfft(planfxfor2);
+    clearfft(planfxbac2);
+    clearfft(planfyfor);
+    clearfft(planfybac);
+    clearfft(planfxr2c);
+    clearfft(planfxc2r);
+    clearfft(planfyr2c);
+    clearfft(planfyc2r);
 }
 
 
@@ -303,7 +339,7 @@ void FFT_CPU<float>::clear()
         fftw_free(c_auxg);
         c_auxg = nullptr;
     }
-    if (z_auxr != nullptr)
+    if (c_auxr != nullptr)
     {
         fftw_free(c_auxr);
         c_auxr = nullptr;
@@ -430,4 +466,6 @@ template <> std::complex<float>*
 FFT_CPU<float>::get_auxr_data()   const {return c_auxr;}
 template <> std::complex<float>* 
 FFT_CPU<float>::get_auxg_data()   const {return c_auxg;}
+template FFT_CPU<float>::FFT_CPU();
+template FFT_CPU<float>::~FFT_CPU();
 }

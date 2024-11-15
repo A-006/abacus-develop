@@ -3,8 +3,8 @@
 namespace ModulePW
 {
 
-template <typename FPTYPE>
-void FFT_CPU<FPTYPE>::initfft(int nx_in, 
+template <>
+void FFT_CPU<double>::initfft(int nx_in, 
                               int ny_in, 
                               int nz_in, 
                               int lixy_in, 
@@ -458,8 +458,7 @@ FFT_CPU<double>::get_auxr_data()   const {return z_auxr;}
 template <> std::complex<double>* 
 FFT_CPU<double>::get_auxg_data()   const {return z_auxg;}
 
-template FFT_CPU<float>::FFT_CPU();
-template FFT_CPU<float>::~FFT_CPU();
+
 template FFT_CPU<double>::FFT_CPU();
 template FFT_CPU<double>::~FFT_CPU();
 }
