@@ -106,31 +106,31 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
         void clearfft(fftw_plan& plan);
         void clearfft(fftwf_plan& plan);
 
-        fftw_plan planzfor  = NULL;
-        fftw_plan planzbac  = NULL;
-        fftw_plan planxfor1 = NULL;
-        fftw_plan planxbac1 = NULL;
-        fftw_plan planxfor2 = NULL;
-        fftw_plan planxbac2 = NULL;
-        fftw_plan planyfor  = NULL;
-        fftw_plan planybac  = NULL;
-        fftw_plan planxr2c  = NULL;
-        fftw_plan planxc2r  = NULL;
-        fftw_plan planyr2c  = NULL;
-        fftw_plan planyc2r  = NULL;
+        fftw_plan planzfor  = nullptr;
+        fftw_plan planzbac  = nullptr;
+        fftw_plan planxfor1 = nullptr;
+        fftw_plan planxbac1 = nullptr;
+        fftw_plan planxfor2 = nullptr;
+        fftw_plan planxbac2 = nullptr;
+        fftw_plan planyfor  = nullptr;
+        fftw_plan planybac  = nullptr;
+        fftw_plan planxr2c  = nullptr;
+        fftw_plan planxc2r  = nullptr;
+        fftw_plan planyr2c  = nullptr;
+        fftw_plan planyc2r  = nullptr;
 
-        fftwf_plan planfzfor = NULL;
-        fftwf_plan planfzbac = NULL;
-        fftwf_plan planfxfor1= NULL;
-        fftwf_plan planfxbac1= NULL;
-        fftwf_plan planfxfor2= NULL;
-        fftwf_plan planfxbac2= NULL;
-        fftwf_plan planfyfor = NULL;
-        fftwf_plan planfybac = NULL;
-        fftwf_plan planfxr2c = NULL;
-        fftwf_plan planfxc2r = NULL;
-        fftwf_plan planfyr2c = NULL;
-        fftwf_plan planfyc2r = NULL;
+        fftwf_plan planfzfor = nullptr;
+        fftwf_plan planfzbac = nullptr;
+        fftwf_plan planfxfor1= nullptr;
+        fftwf_plan planfxbac1= nullptr;
+        fftwf_plan planfxfor2= nullptr;
+        fftwf_plan planfxbac2= nullptr;
+        fftwf_plan planfyfor = nullptr;
+        fftwf_plan planfybac = nullptr;
+        fftwf_plan planfxr2c = nullptr;
+        fftwf_plan planfxc2r = nullptr;
+        fftwf_plan planfyr2c = nullptr;
+        fftwf_plan planfyc2r = nullptr;
         
         std::complex<float>*c_auxg = nullptr;
         std::complex<float>*c_auxr = nullptr;  // fft space
