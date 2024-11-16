@@ -170,6 +170,8 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
         int fft_mode = 0; 
 };
 template FFT_CPU<float>::FFT_CPU();
+template FFT_CPU<float>::~FFT_CPU();
 template FFT_CPU<double>::FFT_CPU();
+template FFT_CPU<double>::~FFT_CPU();
 }
 #endif // FFT_CPU_H

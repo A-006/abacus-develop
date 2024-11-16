@@ -63,6 +63,8 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
 
 };
 template FFT_CUDA<float>::FFT_CUDA();
+template FFT_CUDA<float>::~FFT_CUDA();
 template FFT_CUDA<double>::FFT_CUDA();
+template FFT_CUDA<double>::~FFT_CUDA();
 } // namespace ModulePW
 #endif
