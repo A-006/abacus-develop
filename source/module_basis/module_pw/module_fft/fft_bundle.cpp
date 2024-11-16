@@ -2,12 +2,12 @@
 #include "fft_bundle.h"
 #include "fft_cpu.h"
 #include "module_base/module_device/device.h"
-// #if defined(__CUDA)
-// #include "fft_cuda.h"
-// #endif
-// #if defined(__ROCM)
-// #include "fft_rcom.h"
-// #endif
+#if defined(__CUDA)
+#include "fft_cuda.h"
+#endif
+#if defined(__ROCM)
+#include "fft_rcom.h"
+#endif
 
 template<typename FFT_BASE, typename... Args>
 std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
@@ -83,13 +83,17 @@ void FFT_Bundle::initfft(int nx_in,
     }
     if (device=="gpu")
     {
-        // #if defined(__ROCM)
-        //     fft_float = new FFT_RCOM<float>();
-        //     fft_double = new FFT_RCOM<double>();
-        // #elif defined(__CUDA)
-        //     fft_float = make_unique<FFT_CUDA<float>>();
-        //     fft_double = make_unique<FFT_CUDA<double>>();
-        // #endif
+        #if defined(__ROCM)
+            fft_float = new FFT_RCOM<float>();
+            fft_float->initfft(nx_in,ny_in,nz_in);
+            fft_double = new FFT_RCOM<double>();
+            fft_double->initfft(nx_in,ny_in,nz_in);
+        #elif defined(__CUDA)
+            fft_float = make_unique<FFT_CUDA<float>>();
+            fft_float->initfft(nx_in,ny_in,nz_in);
+            fft_double = make_unique<FFT_CUDA<double>>();
+            fft_double->initfft(nx_in,ny_in,nz_in);
+        #endif
     }
 
 }
