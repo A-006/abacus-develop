@@ -16,6 +16,11 @@ std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
 }
 namespace ModulePW
 {
+FFT_Bundle::~FFT_Bundle()
+{
+    this->clear();
+}
+
 void FFT_Bundle::setfft(std::string device_in,std::string precision_in)
 {
     this->device = device_in;
