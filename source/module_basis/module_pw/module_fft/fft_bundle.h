@@ -2,14 +2,11 @@
 #define FFT_TEMP_H
 
 #include "fft_base.h"
-#include <memory>
 #include "fft_cpu.h"
-#ifdef __CUDA
-#include "fft_cuda.h"
-#endif
-#ifdef __ROCM
-#include "fft_rocm.h"
-#endif
+#include "module_base/module_device/device.h"
+#include "module_base/module_device/memory_op.h"
+#include <memory>
+
 namespace ModulePW
 {
 class FFT_Bundle

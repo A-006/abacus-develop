@@ -3,6 +3,7 @@
 
 #include <complex>
 #include <string>
+#include "module_base/module_device/memory_op.h"
 namespace ModulePW
 {
 template <typename FPTYPE>
