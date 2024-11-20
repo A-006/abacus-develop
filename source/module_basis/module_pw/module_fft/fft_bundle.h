@@ -1,8 +1,15 @@
-#include "fft_base.h"
-#include <memory>
-// #include "module_psi/psi.h"
 #ifndef FFT_TEMP_H
 #define FFT_TEMP_H
+
+#include "fft_base.h"
+#include <memory>
+#include "fft_cpu.h"
+#ifdef __CUDA
+#include "fft_cuda.h"
+#endif
+#ifdef __ROCM
+#include "fft_rocm.h"
+#endif
 namespace ModulePW
 {
 class FFT_Bundle

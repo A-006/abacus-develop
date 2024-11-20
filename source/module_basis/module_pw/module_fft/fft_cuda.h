@@ -1,9 +1,9 @@
-#include "fft_base.h"
-#include "cufft.h"
-#include "cuda_runtime.h"
-
 #ifndef FFT_CUDA_H
 #define FFT_CUDA_H
+
+#include "fft_base.h"
+#include "kernel/fft_cuda_func.h"
+
 namespace ModulePW
 {
 template <typename FPTYPE>

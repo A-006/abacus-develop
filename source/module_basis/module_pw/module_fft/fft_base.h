@@ -1,8 +1,8 @@
-#include <complex>
-#include <string>
-#include "fftw3.h"
 #ifndef FFT_BASE_H
 #define FFT_BASE_H
+
+#include <complex>
+#include <string>
 namespace ModulePW
 {
 template <typename FPTYPE>
