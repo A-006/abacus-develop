@@ -15,7 +15,6 @@ if (USE_ROCM)
 endif()
 
 list(APPEND objects
-    fft.cpp
     pw_basis.cpp
     pw_basis_k.cpp
     pw_basis_sup.cpp

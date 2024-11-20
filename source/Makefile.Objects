@@ -407,8 +407,7 @@ OBJS_PSI_INITIALIZER=psi_initializer.o\
                      psi_initializer_nao.o\
                      psi_initializer_nao_random.o\
 
-OBJS_PW=fft.o\
-    fft_bundle.o\
+OBJS_PW=fft_bundle.o\
     fft_base.o\
     fft_cpu.o\
     pw_basis.o\

@@ -132,8 +132,6 @@ namespace ModulePW
                                                                              const double factor) const;
 #endif
 
-    FFT::FFT(){};
-    FFT::~FFT(){};
 
     void PW_Basis::initgrids(double, ModuleBase::Matrix3, double){};
     void PW_Basis::distribute_r(){};
