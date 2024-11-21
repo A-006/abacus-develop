@@ -6,11 +6,11 @@
 namespace ModulePW
 {
 template <typename FPTYPE>
-class FFT_ROCM : public FFT_BASE<FPTYPE>
+class FFT_RCOM : public FFT_BASE<FPTYPE>
 {
     public:
-        FFT_ROCM(){};
-        ~FFT_ROCM(){}; 
+        FFT_RCOM(){};
+        ~FFT_RCOM(){}; 
         
         void setupFFT() override; 
 
@@ -58,8 +58,8 @@ class FFT_ROCM : public FFT_BASE<FPTYPE>
 
 };
 template FFT_RCOM<float>::FFT_RCOM();
-template FFT_ROCM<float>::~FFT_ROCM();
+template FFT_RCOM<float>::~FFT_RCOM();
 template FFT_RCOM<double>::FFT_RCOM();
-template FFT_ROCM<double>::~FFT_ROCM();
+template FFT_RCOM<double>::~FFT_RCOM();
 }// namespace ModulePW
 #endif
