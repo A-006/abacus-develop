@@ -96,7 +96,7 @@ void FFT_Bundle::initfft(int nx_in,
         #elif defined(__CUDA)
             fft_float = make_unique<FFT_CUDA<float>>();
             fft_float->initfft(nx_in,ny_in,nz_in);
-            fft_double = make_unique<FFT_RCOM<double>>();
+            fft_double = make_unique<FFT_CUDA<double>>();
             fft_double->initfft(nx_in,ny_in,nz_in);
         #endif
     }
