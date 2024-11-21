@@ -33,7 +33,6 @@ class FFT_CPU : public FFT_BASE<FPTYPE>
      * @param gamma_only_in  whether only gamma point is used.
      * @param xprime_in  whether xprime is used.
      */
-    __attribute__((weak)) 
     void initfft(int nx_in, 
                  int ny_in, 
                  int nz_in, 
