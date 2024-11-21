@@ -165,5 +165,10 @@ protected:
     int ny=0;
     int nz=0;
 };
+
+template FFT_BASE<float>::FFT_BASE();
+template FFT_BASE<double>::FFT_BASE();
+template FFT_BASE<float>::~FFT_BASE();
+template FFT_BASE<double>::~FFT_BASE();
 }
 #endif // FFT_BASE_H

@@ -25,7 +25,6 @@ list(APPEND objects
     pw_init.cpp
     pw_transform.cpp
     pw_transform_k.cpp
-    module_fft/fft_base.cpp
     module_fft/fft_bundle.cpp
     module_fft/fft_cpu.cpp
     ${FFT_SRC}
