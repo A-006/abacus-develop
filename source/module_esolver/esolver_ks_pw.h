@@ -2,7 +2,7 @@
 #define ESOLVER_KS_PW_H
 #include "./esolver_ks.h"
 #include "module_hamilt_pw/hamilt_pwdft/operator_pw/velocity_pw.h"
-#include "module_hamilt_pw/hamilt_pwdft/wfinit.h"
+#include "module_hamilt_pw/hamilt_pwdft/psiinit.h"
 
 #include <memory>
 #include <module_base/macros.h>
@@ -46,12 +46,6 @@ class ESolver_KS_PW : public ESolver_KS<T, Device>
 
     virtual void hamilt2density_single(const int istep, const int iter, const double ethr) override;
 
-    void init_after_vc(const Input_para& inp, UnitCell& cell) override;
-
-    // temporary, this will be removed in the future;
-    // Init Global class
-    void Init_GlobalC(const Input_para& inp, UnitCell& ucell, pseudopot_cell_vnl& ppcell);
-
     virtual void allocate_hamilt();
     virtual void deallocate_hamilt();
 
@@ -59,7 +53,7 @@ class ESolver_KS_PW : public ESolver_KS<T, Device>
     psi::Psi<std::complex<double>, base_device::DEVICE_CPU>* psi = nullptr;
 
     // psi_initializer controller
-    psi::WFInit<T, Device>* p_wf_init = nullptr;
+    psi::PSIInit<T, Device>* p_wf_init = nullptr;
 
     Device* ctx = {};
 
@@ -69,7 +63,7 @@ class ESolver_KS_PW : public ESolver_KS<T, Device>
 
     psi::Psi<std::complex<double>, Device>* __kspw_psi = nullptr;
 
-    bool init_psi = false;
+    bool already_initpsi = false;
 
     using castmem_2d_d2h_op
         = base_device::memory::cast_memory_op<std::complex<double>, T, base_device::DEVICE_CPU, Device>;
