@@ -1,8 +1,9 @@
+
 #ifndef FFT_ROCM_H
 #define FFT_ROCM_H
-
 #include "fft_base.h"
-#include "kernel/fft_rcom_func.h"
+#include <hipfft/hipfft.h>
+#include <hip/hip_runtime.h>
 namespace ModulePW
 {
 template <typename FPTYPE>

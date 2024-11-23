@@ -1,9 +1,8 @@
 #ifndef FFT_CUDA_H
 #define FFT_CUDA_H
-
 #include "fft_base.h"
-#include "kernel/fft_cuda_func.h"
-
+#include "cufft.h"
+#include "cuda_runtime.h"
 namespace ModulePW
 {
 template <typename FPTYPE>
@@ -62,9 +61,6 @@ class FFT_CUDA : public FFT_BASE<FPTYPE>
         std::complex<double>* z_auxr_3d = nullptr; // fft space
 
 };
-template FFT_CUDA<float>::FFT_CUDA();
-template FFT_CUDA<float>::~FFT_CUDA();
-template FFT_CUDA<double>::FFT_CUDA();
-template FFT_CUDA<double>::~FFT_CUDA();
+
 } // namespace ModulePW
 #endif

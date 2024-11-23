@@ -1,11 +1,6 @@
 #include <cassert>
 #include "fft_bundle.h"
-#if defined(__CUDA)
-#include "fft_cuda.h"
-#endif
-#if defined(__ROCM)
-#include "fft_rcom.h"
-#endif
+
 
 template<typename FFT_BASE, typename... Args>
 std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
