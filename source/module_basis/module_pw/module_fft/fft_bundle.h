@@ -3,15 +3,6 @@
 
 #include <memory>
 #include "fft_base.h"
-#include "fft_cpu.h"
-#include "module_base/module_device/device.h"
-#include "module_base/module_device/memory_op.h"
-#if defined(__CUDA)
-#include "fft_cuda.h"
-#endif
-#if defined(__ROCM)
-#include "fft_rcom.h"
-#endif
 
 namespace ModulePW
 {
