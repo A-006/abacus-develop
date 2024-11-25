@@ -6,11 +6,11 @@
 namespace ModulePW
 {
 template <typename FPTYPE>
-class FFT_RCOM : public FFT_BASE<FPTYPE>
+class FFT_ROCM : public FFT_BASE<FPTYPE>
 {
     public:
-        FFT_RCOM(){};
-        ~FFT_RCOM(){}; 
+        FFT_ROCM(){};
+        ~FFT_ROCM(){}; 
         
         void setupFFT() override; 
 
@@ -57,9 +57,5 @@ class FFT_RCOM : public FFT_BASE<FPTYPE>
         mutable std::complex<double>* z_auxr_3d = nullptr; // fft space
 
 };
-template FFT_RCOM<float>::FFT_RCOM();
-template FFT_RCOM<float>::~FFT_RCOM();
-template FFT_RCOM<double>::FFT_RCOM();
-template FFT_RCOM<double>::~FFT_RCOM();
 }// namespace ModulePW
 #endif
