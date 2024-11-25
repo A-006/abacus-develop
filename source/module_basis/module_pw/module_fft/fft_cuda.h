@@ -1,5 +1,6 @@
 #ifndef FFT_CUDA_H
 #define FFT_CUDA_H
+
 #include "fft_base.h"
 #include "cufft.h"
 #include "cuda_runtime.h"

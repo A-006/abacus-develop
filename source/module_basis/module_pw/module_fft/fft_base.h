@@ -1,7 +1,7 @@
 #ifndef FFT_BASE_H
 #define FFT_BASE_H
+
 #include <complex>
-#include <string>
 namespace ModulePW
 {
 template <typename FPTYPE>

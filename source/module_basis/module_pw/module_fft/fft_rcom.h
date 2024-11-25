@@ -1,6 +1,7 @@
 
 #ifndef FFT_ROCM_H
 #define FFT_ROCM_H
+
 #include "fft_base.h"
 #include <hipfft/hipfft.h>
 #include <hip/hip_runtime.h>

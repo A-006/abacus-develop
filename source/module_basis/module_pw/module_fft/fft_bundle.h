@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "fft_base.h"
-
+#include "fft_cpu.h"
 namespace ModulePW
 {
 class FFT_Bundle

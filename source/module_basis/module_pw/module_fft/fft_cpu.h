@@ -1,12 +1,8 @@
-#include "fft_base.h"
-#include "fftw3.h"
-
-// #ifdef __ENABLE_FLOAT_FFTW
-
-// #endif
-// #endif
 #ifndef FFT_CPU_H
 #define FFT_CPU_H
+
+#include "fft_base.h"
+#include "fftw3.h"
 namespace ModulePW
 {
 template <typename FPTYPE>
