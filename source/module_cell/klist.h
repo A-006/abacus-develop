@@ -55,6 +55,7 @@ public:
         const int& nspin,
         const ModuleBase::Matrix3& reciprocal_vec,
         const ModuleBase::Matrix3& latvec,
+        const UnitCell& ucell,
         std::ofstream& ofs);
 
     /**

@@ -64,6 +64,7 @@ void K_Vectors::set(const ModuleSymmetry::Symmetry& symm,
                     const int& nspin_in,
                     const ModuleBase::Matrix3& reciprocal_vec,
                     const ModuleBase::Matrix3& latvec,
+                    const UnitCell& ucell,
                     std::ofstream& ofs)
 {
     ModuleBase::TITLE("K_Vectors", "set");
@@ -113,7 +114,7 @@ void K_Vectors::set(const ModuleSymmetry::Symmetry& symm,
     {
         bool match = true;
         // calculate kpoints in IBZ and reduce kpoints according to symmetry
-        this->ibz_kpoint(symm, ModuleSymmetry::Symmetry::symm_flag, skpt1, GlobalC::ucell, match);
+        this->ibz_kpoint(symm, ModuleSymmetry::Symmetry::symm_flag, skpt1, ucell, match);
 #ifdef __MPI
         Parallel_Common::bcast_bool(match);
 #endif
@@ -128,7 +129,7 @@ void K_Vectors::set(const ModuleSymmetry::Symmetry& symm,
                 std::cout << "Automatically set symmetry to 0 and continue ..." << std::endl;
                 ModuleSymmetry::Symmetry::symm_flag = 0;
                 match = true;
-                this->ibz_kpoint(symm, ModuleSymmetry::Symmetry::symm_flag, skpt1, GlobalC::ucell, match);
+                this->ibz_kpoint(symm, ModuleSymmetry::Symmetry::symm_flag, skpt1, ucell, match);
             } else {
                 ModuleBase::WARNING_QUIT("K_Vectors::ibz_kpoint",
                                          "Possible solutions: \n \

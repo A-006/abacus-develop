@@ -235,7 +235,7 @@ TEST_F(KlistParaTest, Set)
                                 GlobalV::RANK_IN_POOL,
                                 GlobalV::MY_POOL);
     ModuleSymmetry::Symmetry::symm_flag = 1;
-    kv->set(symm, k_file, kv->nspin, GlobalC::ucell.G, GlobalC::ucell.latvec, GlobalV::ofs_running);
+    kv->set(symm, k_file, kv->nspin, GlobalC::ucell.G, GlobalC::ucell.latvec, GlobalC::ucell, GlobalV::ofs_running);
     EXPECT_EQ(kv->get_nkstot(), 35);
     EXPECT_TRUE(kv->kc_done);
     EXPECT_TRUE(kv->kd_done);
@@ -292,7 +292,7 @@ TEST_F(KlistParaTest, SetAfterVC)
                                 GlobalV::RANK_IN_POOL,
                                 GlobalV::MY_POOL);
     ModuleSymmetry::Symmetry::symm_flag = 1;
-    kv->set(symm, k_file, kv->nspin, GlobalC::ucell.G, GlobalC::ucell.latvec, GlobalV::ofs_running);
+    kv->set(symm, k_file, kv->nspin, GlobalC::ucell.G, GlobalC::ucell.latvec, GlobalC::ucell,GlobalV::ofs_running);
     EXPECT_EQ(kv->get_nkstot(), 35);
     EXPECT_TRUE(kv->kc_done);
     EXPECT_TRUE(kv->kd_done);
