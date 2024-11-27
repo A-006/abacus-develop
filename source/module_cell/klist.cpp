@@ -59,12 +59,12 @@ int K_Vectors::get_ik_global(const int& ik, const int& nkstot)
     }
 }
 
-void K_Vectors::set(const ModuleSymmetry::Symmetry& symm,
+void K_Vectors::set(const UnitCell& ucell,
+                    const ModuleSymmetry::Symmetry& symm,
                     const std::string& k_file_name,
                     const int& nspin_in,
                     const ModuleBase::Matrix3& reciprocal_vec,
                     const ModuleBase::Matrix3& latvec,
-                    const UnitCell& ucell,
                     std::ofstream& ofs)
 {
     ModuleBase::TITLE("K_Vectors", "set");
@@ -94,7 +94,7 @@ void K_Vectors::set(const ModuleSymmetry::Symmetry& symm,
     this->nspin = (this->nspin == 4) ? 1 : this->nspin;
 
     // read KPT file and generate K-point grid
-    bool read_succesfully = this->read_kpoints(k_file_name,ucell);
+    bool read_succesfully = this->read_kpoints(ucell,k_file_name);
 #ifdef __MPI
     Parallel_Common::bcast_bool(read_succesfully);
 #endif
@@ -210,8 +210,8 @@ void K_Vectors::renew(const int& kpoint_number)
 
 // Read the KPT file, which contains K-point coordinates, weights, and grid size information
 // Generate K-point grid according to different parameters of the KPT file
-bool K_Vectors::read_kpoints(const std::string& fn,
-                             const UnitCell& ucell)
+bool K_Vectors::read_kpoints(const UnitCell& ucell,
+                             const std::string& fn)
 {
     ModuleBase::TITLE("K_Vectors", "read_kpoints");
     if (GlobalV::MY_RANK != 0)
