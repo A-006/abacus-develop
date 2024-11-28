@@ -265,7 +265,7 @@ void ESolver_KS_LCAO<TK, TR>::before_scf(UnitCell& ucell, const int istep)
     }
 #endif // __EXX
 
-    this->pelec->init_scf(istep, this->sf.strucFac, ucell.symm);
+    this->pelec->init_scf(istep, this->sf.strucFac, this->ppcell.numeric, ucell.symm);
 
     //! output the initial charge density
     if (PARAM.inp.out_chg[0] == 2)
@@ -370,6 +370,14 @@ void ESolver_KS_LCAO<TK, TR>::before_scf(UnitCell& ucell, const int istep)
     }
 
     this->p_hamilt->non_first_scf = istep;
+
+    // update in ion-step
+    if( PARAM.inp.rdmft == true )
+    {
+        // necessary operation of these parameters have be done with p_esolver->Init() in source/driver_run.cpp
+        rdmft_solver.update_ion(ucell, *(this->pw_rho), this->ppcell.vloc, this->sf.strucFac);   // add by jghan, 2024-03-16/2024-10-08
+    }
+
     return;
 }
 
