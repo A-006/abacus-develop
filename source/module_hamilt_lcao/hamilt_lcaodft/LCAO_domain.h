@@ -41,6 +41,7 @@ void build_Nonlocal_mu_new(const Parallel_Orbitals& pv,
 void grid_prepare(const Grid_Technique& gt,
                   Gint_Gamma& gint_gamma,
                   Gint_k& gint_k,
+                  const UnitCell& ucell,
                   const LCAO_Orbitals& orb,
                   const ModulePW::PW_Basis& rhopw,
                   const ModulePW::PW_Basis_Big& bigpw);

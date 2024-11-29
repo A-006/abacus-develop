@@ -174,7 +174,7 @@ void ESolver_KS_LCAO<TK, TR>::before_scf(UnitCell& ucell, const int istep)
     }
 
     // prepare grid in Gint
-    LCAO_domain::grid_prepare(this->GridT, this->GG, this->GK, orb_, *this->pw_rho, *this->pw_big);
+    LCAO_domain::grid_prepare(this->GridT, this->GG, this->GK, ucell, orb_, *this->pw_rho, *this->pw_big);
 
     // init Hamiltonian
     if (this->p_hamilt != nullptr)
