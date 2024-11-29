@@ -209,7 +209,8 @@ void DFTU::init(UnitCell& cell, // unitcell class
     return;
 }
 
-void DFTU::cal_energy_correction(const int istep)
+void DFTU::cal_energy_correction(const UnitCell& ucell,
+                                 const int istep)
 {
     ModuleBase::TITLE("DFTU", "cal_energy_correction");
     ModuleBase::timer::tick("DFTU", "cal_energy_correction");
@@ -221,18 +222,18 @@ void DFTU::cal_energy_correction(const int istep)
     this->EU = 0.0;
     double EU_dc = 0.0;
 
-    for (int T = 0; T < GlobalC::ucell.ntype; T++)
+    for (int T = 0; T < ucell.ntype; T++)
     {
-        const int NL = GlobalC::ucell.atoms[T].nwl + 1;
+        const int NL = ucell.atoms[T].nwl + 1;
         const int LC = orbital_corr[T];
-        for (int I = 0; I < GlobalC::ucell.atoms[T].na; I++)
+        for (int I = 0; I < ucell.atoms[T].na; I++)
         {
             if (LC == -1)
             {
                 continue;
             }
 
-            const int iat = GlobalC::ucell.itia2iat(T, I);
+            const int iat = ucell.itia2iat(T, I);
             const int L = orbital_corr[T];
 
             for (int l = 0; l < NL; l++)
@@ -242,7 +243,7 @@ void DFTU::cal_energy_correction(const int istep)
                     continue;
                 }
 
-                const int N = GlobalC::ucell.atoms[T].l_nchi[l];
+                const int N = ucell.atoms[T].l_nchi[l];
 
                 const int m_tot = 2 * l + 1;
 

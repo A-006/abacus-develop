@@ -45,7 +45,7 @@ class DFTU
               );
 
     // calculate the energy correction
-    void cal_energy_correction(const int istep);
+    void cal_energy_correction(const UnitCell& ucell, const int istep);
     double get_energy(){return EU;}
     void uramping_update(); // update U by uramping
     bool u_converged(); // check if U is converged
