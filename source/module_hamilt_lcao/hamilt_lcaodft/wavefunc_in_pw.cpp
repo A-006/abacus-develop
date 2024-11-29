@@ -134,7 +134,7 @@ void Wavefunc_in_pw::make_table_q(
 					}
 				}
 				double* table = new double[PARAM.globalv.nqx];
-				Wavefunc_in_pw::integral(meshr, psir, radial, rab, L, table);
+				Wavefunc_in_pw::integral(ucell,meshr, psir, radial, rab, L, table);
 				for(int iq=0; iq<PARAM.globalv.nqx; iq++)
 				{
 					//double energy_q = pow(iq * PARAM.globalv.dq,2);
