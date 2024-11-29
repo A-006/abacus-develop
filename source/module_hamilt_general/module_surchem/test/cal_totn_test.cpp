@@ -104,7 +104,8 @@ TEST_F(cal_totn_test, induced_charge)
     std::string precision_flag, device_flag;
     precision_flag = "double";
     device_flag = "cpu";
-
+    Setcell::setupcell(ucell);
+    
     ModulePW::PW_Basis pwtest(device_flag, precision_flag);
     GlobalC::rhopw = &pwtest;
     ModuleBase::Matrix3 latvec;
