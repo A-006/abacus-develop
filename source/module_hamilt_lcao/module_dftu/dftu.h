@@ -169,22 +169,23 @@ private:
     //=============================================================
   public:
 
-   void force_stress(const elecstate::ElecState* pelec,
-		   const Parallel_Orbitals& pv,
-		   ForceStressArrays& fsr,
-		   ModuleBase::matrix& force_dftu,
-		   ModuleBase::matrix& stress_dftu,
-		   const K_Vectors& kv);
+   void force_stress(const UnitCell& ucell,
+                     const elecstate::ElecState* pelec,
+                     const Parallel_Orbitals& pv,
+                     ForceStressArrays& fsr,
+                     ModuleBase::matrix& force_dftu,
+                     ModuleBase::matrix& stress_dftu,
+                     const K_Vectors& kv);
 
   private:
 
-   void cal_force_k(
-		   ForceStressArrays &fsr,
-		   const Parallel_Orbitals &pv,
-		   const int ik,
-		   const std::complex<double>* rho_VU,
-		   ModuleBase::matrix& force_dftu,
-		   const std::vector<ModuleBase::Vector3<double>>& kvec_d);
+   void cal_force_k(const UnitCell &ucell,
+                    ForceStressArrays &fsr,
+                    const Parallel_Orbitals &pv,
+                    const int ik,
+                    const std::complex<double>* rho_VU,
+                    ModuleBase::matrix& force_dftu,
+                    const std::vector<ModuleBase::Vector3<double>>& kvec_d);
 
     void cal_stress_k(
 			ForceStressArrays &fsr,
@@ -194,13 +195,13 @@ private:
 			ModuleBase::matrix& stress_dftu,
 			const std::vector<ModuleBase::Vector3<double>>& kvec_d);
 
-	void cal_force_gamma(
-			const double* rho_VU, 
-			const Parallel_Orbitals &pv,
-			double* dsloc_x,
-			double* dsloc_y,
-			double* dsloc_z,
-			ModuleBase::matrix& force_dftu);
+	void cal_force_gamma(const UnitCell &ucell,
+                       const double* rho_VU, 
+                       const Parallel_Orbitals &pv,
+                       double* dsloc_x,
+                       double* dsloc_y,
+                       double* dsloc_z,
+                       ModuleBase::matrix& force_dftu);
 
 	void cal_stress_gamma(
 			const UnitCell &ucell,
