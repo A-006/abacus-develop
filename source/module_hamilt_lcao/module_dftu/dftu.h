@@ -147,13 +147,14 @@ private:
     // dim = 4-6 : dS * dR, for stress
 
     void folding_matrix_k(
+        const UnitCell &ucell,
         ForceStressArrays &fsr,
         const Parallel_Orbitals &pv,
-		const int ik, 
-		const int dim1, 
-		const int dim2, 
-		std::complex<double>* mat_k, 
-		const std::vector<ModuleBase::Vector3<double>> &kvec_d);
+        const int ik, 
+        const int dim1, 
+        const int dim2, 
+        std::complex<double>* mat_k, 
+        const std::vector<ModuleBase::Vector3<double>> &kvec_d);
 
 
     /**
@@ -188,6 +189,7 @@ private:
                     const std::vector<ModuleBase::Vector3<double>>& kvec_d);
 
     void cal_stress_k(
+      const UnitCell &ucell,
 			ForceStressArrays &fsr,
 			const Parallel_Orbitals &pv,
 			const int ik,

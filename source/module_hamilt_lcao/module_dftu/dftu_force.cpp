@@ -211,7 +211,7 @@ void DFTU::force_stress(const UnitCell& ucell,
             }
             if (PARAM.inp.cal_stress)
             {
-                cal_stress_k(fsr, pv, ik, &rho_VU[0], stress_dftu, kv.kvec_d);
+                cal_stress_k(ucell,fsr, pv, ik, &rho_VU[0], stress_dftu, kv.kvec_d);
             }
         } // ik
     }
@@ -269,7 +269,7 @@ void DFTU::cal_force_k(const UnitCell& ucell,
 
     for (int dim = 0; dim < 3; dim++)
     {
-        this->folding_matrix_k(fsr, pv, ik, dim + 1, 0, &dSm_k[0], kvec_d);
+        this->folding_matrix_k(ucell,fsr, pv, ik, dim + 1, 0, &dSm_k[0], kvec_d);
 
 #ifdef __MPI
         pzgemm_(&transN,
@@ -376,7 +376,8 @@ void DFTU::cal_force_k(const UnitCell& ucell,
     return;
 }
 
-void DFTU::cal_stress_k(ForceStressArrays& fsr,
+void DFTU::cal_stress_k(const UnitCell& ucell,
+                        ForceStressArrays& fsr,
                         const Parallel_Orbitals& pv,
                         const int ik,
                         const std::complex<double>* rho_VU,
@@ -401,7 +402,8 @@ void DFTU::cal_stress_k(ForceStressArrays& fsr,
     {
         for (int dim2 = dim1; dim2 < 3; dim2++)
         {
-            this->folding_matrix_k(fsr, // mohan add 2024-06-16
+            this->folding_matrix_k(ucell,
+                                   fsr, // mohan add 2024-06-16
                                    pv,
                                    ik,
                                    dim1 + 4,
