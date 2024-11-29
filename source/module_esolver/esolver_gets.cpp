@@ -108,7 +108,8 @@ void ESolver_GetS::runner(UnitCell& ucell, const int istep)
         if (PARAM.inp.nspin == 4)
         {
             this->p_hamilt
-                = new hamilt::HamiltLCAO<std::complex<double>, std::complex<double>>(&this->pv,
+                = new hamilt::HamiltLCAO<std::complex<double>, std::complex<double>>(ucell,
+                                                                                     &this->pv,
                                                                                      this->kv,
                                                                                      *(two_center_bundle_.overlap_orb),
                                                                                      orb_.cutoffs());
@@ -117,7 +118,8 @@ void ESolver_GetS::runner(UnitCell& ucell, const int istep)
         }
         else
         {
-            this->p_hamilt = new hamilt::HamiltLCAO<std::complex<double>, double>(&this->pv,
+            this->p_hamilt = new hamilt::HamiltLCAO<std::complex<double>, double>(ucell,
+                                                                                  &this->pv,
                                                                                   this->kv,
                                                                                   *(two_center_bundle_.overlap_orb),
                                                                                   orb_.cutoffs());
