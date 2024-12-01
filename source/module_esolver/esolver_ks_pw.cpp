@@ -205,7 +205,7 @@ void ESolver_KS_PW<T, Device>::before_all_runners(UnitCell& ucell, const Input_p
     this->ppcell.init(ucell.ntype, &this->sf, this->pw_wfc);
 
     //! initalize local pseudopotential
-    this->ppcell.init_vloc(this->pw_rhod);
+    this->ppcell.init_vloc(ucell,this->pw_rhod);
     ModuleBase::GlobalFunc::DONE(GlobalV::ofs_running, "LOCAL POTENTIAL");
 
     //! Initalize non-local pseudopotential

@@ -112,7 +112,7 @@ void ESolver_OF::before_all_runners(UnitCell& ucell, const Input_para& inp)
     ModuleBase::GlobalFunc::DONE(GlobalV::ofs_running, "INIT BASIS");
 
     // initialize local pseudopotential
-    this->locpp.init_vloc(pw_rho);
+    this->locpp.init_vloc(ucell,pw_rho);
     ModuleBase::GlobalFunc::DONE(GlobalV::ofs_running, "LOCAL POTENTIAL");
 
 
