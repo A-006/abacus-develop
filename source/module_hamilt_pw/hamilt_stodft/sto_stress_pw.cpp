@@ -49,7 +49,7 @@ void Sto_Stress_PW<FPTYPE, Device>::cal_stress(ModuleBase::matrix& sigmatot,
     {
         sigmaxc(i, i) = -(elec.f_en.etxc - elec.f_en.vtxc) / this->ucell->omega;
     }
-    this->stress_gga(sigmaxc, rho_basis, chr);
+    this->stress_gga(ucell_in,sigmaxc, rho_basis, chr);
 
     // local contribution
     this->stress_loc(sigmaloc, rho_basis, nlpp->vloc, p_sf, true, chr);

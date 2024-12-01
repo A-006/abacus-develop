@@ -126,7 +126,8 @@ class Stress_Func
                      int type); // used in nonlinear core correction stress
                      
     // 6) the stress from the exchange-correlation functional term
-    void stress_gga(ModuleBase::matrix& sigma,
+    void stress_gga(const UnitCell& ucell,
+                    ModuleBase::matrix& sigma,
                     ModulePW::PW_Basis* rho_basis,
                     const Charge* const chr); // gga part in both PW and LCAO basis
     void stress_mgga(ModuleBase::matrix& sigma,

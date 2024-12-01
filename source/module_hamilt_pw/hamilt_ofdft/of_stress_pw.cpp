@@ -73,7 +73,7 @@ void OF_Stress_PW::cal_stress(ModuleBase::matrix& sigmatot,
     {
         sigmaxc(i, i) = -(pelec->f_en.etxc - pelec->f_en.vtxc) / ucell.omega;
     }
-    stress_gga(sigmaxc, this->rhopw, pelec->charge);
+    stress_gga(ucell,sigmaxc, this->rhopw, pelec->charge);
 
     // local contribution
     stress_loc(sigmaloc, this->rhopw, locpp.vloc, p_sf, true, pelec->charge);

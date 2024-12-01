@@ -1033,7 +1033,7 @@ void Force_Stress_LCAO<T>::calStressPwPart(const UnitCell& ucell,
         sigmaxc(i, i) = -etxc / ucell.omega;
     }
     // Exchange-correlation for PBE
-    sc_pw.stress_gga(sigmaxc, rhopw, chr);
+    sc_pw.stress_gga(ucell,sigmaxc, rhopw, chr);
 
     return;
 }
