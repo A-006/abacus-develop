@@ -28,7 +28,7 @@ class pseudopot_cell_vnl : public pseudopot_cell_vl
               const UnitCell& cell,
               Structure_Factor* psf_in,
               const ModulePW::PW_Basis_K* wfc_basis = nullptr,
-              const bool allocate_vkb = 1);
+              const bool allocate_vkb = true);
 
     double cell_factor; // LiuXh add 20180619
 
