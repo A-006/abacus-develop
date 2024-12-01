@@ -885,7 +885,7 @@ void ESolver_KS_LCAO<TK, TR>::iter_finish(UnitCell& ucell, const int istep, int&
             }
             GlobalC::dftu.cal_energy_correction(ucell,istep);
         }
-        GlobalC::dftu.output();
+        GlobalC::dftu.output(ucell);
     }
 
     // (7) for deepks, calculate delta_e

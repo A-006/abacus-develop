@@ -179,9 +179,9 @@ void DFTU::init(UnitCell& cell, // unitcell class
     {
         std::stringstream sst;
         sst << "initial_onsite.dm";
-        this->read_occup_m(sst.str());
+        this->read_occup_m(cell,sst.str());
 #ifdef __MPI
-        this->local_occup_bcast();
+        this->local_occup_bcast(cell);
 #endif
 
         initialed_locale = true;
@@ -193,9 +193,9 @@ void DFTU::init(UnitCell& cell, // unitcell class
         {
             std::stringstream sst;
             sst << PARAM.globalv.global_out_dir << "onsite.dm";
-            this->read_occup_m(sst.str());
+            this->read_occup_m(cell,sst.str());
 #ifdef __MPI
-            this->local_occup_bcast();
+            this->local_occup_bcast(cell);
 #endif
             initialed_locale = true;
         }

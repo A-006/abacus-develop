@@ -230,12 +230,15 @@ private:
     // For reading/writing/broadcasting/copying relevant data structures
     //=============================================================
   public:
-    void output();
+    void output(const UnitCell& ucell);
 
   private:
-    void write_occup_m(std::ofstream& ofs, bool diag=false);
-    void read_occup_m(const std::string& fn);
-    void local_occup_bcast();
+    void write_occup_m(const UnitCell& ucell,
+                       std::ofstream& ofs, 
+                       bool diag=false);
+    void read_occup_m(const UnitCell& ucell,
+                      const std::string& fn);
+    void local_occup_bcast(const UnitCell& ucell);
 
     //=============================================================
     // In dftu_yukawa.cpp
