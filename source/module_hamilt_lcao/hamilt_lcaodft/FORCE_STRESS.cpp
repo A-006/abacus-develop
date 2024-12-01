@@ -868,11 +868,11 @@ void Force_Stress_LCAO<T>::calForcePwPart(const UnitCell& ucell,
     // local pseudopotential force:
     // use charge density; plane wave; local pseudopotential;
     //--------------------------------------------------------
-    f_pw.cal_force_loc(fvl_dvl, rhopw, nlpp.vloc, chr);
+    f_pw.cal_force_loc(ucell,fvl_dvl, rhopw, nlpp.vloc, chr);
     //--------------------------------------------------------
     // ewald force: use plane wave only.
     //--------------------------------------------------------
-    f_pw.cal_force_ew(fewalds, rhopw, &sf); // remain problem
+    f_pw.cal_force_ew(ucell,fewalds, rhopw, &sf); // remain problem
 
     //--------------------------------------------------------
     // force due to core correlation.

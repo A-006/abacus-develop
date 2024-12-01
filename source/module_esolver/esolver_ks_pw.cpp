@@ -619,7 +619,8 @@ void ESolver_KS_PW<T, Device>::cal_force(UnitCell& ucell, ModuleBase::matrix& fo
                            : reinterpret_cast<psi::Psi<std::complex<double>, Device>*>(this->kspw_psi);
 
     // Calculate forces
-    ff.cal_force(force,
+    ff.cal_force(ucell,
+                 force,
                  *this->pelec,
                  this->pw_rhod,
                  &ucell.symm,
