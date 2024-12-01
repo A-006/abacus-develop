@@ -1008,7 +1008,7 @@ void Force_Stress_LCAO<T>::calStressPwPart(const UnitCell& ucell,
     // local pseudopotential stress:
     // use charge density; plane wave; local pseudopotential;
     //--------------------------------------------------------
-    sc_pw.stress_loc(sigmadvl, rhopw, nlpp.vloc, &sf, 0, chr);
+    sc_pw.stress_loc(ucell,sigmadvl, rhopw, nlpp.vloc, &sf, 0, chr);
 
     //--------------------------------------------------------
     // hartree term
