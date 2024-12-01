@@ -16,6 +16,7 @@ void HSolverPW_SDFT<T, Device>::solve(hamilt::Hamilt<T, Device>* pHamilt,
                                       psi::Psi<T>& psi_cpu,
                                       elecstate::ElecState* pes,
                                       ModulePW::PW_Basis_K* wfc_basis,
+                                      const UnitCell& ucell,
                                       Stochastic_WF<T, Device>& stowf,
                                       const int istep,
                                       const int iter,
@@ -141,7 +142,7 @@ void HSolverPW_SDFT<T, Device>::solve(hamilt::Hamilt<T, Device>* pHamilt,
         pes_pw->psiToRho(psi);
     }
     // calculate stochastic rho
-    stoiter.cal_storho(stowf, pes_pw, wfc_basis);
+    stoiter.cal_storho(stowf, pes_pw, ucell,wfc_basis);
 
     // will do rho symmetry and energy calculation in esolver
     ModuleBase::timer::tick("HSolverPW_SDFT", "solve");

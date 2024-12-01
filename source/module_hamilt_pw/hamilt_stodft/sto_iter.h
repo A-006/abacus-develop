@@ -66,6 +66,7 @@ class Stochastic_Iter
      */
     void cal_storho(Stochastic_WF<T, Device>& stowf,
                     elecstate::ElecStatePW<T, Device>* pes,
+                    const UnitCell& ucell,  
                     ModulePW::PW_Basis_K* wfc_basis);
 
     /**

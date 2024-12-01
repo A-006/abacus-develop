@@ -47,6 +47,7 @@ class HSolverPW_SDFT : public HSolverPW<T, Device>
                psi::Psi<T>& psi_cpu,
                elecstate::ElecState* pes,
                ModulePW::PW_Basis_K* wfc_basis,
+               const UnitCell& ucell,
                Stochastic_WF<T, Device>& stowf,
                const int istep,
                const int iter,

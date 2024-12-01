@@ -171,6 +171,7 @@ void ESolver_SDFT_PW<T, Device>::hamilt2density_single(UnitCell& ucell, int iste
                               this->psi[0],
                               this->pelec,
                               this->pw_wfc,
+                              ucell,
                               this->stowf,
                               istep,
                               iter,
