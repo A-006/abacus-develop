@@ -147,7 +147,7 @@ namespace ModuleESolver
         }
 
         hsolver::HSolverLIP<T> hsolver_lip_obj(this->pw_wfc);
-        hsolver_lip_obj.solve(this->p_hamilt, this->kspw_psi[0], this->pelec, psig.lock().get()[0], skip_charge);
+        hsolver_lip_obj.solve(this->p_hamilt, this->kspw_psi[0], this->pelec, ucell, psig.lock().get()[0], skip_charge);
 
         // add exx
 #ifdef __EXX

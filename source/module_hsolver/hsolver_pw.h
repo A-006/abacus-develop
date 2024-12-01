@@ -39,11 +39,13 @@ class HSolverPW
     /// @param pHamilt interface to hamilt
     /// @param psi reference to psi
     /// @param pes interface to elecstate
+    /// @param ucell reference to unitcell
     /// @param method_in dav or cg
     /// @param skip_charge
     void solve(hamilt::Hamilt<T, Device>* pHamilt,
                psi::Psi<T, Device>& psi,
                elecstate::ElecState* pes,
+               const UnitCell& ucell,
                double* out_eigenvalues,
                const int rank_in_pool_in,
                const int nproc_in_pool_in,
@@ -89,11 +91,11 @@ class HSolverPW
     std::vector<double> ethr_band;
 
 #ifdef USE_PAW
-    void paw_func_in_kloop(const int ik);
+    void paw_func_in_kloop(const UnitCell& ucell, const int ik);
 
     void call_paw_cell_set_currentk(const int ik);
 
-    void paw_func_after_kloop(psi::Psi<T, Device>& psi, elecstate::ElecState* pes);
+    void paw_func_after_kloop(const UnitCell& ucell, psi::Psi<T, Device>& psi, elecstate::ElecState* pes);
 #endif
 };
 
