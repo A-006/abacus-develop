@@ -64,7 +64,7 @@ void HSolverLIP<T>::paw_func_in_kloop(const UnitCell& ucell, const int ik)
                                     this->wfc_basis->get_ig2iy(ik).data(),
                                     this->wfc_basis->get_ig2iz(ik).data(),
                                     (const double**)kpg,
-                                    GlobalC::ucell.tpiba,
+                                    ucell.tpiba,
                                     (const double**)gcar);
 
         std::vector<double>().swap(kpt);
@@ -131,7 +131,7 @@ void HSolverLIP<T>::paw_func_after_kloop(const UnitCell& ucell, psi::Psi<T>& psi
                                         this->wfc_basis->get_ig2iy(ik).data(),
                                         this->wfc_basis->get_ig2iz(ik).data(),
                                         (const double**)kpg,
-                                        GlobalC::ucell.tpiba,
+                                        ucell.tpiba,
                                         (const double**)gcar);
 
             std::vector<double>().swap(kpt);
@@ -164,7 +164,7 @@ void HSolverLIP<T>::paw_func_after_kloop(const UnitCell& ucell, psi::Psi<T>& psi
         {
             GlobalC::paw_cell.get_rhoijp(rhoijp, rhoijselect, nrhoijsel);
 
-            for (int iat = 0; iat < GlobalC::ucell.nat; iat++)
+            for (int iat = 0; iat < ucell.nat; iat++)
             {
                 GlobalC::paw_cell.set_rhoij(iat,
                                             nrhoijsel[iat],
@@ -176,7 +176,7 @@ void HSolverLIP<T>::paw_func_after_kloop(const UnitCell& ucell, psi::Psi<T>& psi
 #else
         GlobalC::paw_cell.get_rhoijp(rhoijp, rhoijselect, nrhoijsel);
 
-        for (int iat = 0; iat < GlobalC::ucell.nat; iat++)
+        for (int iat = 0; iat < ucell.nat; iat++)
         {
             GlobalC::paw_cell.set_rhoij(iat,
                                         nrhoijsel[iat],
