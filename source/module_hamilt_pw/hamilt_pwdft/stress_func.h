@@ -133,7 +133,8 @@ class Stress_Func
                     ModuleBase::matrix& sigma,
                     ModulePW::PW_Basis* rho_basis,
                     const Charge* const chr); // gga part in both PW and LCAO basis
-    void stress_mgga(ModuleBase::matrix& sigma,
+    void stress_mgga(const UnitCell& ucell,
+                     ModuleBase::matrix& sigma,
                      const ModuleBase::matrix& wg,
                      const ModuleBase::matrix& v_ofk,
                      const Charge* const chr,

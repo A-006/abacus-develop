@@ -79,7 +79,8 @@ void Stress_PW<FPTYPE, Device>::cal_stress(ModuleBase::matrix& sigmatot,
     this->stress_gga(ucell,sigmaxc, rho_basis, pelec->charge);
     if (XC_Functional::get_func_type() == 3 || XC_Functional::get_func_type() == 5)
     {
-        this->stress_mgga(sigmaxc,
+        this->stress_mgga(ucell,
+                          sigmaxc,
                           this->pelec->wg,
                           this->pelec->pot->get_effective_vofk(),
                           pelec->charge,
