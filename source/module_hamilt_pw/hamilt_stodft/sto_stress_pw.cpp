@@ -39,7 +39,7 @@ void Sto_Stress_PW<FPTYPE, Device>::cal_stress(ModuleBase::matrix& sigmatot,
     this->sto_stress_kin(sigmakin, wg, p_symm, p_kv, wfc_basis, psi_in, stowf);
 
     // hartree contribution
-    this->stress_har(sigmahar, rho_basis, true, chr);
+    this->stress_har(ucell_in,sigmahar, rho_basis, true, chr);
 
     // ewald contribution
     this->stress_ewa(ucell_in,sigmaewa, rho_basis, true);

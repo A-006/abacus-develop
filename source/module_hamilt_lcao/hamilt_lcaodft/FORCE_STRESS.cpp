@@ -1013,7 +1013,7 @@ void Force_Stress_LCAO<T>::calStressPwPart(const UnitCell& ucell,
     //--------------------------------------------------------
     // hartree term
     //--------------------------------------------------------
-    sc_pw.stress_har(sigmahar, rhopw, 0, chr);
+    sc_pw.stress_har(ucell,sigmahar, rhopw, 0, chr);
 
     //--------------------------------------------------------
     // ewald stress: use plane wave only.

@@ -70,7 +70,8 @@ class Stress_Func
                     const psi::Psi<complex<FPTYPE>, Device>* psi_in = nullptr); // electron kinetic part in PW basis
 
     // 2) the stress from the Hartree term
-    void stress_har(ModuleBase::matrix& sigma,
+    void stress_har(const UnitCell& ucell,
+                    ModuleBase::matrix& sigma,
                     ModulePW::PW_Basis* rho_basis,
                     const bool is_pw,
                     const Charge* const chr); // hartree part in PW or LCAO basis

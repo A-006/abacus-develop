@@ -66,7 +66,7 @@ void Stress_PW<FPTYPE, Device>::cal_stress(ModuleBase::matrix& sigmatot,
     this->stress_kin(sigmakin, this->pelec->wg, p_symm, p_kv, wfc_basis, ucell, d_psi_in);
 
     // hartree contribution
-    this->stress_har(sigmahar, rho_basis, 1, pelec->charge);
+    this->stress_har(ucell,sigmahar, rho_basis, 1, pelec->charge);
 
     // ewald contribution
     this->stress_ewa(ucell,sigmaewa, rho_basis, 1);

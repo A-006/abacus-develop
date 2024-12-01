@@ -63,7 +63,7 @@ void OF_Stress_PW::cal_stress(ModuleBase::matrix& sigmatot,
     }
 
     // hartree contribution
-    stress_har(sigmahar, this->rhopw, true, pelec->charge);
+    stress_har(ucell,sigmahar, this->rhopw, true, pelec->charge);
 
     // ewald contribution
     stress_ewa(ucell,sigmaewa, this->rhopw, true);
