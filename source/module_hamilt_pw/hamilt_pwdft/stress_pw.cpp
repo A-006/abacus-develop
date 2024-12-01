@@ -69,7 +69,7 @@ void Stress_PW<FPTYPE, Device>::cal_stress(ModuleBase::matrix& sigmatot,
     this->stress_har(sigmahar, rho_basis, 1, pelec->charge);
 
     // ewald contribution
-    this->stress_ewa(sigmaewa, rho_basis, 1);
+    this->stress_ewa(ucell,sigmaewa, rho_basis, 1);
 
     // xc contribution: add gradient corrections(non diagonal)
     for (int i = 0; i < 3; i++)

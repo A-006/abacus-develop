@@ -77,7 +77,8 @@ class Stress_Func
 
     // 3) the stress from the ewald term (ion-ion intraction under
     //		periodic boundary conditions).
-    void stress_ewa(ModuleBase::matrix& sigma,
+    void stress_ewa(const UnitCell& ucell,
+                    ModuleBase::matrix& sigma,
                     ModulePW::PW_Basis* rho_basis,
                     const bool is_pw); // ewald part in PW or LCAO basis
 

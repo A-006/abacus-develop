@@ -66,7 +66,7 @@ void OF_Stress_PW::cal_stress(ModuleBase::matrix& sigmatot,
     stress_har(sigmahar, this->rhopw, true, pelec->charge);
 
     // ewald contribution
-    stress_ewa(sigmaewa, this->rhopw, true);
+    stress_ewa(ucell,sigmaewa, this->rhopw, true);
 
     // xc contribution: add gradient corrections(non diagonal)
     for (int i = 0; i < 3; i++)

@@ -1018,7 +1018,7 @@ void Force_Stress_LCAO<T>::calStressPwPart(const UnitCell& ucell,
     //--------------------------------------------------------
     // ewald stress: use plane wave only.
     //--------------------------------------------------------
-    sc_pw.stress_ewa(sigmaewa, rhopw, 0); // remain problem
+    sc_pw.stress_ewa(ucell,sigmaewa, rhopw, 0); // remain problem
 
     //--------------------------------------------------------
     // stress due to core correlation.
