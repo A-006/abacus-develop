@@ -154,6 +154,7 @@ void Stochastic_Iter<T, Device>::sum_stoeband(Stochastic_WF<T, Device>& stowf,
 template <typename T, typename Device>
 void Stochastic_Iter<T, Device>::cal_storho(Stochastic_WF<T, Device>& stowf,
                                              elecstate::ElecStatePW<T, Device>* pes,
+                                             const UnitCell& ucell,
                                              ModulePW::PW_Basis_K* wfc_basis)
 {
 }
