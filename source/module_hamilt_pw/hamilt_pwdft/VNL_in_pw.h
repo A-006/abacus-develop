@@ -48,7 +48,8 @@ class pseudopot_cell_vnl : public pseudopot_cell_vl
 
     void initgradq_vnl(const UnitCell& cell);
 
-    void getgradq_vnl(const int ik);
+    void getgradq_vnl(const UnitCell& ucell,
+                      const int ik);
 
     //===============================================================
     // MEMBER VARIABLES :
