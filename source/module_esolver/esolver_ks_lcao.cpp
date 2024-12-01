@@ -881,7 +881,7 @@ void ESolver_KS_LCAO<TK, TR>::iter_finish(UnitCell& ucell, const int istep, int&
             {
                 const std::vector<std::vector<TK>>& tmp_dm
                     = dynamic_cast<elecstate::ElecStateLCAO<TK>*>(this->pelec)->get_DM()->get_DMK_vector();
-                ModuleDFTU::dftu_cal_occup_m(iter, tmp_dm, this->kv, this->p_chgmix->get_mixing_beta(), this->p_hamilt);
+                ModuleDFTU::dftu_cal_occup_m(iter, ucell,tmp_dm, this->kv, this->p_chgmix->get_mixing_beta(), this->p_hamilt);
             }
             GlobalC::dftu.cal_energy_correction(ucell,istep);
         }

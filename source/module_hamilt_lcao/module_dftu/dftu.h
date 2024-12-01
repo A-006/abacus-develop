@@ -89,16 +89,25 @@ class DFTU
     //=============================================================
   public:
     // calculate the local occupation number matrix
-    void cal_occup_m_k(const int iter, const std::vector<std::vector<std::complex<double>>>& dm_k, const K_Vectors& kv, const double& mixing_beta, hamilt::Hamilt<std::complex<double>>* p_ham);
-    void cal_occup_m_gamma(const int iter, const std::vector<std::vector<double>>& dm_gamma, const double& mixing_beta, hamilt::Hamilt<double>* p_ham);
+    void cal_occup_m_k(const int iter, 
+                       const UnitCell& ucell,
+                       const std::vector<std::vector<std::complex<double>>>& dm_k, 
+                       const K_Vectors& kv, 
+                       const double& mixing_beta, 
+                       hamilt::Hamilt<std::complex<double>>* p_ham);
+    void cal_occup_m_gamma(const int iter, 
+                           const UnitCell& ucell,
+                           const std::vector<std::vector<double>>& dm_gamma, 
+                           const double& mixing_beta, 
+                           hamilt::Hamilt<double>* p_ham);
 
     // dftu can be calculated only after locale has been initialed
     bool initialed_locale = false;
 
   private:
-    void copy_locale();
-    void zero_locale();
-    void mix_locale(const double& mixing_beta);
+    void copy_locale(const UnitCell& ucell);
+    void zero_locale(const UnitCell& ucell);
+    void mix_locale(const UnitCell& ucell,const double& mixing_beta);
 
 public:
     // local occupancy matrix of the correlated subspace
@@ -270,6 +279,7 @@ private:
 
 template <typename T>
 void dftu_cal_occup_m(const int iter,
+                      const UnitCell& ucell,
                       const std::vector<std::vector<T>>& dm,
                       const K_Vectors& kv,
                       const double& mixing_beta,

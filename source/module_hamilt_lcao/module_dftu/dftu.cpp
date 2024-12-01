@@ -185,7 +185,7 @@ void DFTU::init(UnitCell& cell, // unitcell class
 #endif
 
         initialed_locale = true;
-        this->copy_locale();
+        this->copy_locale(cell);
     }
     else
     {
@@ -201,7 +201,7 @@ void DFTU::init(UnitCell& cell, // unitcell class
         }
         else
         {
-            this->zero_locale();
+            this->zero_locale(cell);
         }
     }
 
@@ -423,22 +423,24 @@ const hamilt::HContainer<double>* DFTU::get_dmr(int ispin) const
 //! dftu occupation matrix for gamma only using dm(double)
 template <>
 void dftu_cal_occup_m(const int iter,
+                      const UnitCell& ucell,
                       const std::vector<std::vector<double>>& dm,
                       const K_Vectors& kv,
                       const double& mixing_beta,
                       hamilt::Hamilt<double>* p_ham)
 {
-    GlobalC::dftu.cal_occup_m_gamma(iter, dm, mixing_beta, p_ham);
+    GlobalC::dftu.cal_occup_m_gamma(iter, ucell ,dm, mixing_beta, p_ham);
 }
 
 //! dftu occupation matrix for multiple k-points using dm(complex)
 template <>
 void dftu_cal_occup_m(const int iter,
+                      const UnitCell& ucell,
                       const std::vector<std::vector<std::complex<double>>>& dm,
                       const K_Vectors& kv,
                       const double& mixing_beta,
                       hamilt::Hamilt<std::complex<double>>* p_ham)
 {
-    GlobalC::dftu.cal_occup_m_k(iter, dm, kv, mixing_beta, p_ham);
+    GlobalC::dftu.cal_occup_m_k(iter,ucell, dm, kv, mixing_beta, p_ham);
 }
 } // namespace ModuleDFTU
