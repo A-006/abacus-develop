@@ -30,7 +30,6 @@ class HSolverLIP
     void solve(hamilt::Hamilt<T>* pHamilt,
                psi::Psi<T>& psi,
                elecstate::ElecState* pes,
-               const UnitCell& ucell,
                psi::Psi<T>& transform,
                const bool skip_charge);
 
@@ -38,9 +37,9 @@ class HSolverLIP
     ModulePW::PW_Basis_K* wfc_basis;
 
 #ifdef USE_PAW
-    void paw_func_in_kloop(const UnitCell& ucell,const int ik);
+    void paw_func_in_kloop(const int ik);
 
-    void paw_func_after_kloop(const UnitCell& ucell, psi::Psi<T>& psi, elecstate::ElecState* pes);
+    void paw_func_after_kloop(psi::Psi<T>& psi, elecstate::ElecState* pes);
 #endif
 };
 

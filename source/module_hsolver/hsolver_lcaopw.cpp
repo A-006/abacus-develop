@@ -24,7 +24,7 @@ namespace hsolver
 
 #ifdef USE_PAW
 template <typename T>
-void HSolverLIP<T>::paw_func_in_kloop(const UnitCell& ucell, const int ik)
+void HSolverLIP<T>::paw_func_in_kloop(const int ik)
 {
     if (PARAM.inp.use_paw)
     {
@@ -83,7 +83,7 @@ void HSolverLIP<T>::paw_func_in_kloop(const UnitCell& ucell, const int ik)
 }
 
 template <typename T>
-void HSolverLIP<T>::paw_func_after_kloop(const UnitCell& ucell, psi::Psi<T>& psi, elecstate::ElecState* pes)
+void HSolverLIP<T>::paw_func_after_kloop(psi::Psi<T>& psi, elecstate::ElecState* pes)
 {
     if (PARAM.inp.use_paw)
     {
@@ -200,7 +200,6 @@ template <typename T>
 void HSolverLIP<T>::solve(hamilt::Hamilt<T>* pHamilt, // ESolver_KS_PW::p_hamilt
                           psi::Psi<T>& psi,           // ESolver_KS_PW::kspw_psi
                           elecstate::ElecState* pes,  // ESolver_KS_PW::pes
-                          const UnitCell& ucell,      
                           psi::Psi<T>& transform,
                           const bool skip_charge)
 {
@@ -213,7 +212,7 @@ void HSolverLIP<T>::solve(hamilt::Hamilt<T>* pHamilt, // ESolver_KS_PW::p_hamilt
         pHamilt->updateHk(ik);
 
 #ifdef USE_PAW
-        this->paw_func_in_kloop(ucell,ik);
+        this->paw_func_in_kloop(ik);
 #endif
 
         psi.fix_k(ik);
@@ -283,7 +282,7 @@ void HSolverLIP<T>::solve(hamilt::Hamilt<T>* pHamilt, // ESolver_KS_PW::p_hamilt
     reinterpret_cast<elecstate::ElecStatePW<T>*>(pes)->psiToRho(psi);
 
 #ifdef USE_PAW
-    this->paw_func_after_kloop(ucell,psi, pes);
+    this->paw_func_after_kloop(psi, pes);
 #endif
 
     ModuleBase::timer::tick("HSolverLIP", "solve");
