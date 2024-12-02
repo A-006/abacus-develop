@@ -100,6 +100,7 @@ void ESolver_SDFT_PW<T, Device>::before_scf(UnitCell& ucell, const int istep)
                                                          this->pw_wfc,
                                                          &this->kv,
                                                          &this->ppcell,
+                                                         &ucell, 
                                                          PARAM.globalv.npol,
                                                          &this->stoche.emin_sto,
                                                          &this->stoche.emax_sto);

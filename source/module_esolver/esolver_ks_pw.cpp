@@ -115,9 +115,9 @@ ESolver_KS_PW<T, Device>::~ESolver_KS_PW()
 }
 
 template <typename T, typename Device>
-void ESolver_KS_PW<T, Device>::allocate_hamilt()
+void ESolver_KS_PW<T, Device>::allocate_hamilt(const UnitCell& ucell)
 {
-    this->p_hamilt = new hamilt::HamiltPW<T, Device>(this->pelec->pot, this->pw_wfc, &this->kv, &this->ppcell);
+    this->p_hamilt = new hamilt::HamiltPW<T, Device>(this->pelec->pot, this->pw_wfc, &this->kv, &this->ppcell, &ucell);
 }
 template <typename T, typename Device>
 void ESolver_KS_PW<T, Device>::deallocate_hamilt()
@@ -279,7 +279,7 @@ void ESolver_KS_PW<T, Device>::before_scf(UnitCell& ucell, const int istep)
     this->deallocate_hamilt();
 
     // allocate HamiltPW
-    this->allocate_hamilt();
+    this->allocate_hamilt(ucell);
 
     //----------------------------------------------------------
     // about vdw, jiyy add vdwd3 and linpz add vdwd2
