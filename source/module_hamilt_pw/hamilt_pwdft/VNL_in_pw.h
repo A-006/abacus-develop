@@ -24,8 +24,7 @@ class pseudopot_cell_vnl : public pseudopot_cell_vl
   public:
     pseudopot_cell_vnl();
     ~pseudopot_cell_vnl();
-    void init(const int ntype,
-              const UnitCell& cell,
+    void init(const UnitCell& cell,
               Structure_Factor* psf_in,
               const ModulePW::PW_Basis_K* wfc_basis = nullptr,
               const bool allocate_vkb = true);

@@ -202,7 +202,7 @@ void ESolver_KS_PW<T, Device>::before_all_runners(UnitCell& ucell, const Input_p
     }
 
     //! init pseudopotential
-    this->ppcell.init(ucell.ntype, ucell,&this->sf, this->pw_wfc);
+    this->ppcell.init(ucell,&this->sf, this->pw_wfc);
 
     //! initalize local pseudopotential
     this->ppcell.init_vloc(ucell,this->pw_rhod);

@@ -82,16 +82,16 @@ void pseudopot_cell_vnl::release_memory()
 // setup lmaxkb, nhm, nkb, lmaxq
 // allocate vkb, PARAM.globalv.nqx, tab, tab_at
 //-----------------------------------
-void pseudopot_cell_vnl::init(const int ntype,
-                              const UnitCell& ucell,
+void pseudopot_cell_vnl::init(const UnitCell& ucell,
                               Structure_Factor* psf_in,
                               const ModulePW::PW_Basis_K* wfc_basis,
                               const bool allocate_vkb)
 {
-    if (PARAM.inp.use_paw) {
+    if (PARAM.inp.use_paw) 
+    {
         return;
-}
-
+    }
+    const int ntype = ucell.ntype;
     ModuleBase::TITLE("pseudopot_cell_vnl", "init");
     ModuleBase::timer::tick("ppcell_vnl", "init");
 
