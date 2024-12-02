@@ -60,13 +60,14 @@ class Stochastic_Iter
     /**
      * @brief calculate the density
      * 
+     * @param ucell reference to unit cell
      * @param stowf stochastic wave function
      * @param pes elecstate
      * @param wfc_basis wfc pw basis
      */
-    void cal_storho(Stochastic_WF<T, Device>& stowf,
+    void cal_storho(const UnitCell& ucell,
+                    Stochastic_WF<T, Device>& stowf,
                     elecstate::ElecStatePW<T, Device>* pes,
-                    const UnitCell& ucell,  
                     ModulePW::PW_Basis_K* wfc_basis);
 
     /**
