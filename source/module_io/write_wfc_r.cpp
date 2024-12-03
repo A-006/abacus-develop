@@ -67,7 +67,7 @@ void write_psi_r_1(const UnitCell& ucell,
                     wfc_imag[ir] = wfc_r[ir].imag();
                 }
             }
-            std::string file_name_base = outdir + "wfc_realspace_" + 
+            const std::string file_name_base = outdir + "wfc_realspace_" + 
                                          ModuleBase::GlobalFunc::TO_STRING(ik_out) + "_" + 
                                          ModuleBase::GlobalFunc::TO_STRING(ib);
             const std::string file_name = square ?  file_name_base : file_name_base + "_imag";
