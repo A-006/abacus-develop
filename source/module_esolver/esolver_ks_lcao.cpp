@@ -991,6 +991,8 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
                         PARAM.inp.out_dm1,
                         false,
                         PARAM.inp.out_app_flag,
+                        ucell.get_iat2iwt(),
+                        &ucell.nat,
                         istep);
 
     //! 7) write density matrix
