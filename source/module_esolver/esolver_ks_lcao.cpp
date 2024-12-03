@@ -1232,7 +1232,8 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
                                              PARAM.inp.nnkpfile,
                                              PARAM.inp.wannier_spin);
 
-            myWannier.calculate(this->pelec->ekb, 
+            myWannier.calculate(ucell,
+                                this->pelec->ekb, 
                                 this->pw_wfc, 
                                 this->pw_big, 
                                 this->sf, 
