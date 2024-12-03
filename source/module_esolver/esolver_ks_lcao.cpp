@@ -1264,7 +1264,8 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
     {
         std::cout << FmtCore::format("\n * * * * * *\n << Start %s.\n", "Berry phase calculation");
         berryphase bp(&(this->pv));
-        bp.lcao_init(this->kv,
+        bp.lcao_init(ucell,
+                     this->kv,
                      this->GridT,
                      orb_); // additional step before calling
                             // macroscopic_polarization (why capitalize

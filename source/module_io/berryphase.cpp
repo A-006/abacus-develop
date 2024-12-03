@@ -40,12 +40,12 @@ void berryphase::get_occupation_bands()
 }
 
 #ifdef __LCAO
-void berryphase::lcao_init(const K_Vectors& kv, const Grid_Technique& grid_tech, const LCAO_Orbitals& orb)
+void berryphase::lcao_init(const UnitCell& ucell, const K_Vectors& kv, const Grid_Technique& grid_tech, const LCAO_Orbitals& orb)
 {
     ModuleBase::TITLE("berryphase", "lcao_init");
-    lcao_method.init(grid_tech, kv.get_nkstot(), orb);
-    lcao_method.cal_R_number();
-    lcao_method.cal_orb_overlap();
+    lcao_method.init(ucell,grid_tech, kv.get_nkstot(), orb);
+    lcao_method.cal_R_number(ucell);
+    lcao_method.cal_orb_overlap(ucell);
     return;
 }
 #endif
@@ -232,7 +232,8 @@ void berryphase::set_kpoints(const K_Vectors& kv, const int direction)
 }
 
 #include "../module_base/complexmatrix.h"
-double berryphase::stringPhase(int index_str,
+double berryphase::stringPhase(const UnitCell& ucell,
+                               int index_str,
                                int nbands,
                                const int npwx,
                                const psi::Psi<std::complex<double>>* psi_in,
@@ -347,7 +348,7 @@ double berryphase::stringPhase(int index_str,
             if (PARAM.inp.nspin != 4)
             {
                 // std::complex<double> my_det = lcao_method.det_berryphase(ik_1,ik_2,dk,nbands);
-                zeta = zeta * lcao_method.det_berryphase(ik_1, ik_2, dk, nbands, *(this->paraV), psi_in, kv);
+                zeta = zeta * lcao_method.det_berryphase(ucell,ik_1, ik_2, dk, nbands, *(this->paraV), psi_in, kv);
                 // test by jingan
                 // GlobalV::ofs_running << "methon 1: det = " << my_det << std::endl;
                 // test by jingan
@@ -392,7 +393,8 @@ double berryphase::stringPhase(int index_str,
     return log(zeta).imag();
 }
 
-void berryphase::Berry_Phase(int nbands,
+void berryphase::Berry_Phase(const UnitCell& ucell,
+                             int nbands,
                              double& pdl_elec_tot,
                              int& mod_elec_tot,
                              const int npwx,
@@ -421,7 +423,7 @@ void berryphase::Berry_Phase(int nbands,
 
     for (int istring = 0; istring < total_string; istring++)
     {
-        phik[istring] = stringPhase(istring, nbands, npwx, psi_in, rhopw, wfcpw, kv);
+        phik[istring] = stringPhase(ucell,istring, nbands, npwx, psi_in, rhopw, wfcpw, kv);
         // transfer phase to complex number
         cphik[istring] = std::complex<double>(cos(phik[istring]), sin(phik[istring]));
         cave = cave + std::complex<double>(wistring[istring], 0.0) * cphik[istring];
@@ -595,7 +597,7 @@ void berryphase::Macroscopic_polarization(const UnitCell& ucell,
         set_kpoints(kv, direction);
         double pdl_elec_tot = 0.0;
         int mod_elec_tot = 0;
-        Berry_Phase(occ_nbands, pdl_elec_tot, mod_elec_tot, npwx, psi_in, rhopw, wfcpw, kv);
+        Berry_Phase(ucell,occ_nbands, pdl_elec_tot, mod_elec_tot, npwx, psi_in, rhopw, wfcpw, kv);
 
         const double rmod = ucell.a1.norm() * ucell.lat0;
         const double unit1 = rmod;
@@ -641,7 +643,7 @@ void berryphase::Macroscopic_polarization(const UnitCell& ucell,
         set_kpoints(kv, direction);
         double pdl_elec_tot = 0.0;
         int mod_elec_tot = 0;
-        Berry_Phase(occ_nbands, pdl_elec_tot, mod_elec_tot, npwx, psi_in, rhopw, wfcpw, kv);
+        Berry_Phase(ucell,occ_nbands, pdl_elec_tot, mod_elec_tot, npwx, psi_in, rhopw, wfcpw, kv);
 
         const double rmod = ucell.a2.norm() * ucell.lat0;
         const double unit1 = rmod;
@@ -687,7 +689,7 @@ void berryphase::Macroscopic_polarization(const UnitCell& ucell,
         set_kpoints(kv, direction);
         double pdl_elec_tot = 0.0;
         int mod_elec_tot = 0;
-        Berry_Phase(occ_nbands, pdl_elec_tot, mod_elec_tot, npwx, psi_in, rhopw, wfcpw, kv);
+        Berry_Phase(ucell,occ_nbands, pdl_elec_tot, mod_elec_tot, npwx, psi_in, rhopw, wfcpw, kv);
 
         const double rmod = ucell.a3.norm() * ucell.lat0;
         const double unit1 = rmod;
