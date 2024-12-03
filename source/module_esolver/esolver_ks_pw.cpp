@@ -593,7 +593,7 @@ void ESolver_KS_PW<T, Device>::after_scf(UnitCell& ucell, const int istep)
     {
         std::cout << FmtCore::format("\n * * * * * *\n << Start %s.\n", "Berry phase polarization");
         berryphase bp;
-        bp.Macroscopic_polarization(this->pw_wfc->npwk_max, this->psi, this->pw_rho, this->pw_wfc, this->kv);
+        bp.Macroscopic_polarization(ucell,this->pw_wfc->npwk_max, this->psi, this->pw_rho, this->pw_wfc, this->kv);
         std::cout << FmtCore::format(" >> Finish %s.\n * * * * * *\n", "Berry phase polarization");
     }
 }

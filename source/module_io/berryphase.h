@@ -58,7 +58,8 @@ class berryphase
                      const ModulePW::PW_Basis_K* wfcpw,
                      const K_Vectors& kv);
 
-    void Macroscopic_polarization(const int npwx,
+    void Macroscopic_polarization(const UnitCell& ucell,
+                                  const int npwx,
                                   const psi::Psi<double>* psi_in,
                                   const ModulePW::PW_Basis* rhopw,
                                   const ModulePW::PW_Basis_K* wfcpw,
@@ -66,7 +67,8 @@ class berryphase
     {
         throw std::logic_error("berry phase supports only multi-k");
     };
-    void Macroscopic_polarization(const int npwx,
+    void Macroscopic_polarization(const UnitCell& ucell,
+                                  const int npwx,
                                   const psi::Psi<std::complex<double>>* psi_in,
                                   const ModulePW::PW_Basis* rhopw,
                                   const ModulePW::PW_Basis_K* wfcpw,
