@@ -65,7 +65,8 @@ void ESolver_KS_PW<T, Device>::others(UnitCell& ucell, const int istep)
                               this->p_chgmix->get_mixing_ndim());
     } else if (cal_type == "gen_bessel") {
         Numerical_Descriptor nc;
-        nc.output_descriptor(this->psi[0],
+        nc.output_descriptor(ucell,
+                             this->psi[0],
                              PARAM.inp.bessel_descriptor_lmax,
                              PARAM.inp.bessel_descriptor_rcut,
                              PARAM.inp.bessel_descriptor_tolerence,
