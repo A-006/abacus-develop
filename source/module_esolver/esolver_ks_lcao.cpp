@@ -1252,7 +1252,7 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
                                        PARAM.inp.wannier_spin,
                                        orb_);
 
-            myWannier.calculate(this->pelec->ekb, this->kv, *(this->psi), &(this->pv));
+            myWannier.calculate(ucell,this->pelec->ekb, this->kv, *(this->psi), &(this->pv));
         }
         std::cout << FmtCore::format(" >> Finish %s.\n * * * * * *\n", "Wave function to Wannier90");
     }
