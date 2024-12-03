@@ -59,12 +59,14 @@ class toWannier90_PW : public toWannier90
       const ModulePW::PW_Basis_K* wfcpw,
       const ModulePW::PW_Basis_Big* bigpw
     );
-
+    void set_tpiba_omega(const double& tpiba, const double& omega);
   protected:
     // Radial section of trial orbitals
     const int mesh_r = 333;
     const double dx = 0.025;
     const double x_min = -6.0;
+    double const *tpiba;
+    double const *omega;
 
     void unkdotkb(
       const psi::Psi<std::complex<double>>& psi_pw, 
