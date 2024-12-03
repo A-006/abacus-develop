@@ -239,7 +239,7 @@ void IState_Envelope::begin(const UnitCell& ucell,
 
     if (out_wfc_r)
     {
-        ModuleIO::write_psi_r_1(psi_g, pw_wfc, "wfc_realspace", false, kv);
+        ModuleIO::write_psi_r_1(ucell,psi_g, pw_wfc, "wfc_realspace", false, kv);
     }
 
     for (int is = 0; is < nspin; ++is)
@@ -388,7 +388,7 @@ void IState_Envelope::begin(const UnitCell& ucell,
         }
         if (out_wf_r)
         {
-            ModuleIO::write_psi_r_1(psi_g, pw_wfc, "wfc_realspace", false, kv);
+            ModuleIO::write_psi_r_1(ucell,psi_g, pw_wfc, "wfc_realspace", false, kv);
         }
 
         std::cout << " Outputting real-space wave functions in cube format..." << std::endl;

@@ -780,7 +780,7 @@ void ESolver_KS_PW<T, Device>::after_all_runners(UnitCell& ucell)
     //! 6) Print out electronic wave functions in real space
     if (PARAM.inp.out_wfc_r == 1) // Peize Lin add 2021.11.21
     {
-        ModuleIO::write_psi_r_1(this->psi[0], this->pw_wfc, "wfc_realspace", true, this->kv);
+        ModuleIO::write_psi_r_1(ucell,this->psi[0], this->pw_wfc, "wfc_realspace", true, this->kv);
     }
 
     //! 7) Use Kubo-Greenwood method to compute conductivities
