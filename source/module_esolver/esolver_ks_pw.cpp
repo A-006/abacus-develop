@@ -584,7 +584,7 @@ void ESolver_KS_PW<T, Device>::after_scf(UnitCell& ucell, const int istep)
                            PARAM.inp.nnkpfile,
                            PARAM.inp.wannier_spin);
         wan.set_tpiba_omega(ucell.tpiba, ucell.omega);
-        wan.calculate(this->pelec->ekb, this->pw_wfc, this->pw_big, this->kv, this->psi);
+        wan.calculate(ucell,this->pelec->ekb, this->pw_wfc, this->pw_big, this->kv, this->psi);
         std::cout << FmtCore::format(" >> Finish %s.\n * * * * * *\n", "Wannier functions calculation");
     }
 

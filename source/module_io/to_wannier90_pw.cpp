@@ -28,6 +28,7 @@ toWannier90_PW::~toWannier90_PW()
 }
 
 void toWannier90_PW::calculate(
+    const UnitCell& ucell,
     const ModuleBase::matrix& ekb,
     const ModulePW::PW_Basis_K* wfcpw,
     const ModulePW::PW_Basis_Big* bigpw,
@@ -35,7 +36,7 @@ void toWannier90_PW::calculate(
     const psi::Psi<std::complex<double>>* psi
 )
 {
-    read_nnkp(kv);
+    read_nnkp(ucell,kv);
 
     if (PARAM.inp.nspin == 2)
     {

@@ -52,7 +52,7 @@ void toWannier90_LCAO_IN_PW::calculate(
     #endif
     this->psi_init_->tabulate();
     this->psi_init_->allocate(true);
-    read_nnkp(kv);
+    read_nnkp(ucell,kv);
 
     if (PARAM.inp.nspin == 2)
     {

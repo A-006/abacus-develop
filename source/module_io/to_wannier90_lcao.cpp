@@ -46,7 +46,7 @@ void toWannier90_LCAO::calculate(const UnitCell& ucell,
 {
     this->ParaV = pv;
 
-    read_nnkp(kv);
+    read_nnkp(ucell,kv);
 
     if (PARAM.inp.nspin == 2)
     {

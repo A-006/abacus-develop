@@ -34,6 +34,7 @@ class toWannier90_PW : public toWannier90
     ~toWannier90_PW();
 
     void calculate(
+      const UnitCell& ucell,
       const ModuleBase::matrix& ekb,
       const ModulePW::PW_Basis_K* wfcpw,
       const ModulePW::PW_Basis_Big* bigpw,
@@ -42,6 +43,7 @@ class toWannier90_PW : public toWannier90
     );
 
     void calculate(
+      const UnitCell& ucell,
       const ModuleBase::matrix& ekb,
       const ModulePW::PW_Basis_K* wfcpw,
       const ModulePW::PW_Basis_Big* bigpw,
