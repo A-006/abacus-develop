@@ -326,7 +326,8 @@ void ESolver_KS_LCAO<TK, TR>::others(UnitCell& ucell, const int istep)
         IState_Envelope IEP(this->pelec);
         if (PARAM.globalv.gamma_only_local)
         {
-            IEP.begin(this->psi,
+            IEP.begin(ucell,
+                      this->psi,
                       this->pw_rhod,
                       this->pw_wfc,
                       this->pw_big,
@@ -346,7 +347,8 @@ void ESolver_KS_LCAO<TK, TR>::others(UnitCell& ucell, const int istep)
         }
         else
         {
-            IEP.begin(this->psi,
+            IEP.begin(ucell,
+                      this->psi,
                       this->pw_rhod,
                       this->pw_wfc,
                       this->pw_big,
