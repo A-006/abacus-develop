@@ -194,8 +194,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
                         wavefunc* p_wf,
                         const ModuleBase::realArray& tab_at,
                         const int& lmaxkb,
-                        const int natomwfc,
-                        const int lmax_ppwf,
+                        const UnitCell& ucell,
                         hamilt::Hamilt<std::complex<float>, base_device::DEVICE_CPU>* phm_in)
 {
     // TODO float func
@@ -209,8 +208,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
                         wavefunc* p_wf,
                         const ModuleBase::realArray& tab_at,
                         const int& lmaxkb,
-                        const int natomwfc,
-                        const int lmax_ppwf,
+                        const UnitCell& ucell,
                         hamilt::Hamilt<std::complex<double>, base_device::DEVICE_CPU>* phm_in)
 {
     ModuleBase::TITLE("wavefunc", "diago_PAO_in_pw_k2");
@@ -256,7 +254,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
         }
     }
     else if (PARAM.inp.init_wfc == "random"
-             || (PARAM.inp.init_wfc.substr(0, 6) == "atomic" && natomwfc == 0))
+             || (PARAM.inp.init_wfc.substr(0, 6) == "atomic" && ucell.natomwfc == 0))
     {
         p_wf->random(wvf.get_pointer(), 0, nbands, ik, wfc_basis);
 
@@ -277,7 +275,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
     }
     else if (PARAM.inp.init_wfc.substr(0, 6) == "atomic")
     {
-        const int starting_nw = p_wf->get_starting_nw(natomwfc);
+        const int starting_nw = p_wf->get_starting_nw(ucell.natomwfc);
         if (starting_nw == 0)
         {
             return;
@@ -291,9 +289,10 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
             ModuleBase::GlobalFunc::OUT(GlobalV::ofs_running, "starting_nw", starting_nw);
         }
 
-        p_wf->atomic_wfc(ik,
+        p_wf->atomic_wfc(ucell,
+                         ik,
                          current_nbasis,
-                         lmax_ppwf,
+                         ucell.lmax_ppwf,
                          lmaxkb,
                          wfc_basis,
                          wfcatom,
@@ -302,7 +301,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
                          PARAM.globalv.dq);
 
         if (PARAM.inp.init_wfc == "atomic+random"
-            && starting_nw == natomwfc) // added by qianrui 2021-5-16
+            && starting_nw == ucell.natomwfc) // added by qianrui 2021-5-16
         {
             p_wf->atomicrandom(wfcatom, 0, starting_nw, ik, wfc_basis);
         }
@@ -311,7 +310,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
         // If not enough atomic wfc are available, complete
         // with random wfcs
         //====================================================
-        p_wf->random(wfcatom.c, natomwfc, nbands, ik, wfc_basis);
+        p_wf->random(wfcatom.c, ucell.natomwfc, nbands, ik, wfc_basis);
 
         // (7) Diago with cg method.
         // if(GlobalV::DIAGO_TYPE == "cg") xiaohui modify 2013-09-02
@@ -355,8 +354,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
                         wavefunc* p_wf,
                         const ModuleBase::realArray& tab_at,
                         const int& lmaxkb,
-                        const int  natomwfc,
-                        const int  lmax_ppwf,
+                        const UnitCell& ucell,
                         hamilt::Hamilt<std::complex<float>, base_device::DEVICE_GPU>* phm_in)
 {
     // TODO float
@@ -370,8 +368,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
                         wavefunc* p_wf,
                         const ModuleBase::realArray& tab_at,
                         const int& lmaxkb,
-                        const int natomwfc,
-                        const int lmax_ppwf,
+                        const UnitCell& ucell,
                         hamilt::Hamilt<std::complex<double>, base_device::DEVICE_GPU>* phm_in)
 {
     ModuleBase::TITLE("wavefunc", "diago_PAO_in_pw_k2");
@@ -399,7 +396,8 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
         ModuleBase::GlobalFunc::OUT(GlobalV::ofs_running, "starting_nw", starting_nw);
     if (PARAM.inp.init_wfc.substr(0, 6) == "atomic")
     {
-        p_wf->atomic_wfc(ik,
+        p_wf->atomic_wfc(ucell,
+                         ik,
                          current_nbasis,
                          lmax_ppwf,
                          lmaxkb,
@@ -409,7 +407,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
                          PARAM.globalv.nqx,
                          PARAM.globalv.dq);
         if (PARAM.inp.init_wfc == "atomic+random"
-            && starting_nw == natomwfc) // added by qianrui 2021-5-16
+            && starting_nw == ucell.natomwfc) // added by qianrui 2021-5-16
         {
             p_wf->atomicrandom(wfcatom, 0, starting_nw, ik, wfc_basis);
         }
@@ -418,7 +416,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
         // If not enough atomic wfc are available, complete
         // with random wfcs
         //====================================================
-        p_wf->random(wfcatom.c, natomwfc, nbands, ik, wfc_basis);
+        p_wf->random(wfcatom.c, ucell.natomwfc, nbands, ik, wfc_basis);
     }
     else if (PARAM.inp.init_wfc == "random")
     {

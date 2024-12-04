@@ -57,8 +57,7 @@ void diago_PAO_in_pw_k2(const Device* ctx,
                         wavefunc* p_wf,
                         const ModuleBase::realArray& tab_at,
                         const int& lmaxkb,
-                        const int natomwfc,
-                        const int lmax_ppwf,
+                        const UnitCell& ucell,
                         hamilt::Hamilt<std::complex<FPTYPE>, Device>* phm_in = nullptr);
 } // namespace hamilt
 
