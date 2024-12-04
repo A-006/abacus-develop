@@ -47,7 +47,6 @@ class WF_atomic
     void atomic_wfc(const UnitCell& ucell,
                     const int& ik,
                     const int& np,
-                    const int& lmax_wfc,
                     const int& lmaxkb,
                     const ModulePW::PW_Basis_K* wfc_basis,
                     ModuleBase::ComplexMatrix& wfcatom,

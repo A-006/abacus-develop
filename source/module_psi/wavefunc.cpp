@@ -292,7 +292,6 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_CPU* ctx,
         p_wf->atomic_wfc(ucell,
                          ik,
                          current_nbasis,
-                         ucell.lmax_ppwf,
                          lmaxkb,
                          wfc_basis,
                          wfcatom,
@@ -387,7 +386,7 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
         ModuleIO::read_wfc_pw(filename.str(), wfc_basis, ik, p_wf->nkstot, wfcatom);
     }
 
-    starting_nw = p_wf->get_starting_nw();
+    starting_nw = p_wf->get_starting_nw(ucell.natomwfc);
     if (starting_nw == 0)
         return;
     assert(starting_nw > 0);
@@ -399,7 +398,6 @@ void diago_PAO_in_pw_k2(const base_device::DEVICE_GPU* ctx,
         p_wf->atomic_wfc(ucell,
                          ik,
                          current_nbasis,
-                         lmax_ppwf,
                          lmaxkb,
                          wfc_basis,
                          wfcatom,

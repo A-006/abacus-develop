@@ -263,7 +263,6 @@ void WF_atomic::print_PAOs(const UnitCell& ucell) const
 void WF_atomic::atomic_wfc(const UnitCell& ucell,
                            const int& ik,
                            const int& np,
-                           const int& lmax_wfc,
                            const int& lmaxkb,
                            const ModulePW::PW_Basis_K* wfc_basis,
                            ModuleBase::ComplexMatrix& wfcatom,
@@ -280,7 +279,7 @@ void WF_atomic::atomic_wfc(const UnitCell& ucell,
     // This routine computes the superposition of atomic
     // WF_atomictions for a given k-point.
     //=========================================================
-    const int total_lm = (lmax_wfc + 1) * (lmax_wfc + 1);
+    const int total_lm = (ucell.lmax_ppwf + 1) * (ucell.lmax_ppwf + 1);
     ModuleBase::matrix ylm(total_lm, np);
     std::complex<double>* aux = new std::complex<double>[np];
     double* chiaux = nullptr;
