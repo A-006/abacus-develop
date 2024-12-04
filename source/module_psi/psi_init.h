@@ -54,6 +54,7 @@ class PSIInit
                         psi::Psi<T, Device>* kspw_psi,
                         hamilt::Hamilt<T, Device>* p_hamilt,
                         const pseudopot_cell_vnl& nlpp,
+                        const UnitCell& ucell,
                         std::ofstream& ofs_running,
                         const bool is_already_initpsi);
 

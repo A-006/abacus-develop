@@ -152,6 +152,7 @@ void PSIInit<T, Device>::initialize_psi(Psi<std::complex<double>>* psi,
                                         psi::Psi<T, Device>* kspw_psi,
                                         hamilt::Hamilt<T, Device>* p_hamilt,
                                         const pseudopot_cell_vnl& nlpp,
+                                        const UnitCell& ucell,
                                         std::ofstream& ofs_running,
                                         const bool is_already_initpsi)
 {
@@ -278,6 +279,8 @@ void PSIInit<T, Device>::initialize_psi(Psi<std::complex<double>>* psi,
                                                    &this->wf_old,
                                                    nlpp.tab_at,
                                                    nlpp.lmaxkb,
+                                                   ucell.natomwfc,
+                                                   ucell.lmax_ppwf,
                                                    p_hamilt);
                     }
                 }
@@ -294,6 +297,8 @@ void PSIInit<T, Device>::initialize_psi(Psi<std::complex<double>>* psi,
                                                &this->wf_old,
                                                nlpp.tab_at,
                                                nlpp.lmaxkb,
+                                               ucell.natomwfc,
+                                               ucell.lmax_ppwf,
                                                p_hamilt);
                 }
             }
