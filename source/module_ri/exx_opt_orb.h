@@ -34,7 +34,7 @@ private:
         const std::vector<double>& orb_cutoff,
 		const ModuleBase::Element_Basis_Index::Range &range_jles, 
 		const ModuleBase::Element_Basis_Index::IndexLNM &index_jles) const;
-	std::map<size_t,std::map<size_t,std::set<double>>> get_radial_R() const;
+	std::map<size_t,std::map<size_t,std::set<double>>> get_radial_R(const UnitCell& ucell) const;
 		
 	int kmesh_times = 4;
 };
