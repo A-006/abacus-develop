@@ -24,6 +24,7 @@ private:
 		const std::vector<std::vector<RI::Tensor<double>>> & m_middle, 
 		const std::vector<RI::Tensor<double>> & m_right ) const;
     void print_matrix(
+		const UnitCell& ucell,
         const K_Vectors &kv,
         const std::string& file_name,
 		const std::vector<RI::Tensor<double>> &matrix_Q, 

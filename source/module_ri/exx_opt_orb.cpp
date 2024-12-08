@@ -208,7 +208,8 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 									{ms_jys_abfs.at(T).at(I).at(T).at(I)},
 									ms_abfs_abfs_I,
 									{ms_jys_abfs.at(T).at(I).at(T).at(I)})}};
-							print_matrix(kv,
+							print_matrix(ucell,
+								kv,
 								"matrix",
 								m_lcaoslcaos_jys_proj,
 								m_jys_jys_proj,
@@ -219,7 +220,8 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 						}
 						else
 						{
-							print_matrix(kv,
+							print_matrix(ucell,
+								kv,
 								"matrix",
 								ms_lcaoslcaos_jys.at(T).at(I).at(T).at(I),
 								{{ms_jys_jys.at(T).at(I).at(T).at(I)}},
@@ -276,7 +278,8 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 									{ ms_jys_abfs.at(TB).at(IB).at(TA).at(IA), ms_jys_abfs.at(TB).at(IB).at(TB).at(IB) },
 									ms_abfs_abfs_I,
 									{ ms_jys_abfs.at(TB).at(IB).at(TA).at(IA), ms_jys_abfs.at(TB).at(IB).at(TB).at(IB) }) }};
-							print_matrix(kv,
+							print_matrix(ucell,
+								kv,
 								"matrix",
 								m_lcaoslcaos_jys_proj,
 								m_jys_jys_proj,
@@ -287,7 +290,8 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 						}
 						else
 						{
-							print_matrix(kv,
+							print_matrix(ucell,
+								kv,
 								"matrix",
 								ms_lcaoslcaos_jys.at(TA).at(IA).at(TB).at(IB),
 								{{ms_jys_jys.at(TA).at(IA).at(TA).at(IA), ms_jys_jys.at(TA).at(IA).at(TB).at(IB)},
