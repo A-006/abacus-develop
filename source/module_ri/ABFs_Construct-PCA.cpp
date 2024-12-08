@@ -104,7 +104,7 @@ namespace PCA
 		for( std::size_t it=0; it!=abfs.size(); ++it ) {
 			delta_R[it][it] = {0.0};
 }
-		m_abfslcaos_lcaos.init_radial_table(ucell.lat0,delta_R);
+		m_abfslcaos_lcaos.init_radial_table(delta_R);
 
 		GlobalC::exx_info.info_ri.abfs_Lmax = Lmax_bak;
 		

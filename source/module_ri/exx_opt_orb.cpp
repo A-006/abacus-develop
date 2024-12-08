@@ -76,7 +76,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		m_lcaoslcaos_lcaoslcaos.init( 1, ucell,orb, this->kmesh_times, 1 );
 		m_lcaoslcaos_lcaoslcaos.init_radial( lcaos, lcaos, lcaos, lcaos );
 		#if TEST_EXX_RADIAL>=1
-		m_lcaoslcaos_lcaoslcaos.init_radial_table(ucell.lat0,radial_R);
+		m_lcaoslcaos_lcaoslcaos.init_radial_table(radial_R);
 		#else
 		m_lcaoslcaos_lcaoslcaos.init_radial_table();
 		#endif
@@ -92,7 +92,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		m_jyslcaos_lcaos.init( 1, ucell , orb, this->kmesh_times, 1 );
 		m_jyslcaos_lcaos.init_radial( jle.jle, lcaos, lcaos );
 		#if TEST_EXX_RADIAL>=1
-		m_jyslcaos_lcaos.init_radial_table(ucell.lat0, radial_R);
+		m_jyslcaos_lcaos.init_radial_table( radial_R);
 		#else
 		m_jyslcaos_lcaos.init_radial_table();
 		#endif
@@ -108,7 +108,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		m_jys_jys.init( 2,ucell,orb, this->kmesh_times, 1 );
 		m_jys_jys.init_radial( jle.jle, jle.jle );
 		#if TEST_EXX_RADIAL>=1
-		m_jys_jys.init_radial_table(ucell.lat0,radial_R);
+		m_jys_jys.init_radial_table(radial_R);
 		#else
 		m_jys_jys.init_radial_table();
 		#endif
@@ -124,7 +124,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		m_abfs_abfs.init( 2, ucell, orb, this->kmesh_times, 1 );
 		m_abfs_abfs.init_radial( abfs, abfs );
 		#if TEST_EXX_RADIAL>=1
-		m_abfs_abfs.init_radial_table(ucell.lat0,radial_R);
+		m_abfs_abfs.init_radial_table(radial_R);
 		#else
 		m_abfs_abfs.init_radial_table();
 		#endif
@@ -140,7 +140,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		m_abfslcaos_lcaos.init( 1, ucell , orb, this->kmesh_times, 1 );
 		m_abfslcaos_lcaos.init_radial( abfs, lcaos, lcaos );
 		#if TEST_EXX_RADIAL>=1
-		m_abfslcaos_lcaos.init_radial_table(ucell.lat0,radial_R);
+		m_abfslcaos_lcaos.init_radial_table(radial_R);
 		#else
 		m_abfslcaos_lcaos.init_radial_table();
 		#endif
@@ -156,7 +156,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		m_jys_abfs.init( 2, ucell,orb, this->kmesh_times, 1 );
 		m_jys_abfs.init_radial( jle.jle, abfs );
 		#if TEST_EXX_RADIAL>=1
-		m_jys_abfs.init_radial_table(ucell.lat0,radial_R);
+		m_jys_abfs.init_radial_table(radial_R);
 		#else
 		m_jys_abfs.init_radial_table();
 		#endif

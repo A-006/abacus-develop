@@ -133,8 +133,7 @@ void Matrix_Orbs22::init_radial_table()
     ModuleBase::timer::tick("Matrix_Orbs22", "init_radial_table");
 }
 
-void Matrix_Orbs22::init_radial_table(const double lat0,
-                                      const std::map<size_t, std::map<size_t, std::set<double>>>& Rs)
+void Matrix_Orbs22::init_radial_table(const std::map<size_t, std::map<size_t, std::set<double>>>& Rs)
 {
     ModuleBase::TITLE("Matrix_Orbs22", "init_radial_table_Rs");
     ModuleBase::timer::tick("Matrix_Orbs22", "init_radial_table");

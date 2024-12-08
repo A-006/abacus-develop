@@ -19,7 +19,7 @@ void Matrix_Orbs11::init(const int mode,
     ModuleBase::timer::tick("Matrix_Orbs11", "init");
 
     int Lmax_used, Lmax;
-
+    this->lat0 = ucell.lat0;
     const int ntype = orb.get_ntype();
     int lmax_orb = -1, lmax_beta = -1;
     for (int it = 0; it < ntype; it++)
@@ -123,8 +123,7 @@ void Matrix_Orbs11::init_radial_table()
     ModuleBase::timer::tick("Matrix_Orbs11", "init_radial_table");
 }
 
-void Matrix_Orbs11::init_radial_table(const double lat0,
-                                      const std::map<size_t, std::map<size_t, std::set<double>>>& Rs)
+void Matrix_Orbs11::init_radial_table(const std::map<size_t, std::map<size_t, std::set<double>>>& Rs)
 {
     ModuleBase::TITLE("Matrix_Orbs11", "init_radial_table_Rs");
     ModuleBase::timer::tick("Matrix_Orbs11", "init_radial_table");

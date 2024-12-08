@@ -35,8 +35,7 @@ class Matrix_Orbs11
     void init_radial(const LCAO_Orbitals& orb_A, const LCAO_Orbitals& orb_B);
 
     void init_radial_table();
-    void init_radial_table(const double lat0,
-                           const std::map<size_t, std::map<size_t, std::set<double>>>& Rs); // unit: ucell.lat0
+    void init_radial_table(const std::map<size_t, std::map<size_t, std::set<double>>>& Rs); // unit: ucell.lat0
 
     enum class Matrix_Order
     {
@@ -71,7 +70,7 @@ class Matrix_Orbs11
     ModuleBase::Sph_Bessel_Recursive::D2* psb_ = nullptr;
     ORB_gaunt_table MGT;
     const double lcao_dr_ = 0.01;
-
+    double lat0 = 0.0;                                            // restore ucell.lat0
     std::map<size_t,                                              // TA
              std::map<size_t,                                     // TB
                       std::map<int,                               // LA

@@ -21,6 +21,7 @@ void Matrix_Orbs21::init(const int mode,
 
     const int ntype = orb.get_ntype();
     int lmax_orb = -1, lmax_beta = -1;
+    this->lat0   = ucell.lat0;
     for (int it = 0; it < ntype; it++)
     {
         lmax_orb = std::max(lmax_orb, orb.Phi[it].getLmax());
@@ -120,8 +121,7 @@ void Matrix_Orbs21::init_radial_table()
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial_table");
 }
 
-void Matrix_Orbs21::init_radial_table(const double lat0,
-                                      const std::map<size_t, std::map<size_t, std::set<double>>>& Rs)
+void Matrix_Orbs21::init_radial_table(const std::map<size_t, std::map<size_t, std::set<double>>>& Rs)
 {
     ModuleBase::TITLE("Matrix_Orbs21", "init_radial_table_Rs");
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial_table");
