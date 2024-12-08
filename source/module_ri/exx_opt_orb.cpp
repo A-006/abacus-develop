@@ -15,7 +15,7 @@
 #include "../module_ri/test_code/test_function.h"
 #include <sched.h>
 
-void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const LCAO_Orbitals& orb) const
+void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, const LCAO_Orbitals& orb) const
 {
 // std::ofstream ofs_mpi(GlobalC::exx_lcao.test_dir.process+"time_"+ModuleBase::GlobalFunc::TO_STRING(GlobalV::MY_RANK),std::ofstream::app);
 
@@ -31,7 +31,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const LCAO_Orbitals& orb)
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
 	
 	Exx_Abfs::Jle jle;
-	jle.init_jle( this->kmesh_times, orb );
+	jle.init_jle(this->kmesh_times, ucell , orb, );
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
 	

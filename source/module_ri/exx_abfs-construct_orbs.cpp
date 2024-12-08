@@ -479,7 +479,7 @@ inline const Numerical_Orbital_Lm &Exx_Abfs::Construct_Orbs::get_orbital(
 */
 
 void Exx_Abfs::Construct_Orbs::print_orbs_size(
-	const UnitCell &ucell,
+	const UnitCell& ucell,
 	const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &orbs,
 	std::ostream &os)
 {

@@ -4,6 +4,7 @@
 #include "exx_abfs.h"
 
 #include <limits>
+#include "module_cell/unitcell.h"
 #include "../module_basis/module_ao/ORB_atomic_lm.h"
 
 	class LCAO_Orbitals;
@@ -25,7 +26,7 @@ public:
 		const double times_threshold=0);
 		
 	static void print_orbs_size(
-		const UnitCell &ucell,
+		const UnitCell& ucell,
 		const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &orbs,
 		std::ostream &os);		
 		

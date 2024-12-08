@@ -90,7 +90,7 @@ void Exx_LRI_Interface<T, Tdata>::exx_beforescf(const int istep,
 		{
 			//program should be stopped after this judgement
 			Exx_Opt_Orb exx_opt_orb;
-			exx_opt_orb.generate_matrix(kv, orb);
+			exx_opt_orb.generate_matrix(kv, ucell,orb);
 			ModuleBase::timer::tick("ESolver_KS_LCAO", "beforescf");
 			return;
 		}

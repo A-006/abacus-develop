@@ -13,7 +13,7 @@
 class Exx_Opt_Orb
 {
 public:
-	void generate_matrix(const K_Vectors &kv, const LCAO_Orbitals& orb) const;
+	void generate_matrix(const K_Vectors &kv, const UnitCell& ucell, const LCAO_Orbitals& orb) const;
 private:
 	std::vector<std::vector<RI::Tensor<double>>> cal_I( 
 		const std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,RI::Tensor<double>>>>> &ms, 
