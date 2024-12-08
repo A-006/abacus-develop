@@ -60,8 +60,8 @@ public:
 			  const UnitCell &ucell,
 			  const K_Vectors &kv_in, 
 			  const LCAO_Orbitals& orb);
-	void cal_exx_force();
-    void cal_exx_stress();
+	void cal_exx_force(const int& nat);
+    void cal_exx_stress(const double& omega, const double& lat0);
 	void cal_exx_ions(const UnitCell& ucell, const bool write_cv = false);
     void cal_exx_elec(const std::vector<std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>>& Ds,
 		const UnitCell& ucell,

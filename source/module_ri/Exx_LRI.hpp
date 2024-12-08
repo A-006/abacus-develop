@@ -219,7 +219,7 @@ void Exx_LRI<Tdata>::cal_exx_elec(const std::vector<std::map<TA, std::map<TAC, R
             // reduce but not repeat
             auto Hs_a2D = this->exx_lri.post_2D.set_tensors_map2(this->exx_lri.Hs);
             // rotate locally without repeat
-            Hs_a2D = p_symrot->restore_HR(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, 'H', Hs_a2D);
+            Hs_a2D = p_symrot->restore_HR(ucell.symm, ucell.atoms, ucell.st, 'H', Hs_a2D);
             // cal energy using full Hs without repeat
             this->exx_lri.energy = this->exx_lri.post_2D.cal_energy(
                 this->exx_lri.post_2D.saves["Ds_" + suffix],
@@ -274,20 +274,20 @@ post_process_old
 */
 
 template<typename Tdata>
-void Exx_LRI<Tdata>::cal_exx_force()
+void Exx_LRI<Tdata>::cal_exx_force(const int& nat)
 {
 	ModuleBase::TITLE("Exx_LRI","cal_exx_force");
 	ModuleBase::timer::tick("Exx_LRI", "cal_exx_force");
 
-	this->force_exx.create(GlobalC::ucell.nat, Ndim);
+	this->force_exx.create(nat, Ndim);
 	for(int is=0; is<PARAM.inp.nspin; ++is)
 	{
 		this->exx_lri.cal_force({"","",std::to_string(is),"",""});
 		for(std::size_t idim=0; idim<Ndim; ++idim) {
 			for(const auto &force_item : this->exx_lri.force[idim]) {
 				this->force_exx(force_item.first, idim) += std::real(force_item.second);
-}
-}
+			}
+		}
 	}
 
 	const double SPIN_multiple = std::map<int,double>{{1,2}, {2,1}, {4,1}}.at(PARAM.inp.nspin);				// why?
@@ -298,7 +298,7 @@ void Exx_LRI<Tdata>::cal_exx_force()
 
 
 template<typename Tdata>
-void Exx_LRI<Tdata>::cal_exx_stress()
+void Exx_LRI<Tdata>::cal_exx_stress(const double& omega, const double& lat0)
 {
 	ModuleBase::TITLE("Exx_LRI","cal_exx_stress");
 	ModuleBase::timer::tick("Exx_LRI", "cal_exx_stress");
@@ -310,12 +310,12 @@ void Exx_LRI<Tdata>::cal_exx_stress()
 		for(std::size_t idim0=0; idim0<Ndim; ++idim0) {
 			for(std::size_t idim1=0; idim1<Ndim; ++idim1) {
 				this->stress_exx(idim0,idim1) += std::real(this->exx_lri.stress(idim0,idim1));
-}
-}
+		}
+	}
 	}
 
 	const double SPIN_multiple = std::map<int,double>{{1,2}, {2,1}, {4,1}}.at(PARAM.inp.nspin);				// why?
-	const double frac = 2 * SPIN_multiple / GlobalC::ucell.omega * GlobalC::ucell.lat0;		// why?
+	const double frac = 2 * SPIN_multiple / omega * lat0;		// why?
 	this->stress_exx *= frac;
 
 	ModuleBase::timer::tick("Exx_LRI", "cal_exx_stress");
