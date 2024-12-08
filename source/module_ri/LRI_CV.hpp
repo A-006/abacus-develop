@@ -66,7 +66,7 @@ void LRI_CV<Tdata>::set_orbitals(
 	this->m_abfs_abfs.init_radial( this->abfs_ccp, this->abfs );
 	this->m_abfs_abfs.init_radial_table();
 
-	this->m_abfslcaos_lcaos.init( 1, orb, kmesh_times, 1 );
+	this->m_abfslcaos_lcaos.init( 1, ucell , orb, kmesh_times, 1 );
 	this->m_abfslcaos_lcaos.init_radial( this->abfs_ccp, this->lcaos, this->lcaos );
 	this->m_abfslcaos_lcaos.init_radial_table();
 

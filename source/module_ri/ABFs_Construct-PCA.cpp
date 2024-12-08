@@ -72,6 +72,7 @@ namespace PCA
 	}
 
 	std::vector<std::vector<std::pair<std::vector<double>, RI::Tensor<double>>>> cal_PCA(
+		const UnitCell &ucell,
         const LCAO_Orbitals& orb,
 		const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &lcaos, 
 		const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &abfs,
@@ -96,14 +97,14 @@ namespace PCA
 }
 
 		Matrix_Orbs21 m_abfslcaos_lcaos;
-		m_abfslcaos_lcaos.init( 1, orb, kmesh_times, 1 );
+		m_abfslcaos_lcaos.init( 1, ucell , orb, kmesh_times, 1 );
 		m_abfslcaos_lcaos.init_radial( abfs, lcaos, lcaos );
 
 		std::map<std::size_t,std::map<std::size_t,std::set<double>>> delta_R;
 		for( std::size_t it=0; it!=abfs.size(); ++it ) {
 			delta_R[it][it] = {0.0};
 }
-		m_abfslcaos_lcaos.init_radial_table(delta_R);
+		m_abfslcaos_lcaos.init_radial_table(ucell.lat0,delta_R);
 
 		GlobalC::exx_info.info_ri.abfs_Lmax = Lmax_bak;
 		

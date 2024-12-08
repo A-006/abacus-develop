@@ -11,7 +11,7 @@
 #include "module_basis/module_ao/ORB_gaunt_table.h"
 #include "module_basis/module_ao/ORB_read.h"
 #include "module_hamilt_lcao/hamilt_lcaodft/center2_orb-orb21.h"
-
+#include "module_cell/unitcell.h"
 #include <RI/global/Tensor.h>
 #include <map>
 #include <set>
@@ -23,6 +23,7 @@ class Matrix_Orbs21
     // mode:
     //    1: <jYs lcaos|lcaos>  <abfs lcaos|lcaos>
     void init(const int mode,
+              const UnitCell& ucell,
               const LCAO_Orbitals& orb,
               const double kmesh_times,  // extend Kcut, keep dK
               const double rmesh_times); // extend Rcut, keep dR
@@ -35,7 +36,8 @@ class Matrix_Orbs21
                      const LCAO_Orbitals& orb_B);
 
     void init_radial_table();
-    void init_radial_table(const std::map<size_t, std::map<size_t, std::set<double>>>& Rs); // unit: ucell.lat0
+    void init_radial_table(const double lat0,
+                           const std::map<size_t, std::map<size_t, std::set<double>>>& Rs); // unit: ucell.lat0
 
     enum class Matrix_Order
     {

@@ -62,7 +62,7 @@ void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in,
 //	#endif
 
 	const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>>
-		abfs_same_atom = Exx_Abfs::Construct_Orbs::abfs_same_atom( orb, this->lcaos, this->info.kmesh_times, this->info.pca_threshold );
+		abfs_same_atom = Exx_Abfs::Construct_Orbs::abfs_same_atom(ucell, orb, this->lcaos, this->info.kmesh_times, this->info.pca_threshold );
 	if(this->info.files_abfs.empty()) {
 		this->abfs = abfs_same_atom;
 	} else {

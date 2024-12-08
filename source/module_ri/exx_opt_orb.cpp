@@ -26,7 +26,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		lcaos = Exx_Abfs::Construct_Orbs::change_orbs( orb, this->kmesh_times );
 
 	const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>>
-		abfs = Exx_Abfs::Construct_Orbs::abfs_same_atom( orb, lcaos, this->kmesh_times, GlobalC::exx_info.info_ri.pca_threshold );
+		abfs = Exx_Abfs::Construct_Orbs::abfs_same_atom(ucell,orb, lcaos, this->kmesh_times, GlobalC::exx_info.info_ri.pca_threshold );
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
 	
@@ -89,10 +89,10 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 	const auto ms_lcaoslcaos_jys = [&]() -> std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,std::vector<RI::Tensor<double>>>>>>
 	{
 		Matrix_Orbs21 m_jyslcaos_lcaos;
-		m_jyslcaos_lcaos.init( 1, orb, this->kmesh_times, 1 );
+		m_jyslcaos_lcaos.init( 1, ucell , orb, this->kmesh_times, 1 );
 		m_jyslcaos_lcaos.init_radial( jle.jle, lcaos, lcaos );
 		#if TEST_EXX_RADIAL>=1
-		m_jyslcaos_lcaos.init_radial_table(radial_R);
+		m_jyslcaos_lcaos.init_radial_table(ucell.lat0, radial_R);
 		#else
 		m_jyslcaos_lcaos.init_radial_table();
 		#endif
@@ -137,10 +137,10 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 	const auto ms_lcaoslcaos_abfs = [&]() -> std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,std::vector<RI::Tensor<double>>>>>>
 	{
 		Matrix_Orbs21 m_abfslcaos_lcaos;
-		m_abfslcaos_lcaos.init( 1, orb, this->kmesh_times, 1 );
+		m_abfslcaos_lcaos.init( 1, ucell , orb, this->kmesh_times, 1 );
 		m_abfslcaos_lcaos.init_radial( abfs, lcaos, lcaos );
 		#if TEST_EXX_RADIAL>=1
-		m_abfslcaos_lcaos.init_radial_table(radial_R);
+		m_abfslcaos_lcaos.init_radial_table(ucell.lat0,radial_R);
 		#else
 		m_abfslcaos_lcaos.init_radial_table();
 		#endif
