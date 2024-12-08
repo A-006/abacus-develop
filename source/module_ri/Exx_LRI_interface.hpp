@@ -53,14 +53,18 @@ void Exx_LRI_Interface<T, Tdata>::exx_before_all_runners(const K_Vectors& kv, co
 }
 
 template<typename T, typename Tdata>
-void Exx_LRI_Interface<T, Tdata>::exx_beforescf(const int istep, const K_Vectors& kv, const Charge_Mixing& chgmix, const UnitCell& ucell, const LCAO_Orbitals& orb)
+void Exx_LRI_Interface<T, Tdata>::exx_beforescf(const int istep, 
+                                                const K_Vectors& kv, 
+                                                const Charge_Mixing& chgmix, 
+                                                const UnitCell& ucell, 
+                                                const LCAO_Orbitals& orb)
 {
 #ifdef __MPI
     if (GlobalC::exx_info.info_global.cal_exx)
     {
-        if (GlobalC::restart.info_load.load_H_finish && !GlobalC::restart.info_load.restart_exx) { XC_Functional::set_xc_type(GlobalC::ucell.atoms[0].ncpp.xc_func);
+        if (GlobalC::restart.info_load.load_H_finish && !GlobalC::restart.info_load.restart_exx) { XC_Functional::set_xc_type(ucell.atoms[0].ncpp.xc_func);
         } 
-        else if (istep > 0) { XC_Functional::set_xc_type(GlobalC::ucell.atoms[0].ncpp.xc_func);
+        else if (istep > 0) { XC_Functional::set_xc_type(ucell.atoms[0].ncpp.xc_func);
         } 
         else
         {
@@ -168,9 +172,15 @@ void Exx_LRI_Interface<T, Tdata>::exx_hamilt2density(elecstate::ElecState& elec,
 }
 
 template<typename T, typename Tdata>
-void Exx_LRI_Interface<T, Tdata>::exx_iter_finish(const K_Vectors& kv, const UnitCell& ucell,
-    hamilt::Hamilt<T>& hamilt, elecstate::ElecState& elec, Charge_Mixing& chgmix,
-    const double& scf_ene_thr, int& iter, const int istep, bool& conv_esolver)
+void Exx_LRI_Interface<T, Tdata>::exx_iter_finish(const K_Vectors& kv, 
+                                                  const UnitCell& ucell,
+                                                  hamilt::Hamilt<T>& hamilt, 
+                                                  elecstate::ElecState& elec, 
+                                                  Charge_Mixing& chgmix,
+                                                  const double& scf_ene_thr, 
+                                                  int& iter, 
+                                                  const int istep, 
+                                                  bool& conv_esolver)
 {
     if (GlobalC::restart.info_save.save_H && (this->two_level_step > 0 || istep > 0)
         && (!GlobalC::exx_info.info_global.separate_loop || iter == 1)) // to avoid saving the same value repeatedly
@@ -194,7 +204,7 @@ void Exx_LRI_Interface<T, Tdata>::exx_iter_finish(const K_Vectors& kv, const Uni
         }*/
         ////////// for Add_Hexx_Type:R
         const std::string& restart_HR_path = GlobalC::restart.folder + "HexxR" + std::to_string(GlobalV::MY_RANK);
-        ModuleIO::write_Hexxs_csr(restart_HR_path, GlobalC::ucell, this->get_Hexxs());
+        ModuleIO::write_Hexxs_csr(restart_HR_path, ucell, this->get_Hexxs());
 
         if (GlobalV::MY_RANK == 0)
         {
@@ -214,6 +224,7 @@ void Exx_LRI_Interface<T, Tdata>::exx_iter_finish(const K_Vectors& kv, const Uni
         }
         this->dm_last_step = dynamic_cast<const elecstate::ElecStateLCAO<T>*>(&elec)->get_DM();
         conv_esolver = this->exx_after_converge(
+            ucell,
             hamilt,
             *dynamic_cast<const elecstate::ElecStateLCAO<T>*>(&elec)->get_DM(),
             kv,
@@ -228,6 +239,7 @@ void Exx_LRI_Interface<T, Tdata>::exx_iter_finish(const K_Vectors& kv, const Uni
 
 template<typename T, typename Tdata>
 bool Exx_LRI_Interface<T, Tdata>::exx_after_converge(
+    const UnitCell& ucell,
     hamilt::Hamilt<T>& hamilt,
     const elecstate::DensityMatrix<T, double>& dm,
     const K_Vectors& kv,
@@ -260,7 +272,7 @@ bool Exx_LRI_Interface<T, Tdata>::exx_after_converge(
             else
             {
                 // update exx and redo scf
-                XC_Functional::set_xc_type(GlobalC::ucell.atoms[0].ncpp.xc_func);
+                XC_Functional::set_xc_type(ucell.atoms[0].ncpp.xc_func);
                 iter = 0;
                 std::cout << " Entering 2nd SCF, where EXX is updated" << std::endl;
                 this->two_level_step++;
@@ -285,7 +297,7 @@ bool Exx_LRI_Interface<T, Tdata>::exx_after_converge(
                 // update exx and redo scf
                 if (this->two_level_step == 0)
                 {
-                    XC_Functional::set_xc_type(GlobalC::ucell.atoms[0].ncpp.xc_func);
+                    XC_Functional::set_xc_type(ucell.atoms[0].ncpp.xc_func);
                 }
 
                 std::cout << " Updating EXX " << std::flush;
@@ -305,11 +317,11 @@ bool Exx_LRI_Interface<T, Tdata>::exx_after_converge(
                     : RI_2D_Comm::split_m2D_ktoR<Tdata>(*this->exx_ptr->p_kv, this->mix_DMk_2D.get_DMk_k_out(), *dm.get_paraV_pointer(), nspin, this->exx_spacegroup_symmetry);
 
                 // check the rotation of Ds
-                // this->symrot_.test_HR_rotation(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, 'D', Ds[0]);
+                // this->symrot_.test_HR_rotation(ucell.symm, ucell.atoms, ucell.st, 'D', Ds[0]);
 
                 // check the rotation of H(R) before adding exx
-                // this->symrot_.find_irreducible_sector(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, this->symrot_.get_Rs_from_adjacent_list(GlobalC::ucell, GlobalC::GridD, *lm.ParaV));
-                // this->symrot_.test_HR_rotation(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, 'H', *(dynamic_cast<hamilt::HamiltLCAO<T, double>*>(&hamilt)->getHR()));
+                // this->symrot_.find_irreducible_sector(ucell.symm, ucell.atoms, ucell.st, this->symrot_.get_Rs_from_adjacent_list(ucell, GlobalC::GridD, *lm.ParaV));
+                // this->symrot_.test_HR_rotation(ucell.symm, ucell.atoms, ucell.st, 'H', *(dynamic_cast<hamilt::HamiltLCAO<T, double>*>(&hamilt)->getHR()));
                 // exit(0);
 
             if (this->exx_spacegroup_symmetry && GlobalC::exx_info.info_global.exx_symmetry_realspace)
@@ -327,15 +339,15 @@ bool Exx_LRI_Interface<T, Tdata>::exx_after_converge(
                 // ========================  test   ========================
                 // if (this->two_level_step)exit(0);
                 // check the rotation of S(R)
-                // this->symrot_.find_irreducible_sector(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, this->symrot_.get_Rs_from_adjacent_list(GlobalC::ucell, GlobalC::GridD, *lm.ParaV));
-                // this->symrot_.test_HR_rotation(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, 'H', *(dynamic_cast<hamilt::HamiltLCAO<T, double>*>(&hamilt)->getSR()));
+                // this->symrot_.find_irreducible_sector(ucell.symm, ucell.atoms, ucell.st, this->symrot_.get_Rs_from_adjacent_list(ucell, GlobalC::GridD, *lm.ParaV));
+                // this->symrot_.test_HR_rotation(ucell.symm, ucell.atoms, ucell.st, 'H', *(dynamic_cast<hamilt::HamiltLCAO<T, double>*>(&hamilt)->getSR()));
 
                 // check the rotation of D(R): no atom pair?
-                // symrot_.find_irreducible_sector(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, symrot_.get_Rs_from_adjacent_list(GlobalC::ucell, GlobalC::GridD, *this->DM->get_paraV_pointer()));
-                // symrot_.test_HR_rotation(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, 'D', *(this->DM->get_DMR_pointer(0)));
+                // symrot_.find_irreducible_sector(ucell.symm, ucell.atoms, ucell.st, symrot_.get_Rs_from_adjacent_list(ucell, GlobalC::GridD, *this->DM->get_paraV_pointer()));
+                // symrot_.test_HR_rotation(ucell.symm, ucell.atoms, ucell.st, 'D', *(this->DM->get_DMR_pointer(0)));
 
                 // check the rotation of Hexx
-                // this->symrot_.test_HR_rotation(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st, 'H', this->exx_ptr->Hexxs[0]);
+                // this->symrot_.test_HR_rotation(ucell.symm, ucell.atoms, ucell.st, 'H', this->exx_ptr->Hexxs[0]);
                 // exit(0);// break after test
                 // ========================  test   ========================
                 iter = 0;
