@@ -49,11 +49,11 @@ template <typename T, typename Tdata> class RPA_LRI
         const psi::Psi<T>& psi,
         const elecstate::ElecState* pelec);
     void out_eigen_vector(const Parallel_Orbitals& parav, const psi::Psi<T>& psi);
-    void out_struc();
+    void out_struc(const ModuleBase::Matrix3& latvec, const ModuleBase::Matrix3& G);
     void out_bands(const elecstate::ElecState *pelec);
 
-    void out_Cs();
-    void out_coulomb_k();
+    void out_Cs(const UnitCell &ucell);
+    void out_coulomb_k(const UnitCell &ucell);
     // void print_matrix(char *desc, const ModuleBase::matrix &mat);
     // void print_complex_matrix(char *desc, const ModuleBase::ComplexMatrix &mat);
     // void init(const MPI_Comm &mpi_comm_in);

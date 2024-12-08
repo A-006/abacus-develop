@@ -128,14 +128,14 @@ void RPA_LRI<T, Tdata>::out_for_RPA(const UnitCell& ucell,
     ModuleBase::TITLE("DFT_RPA_interface", "out_for_RPA");
     this->out_bands(pelec);
     this->out_eigen_vector(parav, psi);
-    this->out_struc();
+    this->out_struc(ucell.latvec, ucell.G);
 
     this->cal_rpa_cv(ucell);
     std::cout << "rpa_pca_threshold: " << this->info.pca_threshold << std::endl;
     std::cout << "rpa_ccp_rmesh_times: " << this->info.ccp_rmesh_times << std::endl;
     std::cout << "rpa_lcao_exx(Ha): " << std::fixed << std::setprecision(15) << exx_lri_rpa.Eexx / 2.0 << std::endl;
-    this->out_Cs();
-    this->out_coulomb_k();
+    this->out_Cs(ucell);
+    this->out_coulomb_k(ucell);
 
     std::cout << "etxc(Ha): " << std::fixed << std::setprecision(15) << pelec->f_en.etxc / 2.0 << std::endl;
     std::cout << "etot(Ha): " << std::fixed << std::setprecision(15) << pelec->f_en.etot / 2.0 << std::endl;
@@ -212,7 +212,7 @@ void RPA_LRI<T, Tdata>::out_eigen_vector(const Parallel_Orbitals& parav, const p
 }
 
 template <typename T, typename Tdata>
-void RPA_LRI<T, Tdata>::out_struc()
+void RPA_LRI<T, Tdata>::out_struc(const ModuleBase::Matrix3& latvec, const ModuleBase::Matrix3& G)
 {
     if (GlobalV::MY_RANK != 0)
     {
@@ -221,8 +221,8 @@ void RPA_LRI<T, Tdata>::out_struc()
     ModuleBase::TITLE("DFT_RPA_interface", "out_struc");
     double TWOPI_Bohr2A = ModuleBase::TWO_PI * ModuleBase::BOHR_TO_A;
     const int nks_tot = PARAM.inp.nspin == 2 ? (int)p_kv->get_nks() / 2 : p_kv->get_nks();
-    ModuleBase::Matrix3 lat = GlobalC::ucell.latvec / ModuleBase::BOHR_TO_A;
-    ModuleBase::Matrix3 G = GlobalC::ucell.G * TWOPI_Bohr2A;
+    ModuleBase::Matrix3 lat = latvec / ModuleBase::BOHR_TO_A;
+    ModuleBase::Matrix3 G_RPA = G * TWOPI_Bohr2A;
     std::stringstream ss;
     ss << "stru_out";
     std::ofstream ofs;
@@ -231,9 +231,9 @@ void RPA_LRI<T, Tdata>::out_struc()
     ofs << lat.e21 << std::setw(15) << lat.e22 << std::setw(15) << lat.e23 << std::endl;
     ofs << lat.e31 << std::setw(15) << lat.e32 << std::setw(15) << lat.e33 << std::endl;
 
-    ofs << G.e11 << std::setw(15) << G.e12 << std::setw(15) << G.e13 << std::endl;
-    ofs << G.e21 << std::setw(15) << G.e22 << std::setw(15) << G.e23 << std::endl;
-    ofs << G.e31 << std::setw(15) << G.e32 << std::setw(15) << G.e33 << std::endl;
+    ofs << G_RPA.e11 << std::setw(15) << G_RPA.e12 << std::setw(15) << G_RPA.e13 << std::endl;
+    ofs << G_RPA.e21 << std::setw(15) << G_RPA.e22 << std::setw(15) << G_RPA.e23 << std::endl;
+    ofs << G_RPA.e31 << std::setw(15) << G_RPA.e32 << std::setw(15) << G_RPA.e33 << std::endl;
 
     ofs << p_kv->nmp[0] << std::setw(6) << p_kv->nmp[1] << std::setw(6) << p_kv->nmp[2] << std::setw(6) << std::endl;
 
@@ -286,23 +286,23 @@ void RPA_LRI<T, Tdata>::out_bands(const elecstate::ElecState* pelec)
 }
 
 template <typename T, typename Tdata>
-void RPA_LRI<T, Tdata>::out_Cs()
+void RPA_LRI<T, Tdata>::out_Cs(const UnitCell& ucell)
 {
     std::stringstream ss;
     ss << "Cs_data_" << GlobalV::MY_RANK << ".txt";
     std::ofstream ofs;
     ofs.open(ss.str().c_str(), std::ios::out);
-    ofs << GlobalC::ucell.nat << "    " << 0 << std::endl;
+    ofs << ucell.nat << "    " << 0 << std::endl;
     for (auto& Ip: this->Cs_period)
     {
         size_t I = Ip.first;
-        size_t i_num = GlobalC::ucell.atoms[GlobalC::ucell.iat2it[I]].nw;
+        size_t i_num = ucell.atoms[ucell.iat2it[I]].nw;
         for (auto& JPp: Ip.second)
         {
             size_t J = JPp.first.first;
             auto R = JPp.first.second;
             auto& tmp_Cs = JPp.second;
-            size_t j_num = GlobalC::ucell.atoms[GlobalC::ucell.iat2it[J]].nw;
+            size_t j_num = ucell.atoms[ucell.iat2it[J]].nw;
 
             ofs << I + 1 << "   " << J + 1 << "   " << R[0] << "   " << R[1] << "   " << R[2] << "   " << i_num
                 << std::endl;
@@ -324,14 +324,14 @@ void RPA_LRI<T, Tdata>::out_Cs()
 }
 
 template <typename T, typename Tdata>
-void RPA_LRI<T, Tdata>::out_coulomb_k()
+void RPA_LRI<T, Tdata>::out_coulomb_k(const UnitCell &ucell)
 {
     int all_mu = 0;
-    vector<int> mu_shift(GlobalC::ucell.nat);
-    for (int I = 0; I != GlobalC::ucell.nat; I++)
+    vector<int> mu_shift(ucell.nat);
+    for (int I = 0; I != ucell.nat; I++)
     {
         mu_shift[I] = all_mu;
-        all_mu += exx_lri_rpa.cv.get_index_abfs_size(GlobalC::ucell.iat2it[I]);
+        all_mu += exx_lri_rpa.cv.get_index_abfs_size(ucell.iat2it[I]);
     }
     const int nks_tot = PARAM.inp.nspin == 2 ? (int)p_kv->get_nks() / 2 : p_kv->get_nks();
     std::stringstream ss;
@@ -344,7 +344,7 @@ void RPA_LRI<T, Tdata>::out_coulomb_k()
     for (auto& Ip: this->Vs_period)
     {
         auto I = Ip.first;
-        size_t mu_num = exx_lri_rpa.cv.get_index_abfs_size(GlobalC::ucell.iat2it[I]);
+        size_t mu_num = exx_lri_rpa.cv.get_index_abfs_size(ucell.iat2it[I]);
 
         for (int ik = 0; ik != nks_tot; ik++)
         {
@@ -360,7 +360,7 @@ void RPA_LRI<T, Tdata>::out_coulomb_k()
                 }
                 RI::Tensor<std::complex<double>> tmp_VR = RI::Global_Func::convert<std::complex<double>>(JPp.second);
 
-                const double arg = 1 * (p_kv->kvec_c[ik] * (RI_Util::array3_to_Vector3(R) * GlobalC::ucell.latvec))
+                const double arg = 1 * (p_kv->kvec_c[ik] * (RI_Util::array3_to_Vector3(R) * ucell.latvec))
                                    * ModuleBase::TWO_PI; // latvec
                 const std::complex<double> kphase = std::complex<double>(cos(arg), sin(arg));
                 if (Vq_k_IJ[J].empty())
@@ -373,7 +373,7 @@ void RPA_LRI<T, Tdata>::out_coulomb_k()
             {
                 auto iJ = vq_Jp.first;
                 auto& vq_J = vq_Jp.second;
-                size_t nu_num = exx_lri_rpa.cv.get_index_abfs_size(GlobalC::ucell.iat2it[iJ]);
+                size_t nu_num = exx_lri_rpa.cv.get_index_abfs_size(ucell.iat2it[iJ]);
                 ofs << all_mu << "   " << mu_shift[I] + 1 << "   " << mu_shift[I] + mu_num << "  " << mu_shift[iJ] + 1
                     << "   " << mu_shift[iJ] + nu_num << std::endl;
                 ofs << ik + 1 << "  " << p_kv->wk[ik] / 2.0 * PARAM.inp.nspin << std::endl;
