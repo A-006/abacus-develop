@@ -178,12 +178,12 @@ void ESolver_KS_LCAO<TK, TR>::before_all_runners(UnitCell& ucell, const Input_pa
             // initialize 2-center radial tables for EXX-LRI
             if (GlobalC::exx_info.info_ri.real_number)
             {
-                this->exx_lri_double->init(MPI_COMM_WORLD, this->kv, orb_);
+                this->exx_lri_double->init(MPI_COMM_WORLD, ucell,this->kv, orb_);
                 this->exd->exx_before_all_runners(this->kv, ucell, this->pv);
             }
             else
             {
-                this->exx_lri_complex->init(MPI_COMM_WORLD, this->kv, orb_);
+                this->exx_lri_complex->init(MPI_COMM_WORLD, ucell,this->kv, orb_);
                 this->exc->exx_before_all_runners(this->kv, ucell, this->pv);
             }
         }
@@ -1074,6 +1074,7 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
         RPA_LRI<TK, double> rpa_lri_double(GlobalC::exx_info.info_ri);
         rpa_lri_double.cal_postSCF_exx(*dynamic_cast<const elecstate::ElecStateLCAO<TK>*>(this->pelec)->get_DM(),
                                        MPI_COMM_WORLD,
+                                       ucell,
                                        this->kv,
                                        orb_);
         rpa_lri_double.init(MPI_COMM_WORLD, this->kv, orb_.cutoffs());

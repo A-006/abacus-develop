@@ -56,7 +56,10 @@ public:
     void reset_Cs(const std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>& Cs_in) { this->exx_lri.set_Cs(Cs_in, this->info.C_threshold); }
     void reset_Vs(const std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>& Vs_in) { this->exx_lri.set_Vs(Vs_in, this->info.V_threshold); }
 
-	void init(const MPI_Comm &mpi_comm_in, const K_Vectors &kv_in, const LCAO_Orbitals& orb);
+	void init(const MPI_Comm &mpi_comm_in, 
+			  const UnitCell &ucell,
+			  const K_Vectors &kv_in, 
+			  const LCAO_Orbitals& orb);
 	void cal_exx_force();
     void cal_exx_stress();
 	void cal_exx_ions(const bool write_cv = false);

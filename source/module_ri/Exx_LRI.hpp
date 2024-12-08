@@ -26,7 +26,10 @@
 #include <string>
 
 template<typename Tdata>
-void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in, const K_Vectors &kv_in, const LCAO_Orbitals& orb)
+void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in, 
+						  const UnitCell &ucell,
+						  const K_Vectors &kv_in, 
+						  const LCAO_Orbitals& orb)
 {
 	ModuleBase::TITLE("Exx_LRI","init");
 	ModuleBase::timer::tick("Exx_LRI", "init");
