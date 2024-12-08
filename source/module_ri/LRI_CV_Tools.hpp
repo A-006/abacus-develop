@@ -331,13 +331,13 @@ LRI_CV_Tools::cal_dMRs(
 	{
 		const TA iat1 = A1.first;
 		const TC &cell1 = A1.second;
-		const int it0 = GlobalC::ucell.iat2it[iat0];
-		const int ia0 = GlobalC::ucell.iat2ia[iat0];
-		const int it1 = GlobalC::ucell.iat2it[iat1];
-		const int ia1 = GlobalC::ucell.iat2ia[iat1];
-		const ModuleBase::Vector3<double> tau0 = GlobalC::ucell.atoms[it0].tau[ia0];
-		const ModuleBase::Vector3<double> tau1 = GlobalC::ucell.atoms[it1].tau[ia1];
-		const Abfs::Vector3_Order<double> R_delta = -tau0+tau1+(RI_Util::array3_to_Vector3(cell1)*GlobalC::ucell.latvec);
+		const int it0 = ucell.iat2it[iat0];
+		const int ia0 = ucell.iat2ia[iat0];
+		const int it1 = ucell.iat2it[iat1];
+		const int ia1 = ucell.iat2ia[iat1];
+		const ModuleBase::Vector3<double> tau0 = ucell.atoms[it0].tau[ia0];
+		const ModuleBase::Vector3<double> tau1 = ucell.atoms[it1].tau[ia1];
+		const Abfs::Vector3_Order<double> R_delta = -tau0+tau1+(RI_Util::array3_to_Vector3(cell1)*ucell.latvec);
 		return std::array<Tdata,3>{R_delta.x, R_delta.y, R_delta.z};
 	};
 	constexpr int Npos = 3;
