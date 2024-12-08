@@ -89,9 +89,9 @@ void RPA_LRI<T, Tdata>::cal_postSCF_exx(const elecstate::DensityMatrix<T, Tdata>
     if (exx_spacegroup_symmetry)
     {
         const std::array<Tcell, Ndim> period = RI_Util::get_Born_vonKarmen_period(kv);
-        symrot.find_irreducible_sector(GlobalC::ucell.symm, GlobalC::ucell.atoms, GlobalC::ucell.st,
-            RI_Util::get_Born_von_Karmen_cells(period), period, GlobalC::ucell.lat);
-        symrot.cal_Ms(kv, GlobalC::ucell, *dm.get_paraV_pointer());
+        symrot.find_irreducible_sector(ucell.symm, ucell.atoms, ucell.st,
+            RI_Util::get_Born_von_Karmen_cells(period), period, ucell.lat);
+        symrot.cal_Ms(kv, ucell, *dm.get_paraV_pointer());
         mix_DMk_2D.mix(symrot.restore_dm(kv, dm.get_DMK_vector(), *dm.get_paraV_pointer()), true);
     }
     else { mix_DMk_2D.mix(dm.get_DMK_vector(), true); }
@@ -107,7 +107,7 @@ void RPA_LRI<T, Tdata>::cal_postSCF_exx(const elecstate::DensityMatrix<T, Tdata>
     GlobalC::exx_info.info_ri.ccp_rmesh_times = PARAM.inp.rpa_ccp_rmesh_times;
 
     exx_lri_rpa.init(mpi_comm_in, ucell, kv, orb);
-    exx_lri_rpa.cal_exx_ions(PARAM.inp.out_ri_cv);
+    exx_lri_rpa.cal_exx_ions(ucell,PARAM.inp.out_ri_cv);
 
     if (exx_spacegroup_symmetry && PARAM.inp.exx_symmetry_realspace) {
         exx_lri_rpa.cal_exx_elec(Ds, *dm.get_paraV_pointer(), &symrot);

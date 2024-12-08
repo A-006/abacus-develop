@@ -105,7 +105,8 @@ void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in,
 }
 
 template<typename Tdata>
-void Exx_LRI<Tdata>::cal_exx_ions(const bool write_cv)
+void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
+								  const bool write_cv)
 {
 	ModuleBase::TITLE("Exx_LRI","cal_exx_ions");
 	ModuleBase::timer::tick("Exx_LRI", "cal_exx_ions");

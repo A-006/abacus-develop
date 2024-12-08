@@ -16,8 +16,10 @@ namespace rdmft
 
 
 template <typename TK, typename TR>
-void RDMFT<TK, TR>::update_ion(UnitCell& ucell_in, ModulePW::PW_Basis& rho_basis_in,
-                                ModuleBase::matrix& vloc_in, ModuleBase::ComplexMatrix& sf_in)
+void RDMFT<TK, TR>::update_ion(UnitCell& ucell_in, 
+                               ModulePW::PW_Basis& rho_basis_in,
+                               ModuleBase::matrix& vloc_in, 
+                               ModuleBase::ComplexMatrix& sf_in)
 {
     ucell = &ucell_in;
     rho_basis = &rho_basis_in;
@@ -31,11 +33,11 @@ void RDMFT<TK, TR>::update_ion(UnitCell& ucell_in, ModulePW::PW_Basis& rho_basis
     {
         if (GlobalC::exx_info.info_ri.real_number)
         {
-            Vxc_fromRI_d->cal_exx_ions();
+            Vxc_fromRI_d->cal_exx_ions(ucell_in);
         }
         else
         {
-            Vxc_fromRI_c->cal_exx_ions();
+            Vxc_fromRI_c->cal_exx_ions(ucell_in);
         }
     }
 #endif

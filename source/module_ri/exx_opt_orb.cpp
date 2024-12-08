@@ -31,7 +31,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
 	
 	Exx_Abfs::Jle jle;
-	jle.init_jle(this->kmesh_times, ucell , orb, );
+	jle.init_jle(this->kmesh_times, ucell , orb);
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
 	
