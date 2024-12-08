@@ -275,6 +275,7 @@ std::array<RI::Tensor<Tdata>,3> Matrix_Orbs22::cal_grad_overlap_matrix(
 // 4-parameter interface, for opt_orb
 template<typename Tdata>
 std::map < size_t, std::map<size_t, std::map<size_t, std::map<size_t, RI::Tensor<Tdata>>>>> Matrix_Orbs22::cal_overlap_matrix_all(
+	const UnitCell &ucell,
 	const ModuleBase::Element_Basis_Index::IndexLNM &index_A1,
 	const ModuleBase::Element_Basis_Index::IndexLNM &index_A2,
 	const ModuleBase::Element_Basis_Index::IndexLNM &index_B1,

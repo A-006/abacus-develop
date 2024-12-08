@@ -80,7 +80,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		#else
 		m_lcaoslcaos_lcaoslcaos.init_radial_table();
 		#endif
-		return m_lcaoslcaos_lcaoslcaos.cal_overlap_matrix_all<double>( index_lcaos, index_lcaos, index_lcaos, index_lcaos);
+		return m_lcaoslcaos_lcaoslcaos.cal_overlap_matrix_all<double>(ucell,index_lcaos, index_lcaos, index_lcaos, index_lcaos);
 	}();
 	
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
@@ -96,7 +96,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		#else
 		m_jyslcaos_lcaos.init_radial_table();
 		#endif
-		return m_jyslcaos_lcaos.cal_overlap_matrix_all<double>( index_jys, index_lcaos, index_lcaos );
+		return m_jyslcaos_lcaos.cal_overlap_matrix_all<double>(ucell,index_jys, index_lcaos, index_lcaos );
 	}();
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
@@ -112,7 +112,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		#else
 		m_jys_jys.init_radial_table();
 		#endif
-		return m_jys_jys.cal_overlap_matrix_all<double>( index_jys, index_jys );
+		return m_jys_jys.cal_overlap_matrix_all<double>(ucell,index_jys, index_jys );
 	}();
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
@@ -128,7 +128,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		#else
 		m_abfs_abfs.init_radial_table();
 		#endif
-		return m_abfs_abfs.cal_overlap_matrix_all<double>( index_abfs, index_abfs );
+		return m_abfs_abfs.cal_overlap_matrix_all<double>(ucell,index_abfs, index_abfs );
 	}();
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
@@ -144,7 +144,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		#else
 		m_abfslcaos_lcaos.init_radial_table();
 		#endif
-		return m_abfslcaos_lcaos.cal_overlap_matrix_all<double>( index_abfs, index_lcaos, index_lcaos );
+		return m_abfslcaos_lcaos.cal_overlap_matrix_all<double>(ucell,index_abfs, index_lcaos, index_lcaos );
 	}();
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;
@@ -160,7 +160,7 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 		#else
 		m_jys_abfs.init_radial_table();
 		#endif
-		return m_jys_abfs.cal_overlap_matrix_all<double>( index_jys, index_abfs );
+		return m_jys_abfs.cal_overlap_matrix_all<double>(ucell,index_jys, index_abfs );
 	}();
 
 // ofs_mpi<<"memory:\t"<<get_memory(10)<<std::endl;

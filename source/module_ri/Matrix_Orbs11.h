@@ -63,6 +63,7 @@ class Matrix_Orbs11
 
     template <typename Tdata>
     std::map<size_t, std::map<size_t, std::map<size_t, std::map<size_t, RI::Tensor<Tdata>>>>> cal_overlap_matrix_all(
+        const UnitCell &ucell,
         const ModuleBase::Element_Basis_Index::IndexLNM& index_r,
         const ModuleBase::Element_Basis_Index::IndexLNM& index_c) const;
 
