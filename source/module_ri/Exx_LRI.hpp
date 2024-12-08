@@ -138,7 +138,7 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 		list_As_Vs = RI::Distribute_Equally::distribute_atoms_periods(this->mpi_comm, atoms, period_Vs, 2, false);
 
 	std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>
-		Vs = this->cv.cal_Vs(
+		Vs = this->cv.cal_Vs(ucell,
 			list_As_Vs.first, list_As_Vs.second[0],
 			{{"writable_Vws",true}});
 	this->cv.Vws = LRI_CV_Tools::get_CVws(Vs);
@@ -148,7 +148,7 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 	if(PARAM.inp.cal_force || PARAM.inp.cal_stress)
 	{
 		std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3>
-			dVs = this->cv.cal_dVs(
+			dVs = this->cv.cal_dVs(ucell,
 				list_As_Vs.first, list_As_Vs.second[0],
 				{{"writable_dVws",true}});
 		this->cv.dVws = LRI_CV_Tools::get_dCVws(dVs);
@@ -166,6 +166,7 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 
 	std::pair<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>, std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3>>
 		Cs_dCs = this->cv.cal_Cs_dCs(
+			ucell,
 			list_As_Cs.first, list_As_Cs.second[0],
 			{{"cal_dC",PARAM.inp.cal_force||PARAM.inp.cal_stress},
 			 {"writable_Cws",true}, {"writable_dCws",true}, {"writable_Vws",false}, {"writable_dVws",false}});

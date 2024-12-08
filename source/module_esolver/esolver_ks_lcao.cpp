@@ -1080,7 +1080,7 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
                                        this->kv,
                                        orb_);
         rpa_lri_double.init(MPI_COMM_WORLD, this->kv, orb_.cutoffs());
-        rpa_lri_double.out_for_RPA(this->pv, *(this->psi), this->pelec);
+        rpa_lri_double.out_for_RPA(ucell,this->pv, *(this->psi), this->pelec);
     }
 #endif
 

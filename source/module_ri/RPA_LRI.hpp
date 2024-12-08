@@ -31,10 +31,10 @@ void RPA_LRI<T, Tdata>::init(const MPI_Comm& mpi_comm_in, const K_Vectors& kv_in
 }
 
 template <typename T, typename Tdata>
-void RPA_LRI<T, Tdata>::cal_rpa_cv()
+void RPA_LRI<T, Tdata>::cal_rpa_cv(const UnitCell& ucell)
 {
-    std::vector<TA> atoms(GlobalC::ucell.nat);
-    for (int iat = 0; iat < GlobalC::ucell.nat; ++iat)
+    std::vector<TA> atoms(ucell.nat);
+    for (int iat = 0; iat < ucell.nat; ++iat)
     {
         atoms[iat] = iat;
     }
@@ -44,7 +44,8 @@ void RPA_LRI<T, Tdata>::cal_rpa_cv()
     const std::pair<std::vector<TA>, std::vector<std::vector<std::pair<TA, std::array<Tcell, Ndim>>>>> list_As_Vs
         = RI::Distribute_Equally::distribute_atoms(this->mpi_comm, atoms, period_Vs, 2, false);
 
-    std::map<TA, std::map<TAC, RI::Tensor<Tdata>>> Vs = exx_lri_rpa.cv.cal_Vs(list_As_Vs.first,
+    std::map<TA, std::map<TAC, RI::Tensor<Tdata>>> Vs = exx_lri_rpa.cv.cal_Vs(ucell,
+                                                                              list_As_Vs.first,
                                                                               list_As_Vs.second[0],
                                                                               {
                                                                                   {"writable_Vws", true}
@@ -57,7 +58,8 @@ void RPA_LRI<T, Tdata>::cal_rpa_cv()
 
     std::pair<std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>,
               std::array<std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>, 3>>
-        Cs_dCs = exx_lri_rpa.cv.cal_Cs_dCs(list_As_Cs.first,
+        Cs_dCs = exx_lri_rpa.cv.cal_Cs_dCs(ucell,
+                                           list_As_Cs.first,
                                            list_As_Cs.second[0],
                                            {
                                                {"cal_dC",        false},
@@ -118,7 +120,8 @@ void RPA_LRI<T, Tdata>::cal_postSCF_exx(const elecstate::DensityMatrix<T, Tdata>
 }
 
 template <typename T, typename Tdata>
-void RPA_LRI<T, Tdata>::out_for_RPA(const Parallel_Orbitals& parav,
+void RPA_LRI<T, Tdata>::out_for_RPA(const UnitCell& ucell,
+                                    const Parallel_Orbitals& parav,
                                     const psi::Psi<T>& psi,
                                     const elecstate::ElecState* pelec)
 {
@@ -127,7 +130,7 @@ void RPA_LRI<T, Tdata>::out_for_RPA(const Parallel_Orbitals& parav,
     this->out_eigen_vector(parav, psi);
     this->out_struc();
 
-    this->cal_rpa_cv();
+    this->cal_rpa_cv(ucell);
     std::cout << "rpa_pca_threshold: " << this->info.pca_threshold << std::endl;
     std::cout << "rpa_ccp_rmesh_times: " << this->info.ccp_rmesh_times << std::endl;
     std::cout << "rpa_lcao_exx(Ha): " << std::fixed << std::setprecision(15) << exx_lri_rpa.Eexx / 2.0 << std::endl;

@@ -38,13 +38,14 @@ template <typename T, typename Tdata> class RPA_LRI
     }
     ~RPA_LRI(){};
     void init(const MPI_Comm &mpi_comm_in, const K_Vectors &kv_in, const std::vector<double>& orb_cutoff);
-    void cal_rpa_cv();
+    void cal_rpa_cv(const UnitCell &ucell);
     void cal_postSCF_exx(const elecstate::DensityMatrix<T, Tdata>& dm,
         const MPI_Comm& mpi_comm_in,
         const UnitCell& ucell,
         const K_Vectors& kv,
         const LCAO_Orbitals& orb);
-    void out_for_RPA(const Parallel_Orbitals& parav,
+    void out_for_RPA(const UnitCell& ucell,
+        const Parallel_Orbitals& parav,
         const psi::Psi<T>& psi,
         const elecstate::ElecState* pelec);
     void out_eigen_vector(const Parallel_Orbitals& parav, const psi::Psi<T>& psi);
