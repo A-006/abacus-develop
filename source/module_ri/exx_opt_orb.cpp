@@ -73,10 +73,10 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 	const auto ms_lcaoslcaos_lcaoslcaos = [&]() -> std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,RI::Tensor<double>>>>> 
 	{
 		Matrix_Orbs22 m_lcaoslcaos_lcaoslcaos;
-		m_lcaoslcaos_lcaoslcaos.init( 1, orb, this->kmesh_times, 1 );
+		m_lcaoslcaos_lcaoslcaos.init( 1, ucell,orb, this->kmesh_times, 1 );
 		m_lcaoslcaos_lcaoslcaos.init_radial( lcaos, lcaos, lcaos, lcaos );
 		#if TEST_EXX_RADIAL>=1
-		m_lcaoslcaos_lcaoslcaos.init_radial_table(radial_R);
+		m_lcaoslcaos_lcaoslcaos.init_radial_table(ucell.lat0,radial_R);
 		#else
 		m_lcaoslcaos_lcaoslcaos.init_radial_table();
 		#endif
