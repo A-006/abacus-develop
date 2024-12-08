@@ -274,8 +274,8 @@ void RDMFT<TK, TR>::cal_V_XC(const UnitCell& ucell)
             // transfer the DM_XC to appropriate format
             std::vector<std::map<int,std::map<std::pair<int,std::array<int,3>>,RI::Tensor<double>>>> 
                 Ds_XC_d = std::is_same<TK, double>::value //gamma_only_local
-                ? RI_2D_Comm::split_m2D_ktoR<double>(*kv, DM_XC_pointer, *ParaV, nspin)
-                : RI_2D_Comm::split_m2D_ktoR<double>(*kv, DM_XC_pointer, *ParaV, nspin, this->exx_spacegroup_symmetry);
+                ? RI_2D_Comm::split_m2D_ktoR<double>(ucell,*kv, DM_XC_pointer, *ParaV, nspin)
+                : RI_2D_Comm::split_m2D_ktoR<double>(ucell,*kv, DM_XC_pointer, *ParaV, nspin, this->exx_spacegroup_symmetry);
 
             // provide the Ds_XC to Vxc_fromRI(V_exx_XC)
             if (this->exx_spacegroup_symmetry && GlobalC::exx_info.info_global.exx_symmetry_realspace)
@@ -302,8 +302,8 @@ void RDMFT<TK, TR>::cal_V_XC(const UnitCell& ucell)
             // transfer the DM_XC to appropriate format
             std::vector<std::map<int,std::map<std::pair<int,std::array<int,3>>,RI::Tensor<std::complex<double>>>>> 
                 Ds_XC_c = std::is_same<TK, double>::value //gamma_only_local
-                ? RI_2D_Comm::split_m2D_ktoR<std::complex<double>>(*kv, DM_XC_pointer, *ParaV, nspin)
-                : RI_2D_Comm::split_m2D_ktoR<std::complex<double>>(*kv, DM_XC_pointer, *ParaV, nspin, this->exx_spacegroup_symmetry);
+                ? RI_2D_Comm::split_m2D_ktoR<std::complex<double>>(ucell,*kv, DM_XC_pointer, *ParaV, nspin)
+                : RI_2D_Comm::split_m2D_ktoR<std::complex<double>>(ucell,*kv, DM_XC_pointer, *ParaV, nspin, this->exx_spacegroup_symmetry);
 
             // // provide the Ds_XC to Vxc_fromRI(V_exx_XC)
             if (this->exx_spacegroup_symmetry && GlobalC::exx_info.info_global.exx_symmetry_realspace)
