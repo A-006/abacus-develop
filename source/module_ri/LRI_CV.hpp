@@ -37,6 +37,7 @@ LRI_CV<Tdata>::~LRI_CV()
 
 template<typename Tdata>
 void LRI_CV<Tdata>::set_orbitals(
+	const UnitCell &ucell,
     const LCAO_Orbitals& orb,
 	const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &lcaos_in,
 	const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &abfs_in,
@@ -61,7 +62,7 @@ void LRI_CV<Tdata>::set_orbitals(
 		range_abfs = Exx_Abfs::Abfs_Index::construct_range( abfs );
 	this->index_abfs = ModuleBase::Element_Basis_Index::construct_index( range_abfs );
 
-	this->m_abfs_abfs.init( 2, orb, kmesh_times, (1+this->ccp_rmesh_times)/2.0 );
+	this->m_abfs_abfs.init( 2, ucell,orb, kmesh_times, (1+this->ccp_rmesh_times)/2.0 );
 	this->m_abfs_abfs.init_radial( this->abfs_ccp, this->abfs );
 	this->m_abfs_abfs.init_radial_table();
 

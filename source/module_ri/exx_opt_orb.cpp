@@ -105,10 +105,10 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 	const auto ms_jys_jys = [&]() -> std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,RI::Tensor<double>>>>>
 	{
 		Matrix_Orbs11 m_jys_jys;
-		m_jys_jys.init( 2, orb, this->kmesh_times, 1 );
+		m_jys_jys.init( 2,ucell,orb, this->kmesh_times, 1 );
 		m_jys_jys.init_radial( jle.jle, jle.jle );
 		#if TEST_EXX_RADIAL>=1
-		m_jys_jys.init_radial_table(radial_R);
+		m_jys_jys.init_radial_table(ucell.lat0,radial_R);
 		#else
 		m_jys_jys.init_radial_table();
 		#endif
@@ -121,10 +121,10 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 	const auto ms_abfs_abfs = [&]() -> std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,RI::Tensor<double>>>>>
 	{
 		Matrix_Orbs11 m_abfs_abfs;
-		m_abfs_abfs.init( 2, orb, this->kmesh_times, 1 );
+		m_abfs_abfs.init( 2, ucell, orb, this->kmesh_times, 1 );
 		m_abfs_abfs.init_radial( abfs, abfs );
 		#if TEST_EXX_RADIAL>=1
-		m_abfs_abfs.init_radial_table(radial_R);
+		m_abfs_abfs.init_radial_table(ucell.lat0,radial_R);
 		#else
 		m_abfs_abfs.init_radial_table();
 		#endif
@@ -153,10 +153,10 @@ void Exx_Opt_Orb::generate_matrix(const K_Vectors &kv, const UnitCell& ucell, co
 	const auto ms_jys_abfs = [&]() -> std::map<size_t,std::map<size_t,std::map<size_t,std::map<size_t,RI::Tensor<double>>>>>
 	{
 		Matrix_Orbs11 m_jys_abfs;
-		m_jys_abfs.init( 2, orb, this->kmesh_times, 1 );
+		m_jys_abfs.init( 2, ucell,orb, this->kmesh_times, 1 );
 		m_jys_abfs.init_radial( jle.jle, abfs );
 		#if TEST_EXX_RADIAL>=1
-		m_jys_abfs.init_radial_table(radial_R);
+		m_jys_abfs.init_radial_table(ucell.lat0,radial_R);
 		#else
 		m_jys_abfs.init_radial_table();
 		#endif
