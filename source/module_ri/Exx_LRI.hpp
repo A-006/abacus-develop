@@ -133,7 +133,7 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 	this->exx_lri.set_parallel(this->mpi_comm, atoms_pos, latvec, period);
 
 	// std::max(3) for gamma_only, list_A2 should contain cell {-1,0,1}. In the future distribute will be neighbour.
-	const std::array<Tcell,Ndim> period_Vs = LRI_CV_Tools::cal_latvec_range<Tcell>(1+this->info.ccp_rmesh_times, orb_cutoff_);	
+	const std::array<Tcell,Ndim> period_Vs = LRI_CV_Tools::cal_latvec_range<Tcell>(1+this->info.ccp_rmesh_times, ucell, orb_cutoff_);	
 	const std::pair<std::vector<TA>, std::vector<std::vector<std::pair<TA,std::array<Tcell,Ndim>>>>>
 		list_As_Vs = RI::Distribute_Equally::distribute_atoms_periods(this->mpi_comm, atoms, period_Vs, 2, false);
 
@@ -141,7 +141,7 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 		Vs = this->cv.cal_Vs(ucell,
 			list_As_Vs.first, list_As_Vs.second[0],
 			{{"writable_Vws",true}});
-	this->cv.Vws = LRI_CV_Tools::get_CVws(Vs);
+	this->cv.Vws = LRI_CV_Tools::get_CVws(ucell,Vs);
 	if (write_cv && GlobalV::MY_RANK == 0) { LRI_CV_Tools::write_Vs_abf(Vs, PARAM.globalv.global_out_dir + "Vs"); }
 	this->exx_lri.set_Vs(std::move(Vs), this->info.V_threshold);
 
@@ -151,16 +151,16 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 			dVs = this->cv.cal_dVs(ucell,
 				list_As_Vs.first, list_As_Vs.second[0],
 				{{"writable_dVws",true}});
-		this->cv.dVws = LRI_CV_Tools::get_dCVws(dVs);
+		this->cv.dVws = LRI_CV_Tools::get_dCVws(ucell,dVs);
 		this->exx_lri.set_dVs(std::move(dVs), this->info.V_grad_threshold);
 		if(PARAM.inp.cal_stress)
 		{
-			std::array<std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3>,3> dVRs = LRI_CV_Tools::cal_dMRs(dVs);
+			std::array<std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3>,3> dVRs = LRI_CV_Tools::cal_dMRs(ucell,dVs);
 			this->exx_lri.set_dVRs(std::move(dVRs), this->info.V_grad_R_threshold);
 		}
 	}
 
-	const std::array<Tcell,Ndim> period_Cs = LRI_CV_Tools::cal_latvec_range<Tcell>(2, orb_cutoff_);
+	const std::array<Tcell,Ndim> period_Cs = LRI_CV_Tools::cal_latvec_range<Tcell>(2, ucell,orb_cutoff_);
 	const std::pair<std::vector<TA>, std::vector<std::vector<std::pair<TA,std::array<Tcell,Ndim>>>>>
 		list_As_Cs = RI::Distribute_Equally::distribute_atoms_periods(this->mpi_comm, atoms, period_Cs, 2, false);
 
@@ -171,18 +171,18 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 			{{"cal_dC",PARAM.inp.cal_force||PARAM.inp.cal_stress},
 			 {"writable_Cws",true}, {"writable_dCws",true}, {"writable_Vws",false}, {"writable_dVws",false}});
 	std::map<TA,std::map<TAC,RI::Tensor<Tdata>>> &Cs = std::get<0>(Cs_dCs);
-	this->cv.Cws = LRI_CV_Tools::get_CVws(Cs);
+	this->cv.Cws = LRI_CV_Tools::get_CVws(ucell,Cs);
     if (write_cv && GlobalV::MY_RANK == 0) { LRI_CV_Tools::write_Cs_ao(Cs, PARAM.globalv.global_out_dir + "Cs"); }
 	this->exx_lri.set_Cs(std::move(Cs), this->info.C_threshold);
 
 	if(PARAM.inp.cal_force || PARAM.inp.cal_stress)
 	{
 		std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3> &dCs = std::get<1>(Cs_dCs);
-		this->cv.dCws = LRI_CV_Tools::get_dCVws(dCs);
+		this->cv.dCws = LRI_CV_Tools::get_dCVws(ucell,dCs);
 		this->exx_lri.set_dCs(std::move(dCs), this->info.C_grad_threshold);
 		if(PARAM.inp.cal_stress)
 		{
-			std::array<std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3>,3> dCRs = LRI_CV_Tools::cal_dMRs(dCs);
+			std::array<std::array<std::map<TA,std::map<TAC,RI::Tensor<Tdata>>>,3>,3> dCRs = LRI_CV_Tools::cal_dMRs(ucell,dCs);
 			this->exx_lri.set_dCRs(std::move(dCRs), this->info.C_grad_R_threshold);
 		}
 	}
