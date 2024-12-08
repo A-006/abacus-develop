@@ -53,6 +53,7 @@ void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in,
     this->mpi_comm = mpi_comm_in;
     this->p_kv = &kv_in;
     this->orb_cutoff_ = orb.cutoffs();
+	const double omega = ucell.omega;
 
 	this->lcaos = Exx_Abfs::Construct_Orbs::change_orbs( orb, this->info.kmesh_times );
 
@@ -66,10 +67,10 @@ void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in,
 		this->abfs = abfs_same_atom;
 	} else {
 		this->abfs = Exx_Abfs::IO::construct_abfs( abfs_same_atom, orb, this->info.files_abfs, this->info.kmesh_times );
-}
-	Exx_Abfs::Construct_Orbs::print_orbs_size(this->abfs, GlobalV::ofs_running);
+	}
+	Exx_Abfs::Construct_Orbs::print_orbs_size(ucell,this->abfs, GlobalV::ofs_running);
 
-	auto get_ccp_parameter = [this]() -> std::map<std::string,double>
+	auto get_ccp_parameter = [this,&omega]() -> std::map<std::string,double>
 	{
 		switch(this->info.ccp_type)
 		{
@@ -79,7 +80,7 @@ void Exx_LRI<Tdata>::init(const MPI_Comm &mpi_comm_in,
 			{
 				// 4/3 * pi * Rcut^3 = V_{supercell} = V_{unitcell} * Nk
 				const int nspin0 = (PARAM.inp.nspin==2) ? 2 : 1;
-				const double hf_Rcut = std::pow(0.75 * this->p_kv->get_nkstot_full()/nspin0 * GlobalC::ucell.omega / (ModuleBase::PI), 1.0/3.0);
+				const double hf_Rcut = std::pow(0.75 * this->p_kv->get_nkstot_full()/nspin0 * omega / (ModuleBase::PI), 1.0/3.0);
 				return {{"hf_Rcut", hf_Rcut}};
 			}
 			case Conv_Coulomb_Pot_K::Ccp_Type::Hse:

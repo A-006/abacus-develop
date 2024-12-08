@@ -479,6 +479,7 @@ inline const Numerical_Orbital_Lm &Exx_Abfs::Construct_Orbs::get_orbital(
 */
 
 void Exx_Abfs::Construct_Orbs::print_orbs_size(
+	const UnitCell &ucell,
 	const std::vector<std::vector<std::vector<Numerical_Orbital_Lm>>> &orbs,
 	std::ostream &os)
 {
@@ -486,7 +487,7 @@ void Exx_Abfs::Construct_Orbs::print_orbs_size(
 	const std::vector<char> L_labels = {'s', 'p', 'd'};
 	for(std::size_t T=0; T<orbs.size(); ++T)
 	{
-		os<<"\t\t"<<GlobalC::ucell.atoms[T].label<<"\t\t";
+		os<<"\t\t"<<ucell.atoms[T].label<<"\t\t";
 		for(std::size_t L=0; L<orbs[T].size(); ++L)
 		{
 			const char L_label =
