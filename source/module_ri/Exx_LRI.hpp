@@ -116,18 +116,18 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 //	this->m_abfsabfs.init_radial_table(Rradial);
 //	this->m_abfslcaos_lcaos.init_radial_table(Rradial);
 
-	std::vector<TA> atoms(GlobalC::ucell.nat);
-	for(int iat=0; iat<GlobalC::ucell.nat; ++iat) {
+	std::vector<TA> atoms(ucell.nat);
+	for(int iat=0; iat<ucell.nat; ++iat) {
 		atoms[iat] = iat;
 }
 	std::map<TA,TatomR> atoms_pos;
-	for(int iat=0; iat<GlobalC::ucell.nat; ++iat) {
-		atoms_pos[iat] = RI_Util::Vector3_to_array3( GlobalC::ucell.atoms[ GlobalC::ucell.iat2it[iat] ].tau[ GlobalC::ucell.iat2ia[iat] ] );
+	for(int iat=0; iat<ucell.nat; ++iat) {
+		atoms_pos[iat] = RI_Util::Vector3_to_array3( ucell.atoms[ ucell.iat2it[iat] ].tau[ ucell.iat2ia[iat] ] );
 }
 	const std::array<TatomR,Ndim> latvec
-		= {RI_Util::Vector3_to_array3(GlobalC::ucell.a1),
-		   RI_Util::Vector3_to_array3(GlobalC::ucell.a2),
-		   RI_Util::Vector3_to_array3(GlobalC::ucell.a3)};
+		= {RI_Util::Vector3_to_array3(ucell.a1),
+		   RI_Util::Vector3_to_array3(ucell.a2),
+		   RI_Util::Vector3_to_array3(ucell.a3)};
 	const std::array<Tcell,Ndim> period = {this->p_kv->nmp[0], this->p_kv->nmp[1], this->p_kv->nmp[2]};
 
 	this->exx_lri.set_parallel(this->mpi_comm, atoms_pos, latvec, period);
@@ -190,6 +190,7 @@ void Exx_LRI<Tdata>::cal_exx_ions(const UnitCell& ucell,
 
 template<typename Tdata>
 void Exx_LRI<Tdata>::cal_exx_elec(const std::vector<std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>>& Ds,
+	const UnitCell& ucell,
     const Parallel_Orbitals& pv,
     const ModuleSymmetry::Symmetry_rotation* p_symrot)
 {

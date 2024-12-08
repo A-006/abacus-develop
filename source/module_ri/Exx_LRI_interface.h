@@ -57,8 +57,11 @@ public:
     void exx_beforescf(const int istep, const K_Vectors& kv, const Charge_Mixing& chgmix, const UnitCell& ucell, const LCAO_Orbitals& orb);
 
     /// @brief in eachiterinit:  do DM mixing and calculate Hexx when entering 2nd SCF
-    void exx_eachiterinit(const int istep, const elecstate::DensityMatrix<T, double>& dm/**< double should be Tdata if complex-PBE-DM is supported*/,
-        const K_Vectors& kv, const int& iter);
+    void exx_eachiterinit(const int istep,
+                          const UnitCell& ucell, 
+                          const elecstate::DensityMatrix<T, double>& dm/**< double should be Tdata if complex-PBE-DM is supported*/,
+                          const K_Vectors& kv, 
+                          const int& iter);
 
     /// @brief in hamilt2density: calculate Hexx and Eexx
     void exx_hamilt2density(elecstate::ElecState& elec, const Parallel_Orbitals& pv, const int iter);

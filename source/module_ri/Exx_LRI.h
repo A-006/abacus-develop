@@ -64,6 +64,7 @@ public:
     void cal_exx_stress();
 	void cal_exx_ions(const UnitCell& ucell, const bool write_cv = false);
     void cal_exx_elec(const std::vector<std::map<TA, std::map<TAC, RI::Tensor<Tdata>>>>& Ds,
+		const UnitCell& ucell,
         const Parallel_Orbitals& pv,
         const ModuleSymmetry::Symmetry_rotation* p_symrot = nullptr);
     std::vector<std::vector<int>> get_abfs_nchis() const;

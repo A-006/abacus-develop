@@ -623,6 +623,7 @@ void ESolver_KS_LCAO<TK, TR>::iter_init(UnitCell& ucell, const int istep, const 
         if (GlobalC::exx_info.info_ri.real_number)
         {
             this->exd->exx_eachiterinit(istep,
+                                        ucell,
                                         *dynamic_cast<const elecstate::ElecStateLCAO<TK>*>(this->pelec)->get_DM(),
                                         this->kv,
                                         iter);
@@ -630,6 +631,7 @@ void ESolver_KS_LCAO<TK, TR>::iter_init(UnitCell& ucell, const int istep, const 
         else
         {
             this->exc->exx_eachiterinit(istep,
+                                        ucell,
                                         *dynamic_cast<const elecstate::ElecStateLCAO<TK>*>(this->pelec)->get_DM(),
                                         this->kv,
                                         iter);
@@ -1052,7 +1054,7 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
                 occ_number_ks(ik, inb) /= this->kv.wk[ik];
             }
         }
-        this->rdmft_solver.update_elec(occ_number_ks, *(this->psi));
+        this->rdmft_solver.update_elec(ucell,occ_number_ks, *(this->psi));
 
         //! initialize the gradients of Etotal with respect to occupation numbers and wfc, 
         //! and set all elements to 0. 

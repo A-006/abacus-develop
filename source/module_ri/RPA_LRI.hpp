@@ -110,9 +110,9 @@ void RPA_LRI<T, Tdata>::cal_postSCF_exx(const elecstate::DensityMatrix<T, Tdata>
     exx_lri_rpa.cal_exx_ions(ucell,PARAM.inp.out_ri_cv);
 
     if (exx_spacegroup_symmetry && PARAM.inp.exx_symmetry_realspace) {
-        exx_lri_rpa.cal_exx_elec(Ds, *dm.get_paraV_pointer(), &symrot);
+        exx_lri_rpa.cal_exx_elec(Ds, ucell,*dm.get_paraV_pointer(), &symrot);
     } else {
-        exx_lri_rpa.cal_exx_elec(Ds, *dm.get_paraV_pointer());
+        exx_lri_rpa.cal_exx_elec(Ds, ucell,*dm.get_paraV_pointer());
 }
     // cout<<"postSCF_Eexx: "<<exx_lri_rpa.Eexx<<endl;
 }

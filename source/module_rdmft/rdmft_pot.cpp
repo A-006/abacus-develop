@@ -175,7 +175,7 @@ void RDMFT<TK, TR>::cal_V_hartree()
 
 
 template <typename TK, typename TR>
-void RDMFT<TK, TR>::cal_V_XC()
+void RDMFT<TK, TR>::cal_V_XC(const UnitCell& ucell)
 {
     // // //test
     // DM_XC_pass = DM_XC;
@@ -280,11 +280,11 @@ void RDMFT<TK, TR>::cal_V_XC()
             // provide the Ds_XC to Vxc_fromRI(V_exx_XC)
             if (this->exx_spacegroup_symmetry && GlobalC::exx_info.info_global.exx_symmetry_realspace)
             {
-                Vxc_fromRI_d->cal_exx_elec(Ds_XC_d, *ParaV, &this->symrot_exx);
+                Vxc_fromRI_d->cal_exx_elec(Ds_XC_d, ucell,*ParaV, &this->symrot_exx);
             }
             else
             {
-                Vxc_fromRI_d->cal_exx_elec(Ds_XC_d, *ParaV);
+                Vxc_fromRI_d->cal_exx_elec(Ds_XC_d, ucell,*ParaV);
             }
 
             // when we doing V_exx_XC.contributeHk(ik), we get HK_XC constructed by the special DM_XC
@@ -308,11 +308,11 @@ void RDMFT<TK, TR>::cal_V_XC()
             // // provide the Ds_XC to Vxc_fromRI(V_exx_XC)
             if (this->exx_spacegroup_symmetry && GlobalC::exx_info.info_global.exx_symmetry_realspace)
             {
-                Vxc_fromRI_c->cal_exx_elec(Ds_XC_c, *ParaV, &this->symrot_exx);
+                Vxc_fromRI_c->cal_exx_elec(Ds_XC_c, ucell,*ParaV, &this->symrot_exx);
             }
             else
             {
-                Vxc_fromRI_c->cal_exx_elec(Ds_XC_c, *ParaV);
+                Vxc_fromRI_c->cal_exx_elec(Ds_XC_c, ucell,*ParaV);
             }
 
             // when we doing V_exx_XC.contributeHk(ik), we get HK_XC constructed by the special DM_XC

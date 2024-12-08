@@ -47,7 +47,9 @@ void RDMFT<TK, TR>::update_ion(UnitCell& ucell_in,
 
 
 template <typename TK, typename TR>
-void RDMFT<TK, TR>::update_elec(const ModuleBase::matrix& occ_number_in, const psi::Psi<TK>& wfc_in, const Charge* charge_in)
+void RDMFT<TK, TR>::update_elec(const UnitCell& ucell,
+                                const ModuleBase::matrix& occ_number_in, 
+                                const psi::Psi<TK>& wfc_in, const Charge* charge_in)
 {
     // update occ_number, wg, wk_fun_occNum
     occ_number = (occ_number_in);
@@ -76,11 +78,11 @@ void RDMFT<TK, TR>::update_elec(const ModuleBase::matrix& occ_number_in, const p
     if( this->cal_E_type != 1 )
     {
         // the second cal_E_type need the complete pot to get effctive_V to calEband and so on.
-        this->pelec->pot->update_from_charge(charge, ucell);
+        this->pelec->pot->update_from_charge(charge, &ucell);
     }
 
     this->cal_V_hartree();
-    this->cal_V_XC();
+    this->cal_V_XC(ucell);
     // this->cal_Hk_Hpsi();
 
     std::cout << "\n******\n" << "update elec in rdmft successfully" << "\n******\n" << std::endl;
