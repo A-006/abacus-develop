@@ -44,6 +44,7 @@ namespace RI_2D_Comm
 
     template<typename Tdata, typename TK>
     extern void add_Hexx(
+		const UnitCell& ucell,
         const K_Vectors& kv,
         const int ik,
         const double alpha,
@@ -80,7 +81,7 @@ namespace RI_2D_Comm
 	extern inline std::tuple<int,int,int> get_iat_iw_is_block(const UnitCell& ucell,const int& iwt);
 	extern inline int get_is_block(const int is_k, const int is_row_b, const int is_col_b);
 	extern inline std::tuple<int,int> split_is_block(const int is_b);
-	extern inline int get_iwt(const int iat, const int iw_b, const int is_b);
+	extern inline int get_iwt(const UnitCell& ucell, const int iat, const int iw_b, const int is_b);
 }
 
 #include "RI_2D_Comm.hpp"

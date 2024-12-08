@@ -291,6 +291,7 @@ void RDMFT<TK, TR>::cal_V_XC(const UnitCell& ucell)
             V_exx_XC = new hamilt::OperatorEXX<hamilt::OperatorLCAO<TK, TR>>(
                 hsk_exx_XC,
                 HR_exx_XC,
+                ucell,
                 *kv,
                 &Vxc_fromRI_d->Hexxs,
                 nullptr,
@@ -319,6 +320,7 @@ void RDMFT<TK, TR>::cal_V_XC(const UnitCell& ucell)
             V_exx_XC = new hamilt::OperatorEXX<hamilt::OperatorLCAO<TK, TR>>(
                 hsk_exx_XC,
                 HR_exx_XC,
+                ucell,
                 *kv,
                 nullptr,
                 &Vxc_fromRI_c->Hexxs,
