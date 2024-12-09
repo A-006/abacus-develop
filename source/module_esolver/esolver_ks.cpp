@@ -540,7 +540,7 @@ void ESolver_KS<T, Device>::iter_finish(UnitCell& ucell, const int istep, int& i
         }
         else
         {
-            this->pelec->cal_bandgap_updw();
+            this->pelec->cal_bandgap_updw(ucell);
         }
     }
 

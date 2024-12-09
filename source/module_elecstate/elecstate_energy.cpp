@@ -43,7 +43,7 @@ void ElecState::cal_bandgap()
 
 /// @brief calculate spin up & down band gap
 /// @todo add isk[ik] so as to discriminate different spins
-void ElecState::cal_bandgap_updw()
+void ElecState::cal_bandgap_updw(const UnitCell& ucell)
 {
     if (this->ekb.nr == 0 || this->ekb.nc == 0)
     { // which means no homo and no lumo

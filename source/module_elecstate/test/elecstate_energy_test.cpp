@@ -71,6 +71,7 @@ namespace elecstate
 class MockElecState : public ElecState
 {
   public:
+    UnitCell ucell;
     void Set_GlobalV_Default()
     {
         PARAM.input.imp_sol = false;
@@ -208,7 +209,7 @@ TEST_F(ElecStateEnergyTest, CalBandgap)
 
 TEST_F(ElecStateEnergyTest, CalBandgapUpDwTrivial)
 {
-    elecstate->cal_bandgap_updw();
+    elecstate->cal_bandgap_updw(ucell);
     EXPECT_DOUBLE_EQ(elecstate->bandgap_up, 0.0);
     EXPECT_DOUBLE_EQ(elecstate->bandgap_dw, 0.0);
 }
@@ -247,7 +248,7 @@ TEST_F(ElecStateEnergyTest, CalBandgapUpDw)
     }
     elecstate->eferm.ef_up = 0.5;
     elecstate->eferm.ef_dw = 2.1;
-    elecstate->cal_bandgap_updw();
+    elecstate->cal_bandgap_updw(ucell);
     EXPECT_DOUBLE_EQ(elecstate->bandgap_up, 1.0);
     EXPECT_DOUBLE_EQ(elecstate->bandgap_dw, 0.5);
 }
