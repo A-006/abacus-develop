@@ -33,7 +33,7 @@ class Force_Stress_LCAO
                         const bool isstress,
                         const bool istestf,
                         const bool istests,
-                        const UnitCell& ucell,
+                        UnitCell& ucell,
                         Parallel_Orbitals& pv,
                         const elecstate::ElecState* pelec,
                         const psi::Psi<T>* psi,
@@ -64,7 +64,7 @@ class Force_Stress_LCAO
                        ModuleBase::matrix& fcs, 
                        ModuleSymmetry::Symmetry* symm);
 
-    void calForcePwPart(const UnitCell& ucell,
+    void calForcePwPart(UnitCell& ucell,
                         ModuleBase::matrix& fvl_dvl,
                         ModuleBase::matrix& fewalds,
                         ModuleBase::matrix& fcc,

@@ -35,7 +35,7 @@ void Force_Stress_LCAO<T>::getForceStress(const bool isforce,
                                           const bool isstress,
                                           const bool istestf,
                                           const bool istests,
-                                          const UnitCell& ucell,
+                                          UnitCell& ucell,
                                           Parallel_Orbitals& pv,
                                           const elecstate::ElecState* pelec,
                                           const psi::Psi<T>* psi,
@@ -851,7 +851,7 @@ void Force_Stress_LCAO<T>::getForceStress(const bool isforce,
 
 // local pseudopotential, ewald, core correction, scc terms in force
 template <typename T>
-void Force_Stress_LCAO<T>::calForcePwPart(const UnitCell& ucell,
+void Force_Stress_LCAO<T>::calForcePwPart(UnitCell& ucell,
                                           ModuleBase::matrix& fvl_dvl,
                                           ModuleBase::matrix& fewalds,
                                           ModuleBase::matrix& fcc,
@@ -878,7 +878,7 @@ void Force_Stress_LCAO<T>::calForcePwPart(const UnitCell& ucell,
     //--------------------------------------------------------
     // force due to core correlation.
     //--------------------------------------------------------
-    f_pw.cal_force_cc(fcc, rhopw, chr, nlpp.numeric, GlobalC::ucell);
+    f_pw.cal_force_cc(fcc, rhopw, chr, nlpp.numeric, ucell);
     //--------------------------------------------------------
     // force due to self-consistent charge.
     //--------------------------------------------------------
