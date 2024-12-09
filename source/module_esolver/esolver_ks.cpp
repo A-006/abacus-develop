@@ -677,7 +677,7 @@ void ESolver_KS<T, Device>::iter_finish(UnitCell& ucell, const int istep, int& i
     {
         dkin = p_chgmix->get_dkin(pelec->charge, PARAM.inp.nelec,ucell.omega);
     }
-    this->pelec->print_etot(this->conv_esolver, iter, drho, dkin, duration, PARAM.inp.printe, diag_ethr);
+    this->pelec->print_etot(ucell,this->conv_esolver, iter, drho, dkin, duration, PARAM.inp.printe, diag_ethr);
 
     // Json, need to be moved to somewhere else
 #ifdef __RAPIDJSON

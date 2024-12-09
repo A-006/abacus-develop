@@ -174,7 +174,8 @@ class ElecState
     ModuleBase::matrix wg;  ///< occupation weight for each k-point and band
 
   public: // print something. See elecstate_print.cpp
-    void print_etot(const bool converged,
+    void print_etot(const UnitCell& ucell,
+                    const bool converged,
                     const int& iter,
                     const double& scf_thr,
                     const double& scf_thr_kin,

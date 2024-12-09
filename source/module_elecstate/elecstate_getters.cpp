@@ -24,30 +24,6 @@ int get_xc_func_type()
 }
 
 
-double get_ucell_tot_magnetization()
-{
-    return GlobalC::ucell.magnet.tot_magnetization;
-}
-
-double get_ucell_abs_magnetization()
-{
-    return GlobalC::ucell.magnet.abs_magnetization;
-}
-
-double get_ucell_tot_magnetization_nc_x()
-{
-    return GlobalC::ucell.magnet.tot_magnetization_nc[0];
-}
-
-double get_ucell_tot_magnetization_nc_y()
-{
-    return GlobalC::ucell.magnet.tot_magnetization_nc[1];
-}
-
-double get_ucell_tot_magnetization_nc_z()
-{
-    return GlobalC::ucell.magnet.tot_magnetization_nc[2];
-}
 
 std::string get_ks_solver_type()
 {

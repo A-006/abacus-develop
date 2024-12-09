@@ -289,7 +289,8 @@ void ElecState::print_band(const int& ik, const int& printe, const int& iter)
 /// @param pw_diag_thr: threshold for diagonalization
 /// @param avg_iter: averaged diagonalization iteration of each scf iteration
 /// @param print: if print to screen
-void ElecState::print_etot(const bool converged,
+void ElecState::print_etot(const UnitCell& ucell,
+                           const bool converged,
                            const int& iter_in,
                            const double& scf_thr,
                            const double& scf_thr_kin,
@@ -429,13 +430,13 @@ void ElecState::print_etot(const bool converged,
         switch (PARAM.inp.nspin)
         {
         case 2:
-            mag = {get_ucell_tot_magnetization(), get_ucell_abs_magnetization()};
+            mag = {ucell.magnet.tot_magnetization, ucell.magnet.abs_magnetization};
             break;
         case 4:
-            mag = {get_ucell_tot_magnetization_nc_x(),
-                   get_ucell_tot_magnetization_nc_y(),
-                   get_ucell_tot_magnetization_nc_z(),
-                   get_ucell_abs_magnetization()};
+            mag = {ucell.magnet.tot_magnetization_nc[0],
+                   ucell.magnet.tot_magnetization_nc[1],
+                   ucell.magnet.tot_magnetization_nc[2],
+                   ucell.magnet.abs_magnetization};
             break;
         default:
             mag = {};
