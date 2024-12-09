@@ -56,8 +56,24 @@ K_Vectors::K_Vectors()
 K_Vectors::~K_Vectors()
 {
 }
-
-
+UnitCell::UnitCell()
+{
+}
+UnitCell::~UnitCell()
+{
+}
+Magnetism::Magnetism()
+{
+}
+Magnetism::~Magnetism()
+{
+}
+InfoNonlocal::InfoNonlocal()
+{
+}
+InfoNonlocal::~InfoNonlocal()
+{
+}
 /***************************************************************
  *  unit test of functions in elecstate_energy.cpp
  ****************************************************************/
@@ -71,7 +87,6 @@ namespace elecstate
 class MockElecState : public ElecState
 {
   public:
-    UnitCell ucell;
     void Set_GlobalV_Default()
     {
         PARAM.input.imp_sol = false;
@@ -104,6 +119,7 @@ void ElecState::calculate_weights()
 class ElecStateEnergyTest : public ::testing::Test
 {
   protected:
+    UnitCell ucell;
     elecstate::MockElecState* elecstate;
     void SetUp() override
     {

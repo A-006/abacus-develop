@@ -43,7 +43,9 @@ class Charge_Mixing
                     const double& mixing_gg0_mag_in,
                     const double& mixing_gg0_min_in,
                     const double& mixing_angle_in,
-                    const bool& mixing_dmr_in);
+                    const bool& mixing_dmr_in,
+                    const double& omega_in,
+                    const double& tpiba_in);
 
     void close_kerker_gg0() { mixing_gg0 = 0.0; mixing_gg0_mag = 0.0; }
     /**
@@ -129,6 +131,9 @@ class Charge_Mixing
     double mixing_gg0_min = 0.1;         ///< minimum kerker coefficient
     double mixing_angle = 0.0;           ///< mixing angle for nspin=4
     bool mixing_dmr = false;             ///< whether to mixing real space density matrix
+    double omega   = 0.0;                ///< omega for mixing
+    double tpiba   = 0.0;                ///< 2*pi/lat0
+    double tpiba2  = 0.0;                ///< 2*pi/lat0^2
 
     std::vector<double> _drho_history; ///< history of drho used to determine the oscillation, size is scf_nmax
     

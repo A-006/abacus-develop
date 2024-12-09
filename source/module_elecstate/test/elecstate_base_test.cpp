@@ -83,7 +83,24 @@ void Charge::renormalize_rho()
 void Charge::check_rho()
 {
 }
-
+UnitCell::UnitCell()
+{
+}
+UnitCell::~UnitCell()
+{
+}
+Magnetism::Magnetism()
+{
+}
+Magnetism::~Magnetism()
+{
+}
+InfoNonlocal::InfoNonlocal()
+{
+}
+InfoNonlocal::~InfoNonlocal()
+{
+}
 /************************************************
  *  unit test of elecstate.cpp
  ***********************************************/
@@ -141,6 +158,7 @@ class ElecStateTest : public ::testing::Test
   protected:
     elecstate::MockElecState* elecstate;
     std::string output;
+    UnitCell ucell;
     void SetUp()
     {
         elecstate = new elecstate::MockElecState;
@@ -250,7 +268,7 @@ TEST_F(ElecStateTest, InitSCF)
     ModuleBase::ComplexMatrix strucfac;
     elecstate->eferm = efermi;
     ModuleSymmetry::Symmetry symm;
-    EXPECT_NO_THROW(elecstate->init_scf(istep, strucfac, nullptr, symm));
+    EXPECT_NO_THROW(elecstate->init_scf(istep, ucell,strucfac, nullptr, symm));
     // delete elecstate->pot is done in the destructor of elecstate
     delete charge;
 }
