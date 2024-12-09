@@ -112,7 +112,8 @@ class Stress_Func
                        ModulePW::PW_Basis* rho_basis); // used in local pseudopotential stress
 
     // 5) the stress from the non-linear core correction (if any)
-    void stress_cc(ModuleBase::matrix& sigma,
+    void stress_cc(UnitCell& ucell,
+                   ModuleBase::matrix& sigma,
                    ModulePW::PW_Basis* rho_basis,
                    const Structure_Factor* p_sf,
                    const bool is_pw,

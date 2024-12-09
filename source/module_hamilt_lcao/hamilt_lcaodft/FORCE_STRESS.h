@@ -102,7 +102,7 @@ class Force_Stress_LCAO
                        const Parallel_Orbitals& pv,
                        const K_Vectors& kv);
 
-    void calStressPwPart(const UnitCell& ucell,
+    void calStressPwPart(UnitCell& ucell,
                          ModuleBase::matrix& sigmadvl,
                          ModuleBase::matrix& sigmahar,
                          ModuleBase::matrix& sigmaewa,
