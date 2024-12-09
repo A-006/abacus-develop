@@ -13,8 +13,6 @@ double get_ucell_omega();
 double get_ucell_tpiba();
 /// @brief get the value of XC_Functional::func_type
 int get_xc_func_type();
-/// @brief get the value of INPUT.vdw_method
-std::string get_input_vdw_method();
 /// @brief get the value of GlobalC::ucell.magnet.tot_magnetization
 double get_ucell_tot_magnetization();
 /// @brief get the value of GlobalC::ucell.magnet.abs_magnetization
