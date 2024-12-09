@@ -24,7 +24,7 @@
 #endif
 
 template <typename FPTYPE, typename Device>
-void Forces<FPTYPE, Device>::cal_force(const UnitCell& ucell,
+void Forces<FPTYPE, Device>::cal_force(UnitCell& ucell,
                                        ModuleBase::matrix& force,
                                        const elecstate::ElecState& elec,
                                        ModulePW::PW_Basis* rho_basis,
