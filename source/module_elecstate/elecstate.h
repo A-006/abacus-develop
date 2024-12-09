@@ -127,7 +127,7 @@ class ElecState
     void cal_bandgap();
     void cal_bandgap_updw(const UnitCell& ucell);
 
-    double cal_delta_eband() const;
+    double cal_delta_eband(const UnitCell& ucell) const;
     double cal_delta_escf() const;
 
     ModuleBase::matrix vnew;
