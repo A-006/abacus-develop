@@ -62,14 +62,14 @@ void Matrix_Orbs21::init_radial(const std::vector<std::vector<std::vector<Numeri
     ModuleBase::TITLE("Matrix_Orbs21", "init_radial");
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial");
     assert(orb_A1.size() == orb_A2.size());
-    for (size_t TA = 0; TA != orb_A1.size(); ++TA)
-        for (size_t TB = 0; TB != orb_B.size(); ++TB)
-            for (int LA1 = 0; LA1 != orb_A1[TA].size(); ++LA1)
-                for (size_t NA1 = 0; NA1 != orb_A1[TA][LA1].size(); ++NA1)
-                    for (int LA2 = 0; LA2 != orb_A2[TA].size(); ++LA2)
-                        for (size_t NA2 = 0; NA2 != orb_A2[TA][LA2].size(); ++NA2)
-                            for (int LB = 0; LB != orb_B[TB].size(); ++LB)
-                                for (size_t NB = 0; NB != orb_B[TB][LB].size(); ++NB)
+    for (size_t TA = 0; TA != orb_A1.size(); ++TA) {
+        for (size_t TB = 0; TB != orb_B.size(); ++TB) {
+            for (int LA1 = 0; LA1 != orb_A1[TA].size(); ++LA1) {
+                for (size_t NA1 = 0; NA1 != orb_A1[TA][LA1].size(); ++NA1) {
+                    for (int LA2 = 0; LA2 != orb_A2[TA].size(); ++LA2) {
+                        for (size_t NA2 = 0; NA2 != orb_A2[TA][LA2].size(); ++NA2) {
+                            for (int LB = 0; LB != orb_B[TB].size(); ++LB) {
+                                for (size_t NB = 0; NB != orb_B[TB][LB].size(); ++NB) {
                                     center2_orb21_s[TA][TB][LA1][NA1][LA2][NA2][LB].insert(
                                         std::make_pair(NB,
                                                        Center2_Orb::Orb21(orb_A1[TA][LA1][NA1],
@@ -77,6 +77,14 @@ void Matrix_Orbs21::init_radial(const std::vector<std::vector<std::vector<Numeri
                                                                           orb_B[TB][LB][NB],
                                                                           psb_,
                                                                           this->MGT)));
+}
+}
+}
+}
+}
+}
+}
+}
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial");
 }
 
@@ -87,14 +95,14 @@ void Matrix_Orbs21::init_radial(const std::vector<std::vector<std::vector<Numeri
     ModuleBase::TITLE("Matrix_Orbs21", "init_radial");
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial");
     assert(orb_A1.size() == orb_A2.get_ntype());
-    for (size_t TA = 0; TA != orb_A1.size(); ++TA)
-        for (size_t TB = 0; TB != orb_B.get_ntype(); ++TB)
-            for (int LA1 = 0; LA1 != orb_A1[TA].size(); ++LA1)
-                for (size_t NA1 = 0; NA1 != orb_A1[TA][LA1].size(); ++NA1)
-                    for (int LA2 = 0; LA2 <= orb_A2.Phi[TA].getLmax(); ++LA2)
-                        for (size_t NA2 = 0; NA2 != orb_A2.Phi[TA].getNchi(LA2); ++NA2)
-                            for (int LB = 0; LB <= orb_B.Phi[TB].getLmax(); ++LB)
-                                for (size_t NB = 0; NB != orb_B.Phi[TB].getNchi(LB); ++NB)
+    for (size_t TA = 0; TA != orb_A1.size(); ++TA) {
+        for (size_t TB = 0; TB != orb_B.get_ntype(); ++TB) {
+            for (int LA1 = 0; LA1 != orb_A1[TA].size(); ++LA1) {
+                for (size_t NA1 = 0; NA1 != orb_A1[TA][LA1].size(); ++NA1) {
+                    for (int LA2 = 0; LA2 <= orb_A2.Phi[TA].getLmax(); ++LA2) {
+                        for (size_t NA2 = 0; NA2 != orb_A2.Phi[TA].getNchi(LA2); ++NA2) {
+                            for (int LB = 0; LB <= orb_B.Phi[TB].getLmax(); ++LB) {
+                                for (size_t NB = 0; NB != orb_B.Phi[TB].getNchi(LB); ++NB) {
                                     center2_orb21_s[TA][TB][LA1][NA1][LA2][NA2][LB].insert(
                                         std::make_pair(NB,
                                                        Center2_Orb::Orb21(orb_A1[TA][LA1][NA1],
@@ -102,6 +110,14 @@ void Matrix_Orbs21::init_radial(const std::vector<std::vector<std::vector<Numeri
                                                                           orb_B.Phi[TB].PhiLN(LB, NB),
                                                                           psb_,
                                                                           this->MGT)));
+}
+}
+}
+}
+}
+}
+}
+}
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial");
 }
 
@@ -109,15 +125,23 @@ void Matrix_Orbs21::init_radial_table()
 {
     ModuleBase::TITLE("Matrix_Orbs21", "init_radial");
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial_table");
-    for (auto& coA: center2_orb21_s)
-        for (auto& coB: coA.second)
-            for (auto& coC: coB.second)
-                for (auto& coD: coC.second)
-                    for (auto& coE: coD.second)
-                        for (auto& coF: coE.second)
-                            for (auto& coG: coF.second)
-                                for (auto& coH: coG.second)
+    for (auto& coA: center2_orb21_s) {
+        for (auto& coB: coA.second) {
+            for (auto& coC: coB.second) {
+                for (auto& coD: coC.second) {
+                    for (auto& coE: coD.second) {
+                        for (auto& coF: coE.second) {
+                            for (auto& coG: coF.second) {
+                                for (auto& coH: coG.second) {
                                     coH.second.init_radial_table();
+}
+}
+}
+}
+}
+}
+}
+}
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial_table");
 }
 
@@ -125,7 +149,7 @@ void Matrix_Orbs21::init_radial_table(const std::map<size_t, std::map<size_t, st
 {
     ModuleBase::TITLE("Matrix_Orbs21", "init_radial_table_Rs");
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial_table");
-    for (const auto& RsA: Rs)
+    for (const auto& RsA: Rs) {
         for (const auto& RsB: RsA.second)
         {
             if (auto* const center2_orb21_sAB = static_cast<std::map<
@@ -140,17 +164,25 @@ void Matrix_Orbs21::init_radial_table(const std::map<size_t, std::map<size_t, st
                 {
                     const double position = R * lat0 / lcao_dr_;
                     const size_t iq = static_cast<size_t>(position);
-                    for (size_t i = 0; i != 4; ++i)
+                    for (size_t i = 0; i != 4; ++i) {
                         radials.insert(iq + i);
+}
                 }
-                for (auto& coC: *center2_orb21_sAB)
-                    for (auto& coD: coC.second)
-                        for (auto& coE: coD.second)
-                            for (auto& coF: coE.second)
-                                for (auto& coG: coF.second)
-                                    for (auto& coH: coG.second)
+                for (auto& coC: *center2_orb21_sAB) {
+                    for (auto& coD: coC.second) {
+                        for (auto& coE: coD.second) {
+                            for (auto& coF: coE.second) {
+                                for (auto& coG: coF.second) {
+                                    for (auto& coH: coG.second) {
                                         coH.second.init_radial_table(radials);
+}
+}
+}
+}
+}
+}
             }
         }
+}
     ModuleBase::timer::tick("Matrix_Orbs21", "init_radial_table");
 }

@@ -65,10 +65,11 @@ void Exx_Opt_Orb::print_matrix(
 		// this parameter determine the total number of jlq.
 		ofs << Exx_Abfs::Jle::Ecut_exx << " ecutwfc_jlq" << std::endl;//mohan modify 2009-09-08
 
-		if(TA==TB)
+		if(TA==TB) {
 			ofs << orb_cutoff[TA] << " rcut_Jlq" << std::endl;
-		else
+		} else {
 			ofs << orb_cutoff[TA] << " " << orb_cutoff[TB] << " rcut_Jlq" << std::endl;
+}
 
 		// mohan add 'smooth' and 'smearing_sigma' 2009-08-28
 		ofs << 0 << " smooth" << std::endl;
@@ -85,8 +86,9 @@ void Exx_Opt_Orb::print_matrix(
 		auto cal_sum_M = [&range_jles](size_t T) -> size_t
 		{
 			size_t sum_M = 0;
-			for( size_t L = 0; L!=range_jles[T].size(); ++L )
+			for( size_t L = 0; L!=range_jles[T].size(); ++L ) {
 				sum_M += range_jles[T][L].M;
+}
 			return sum_M;
 		};
 		const size_t nwfc = (TA==TB && IA==IB) ? cal_sum_M(TA) : cal_sum_M(TA)+cal_sum_M(TB);
@@ -94,10 +96,11 @@ void Exx_Opt_Orb::print_matrix(
 		
 		const size_t ecut_numberA = static_cast<size_t>( sqrt( Exx_Abfs::Jle::Ecut_exx ) * orb_cutoff[TA] / ModuleBase::PI ); // Rydberg Unit
 		const size_t ecut_numberB = static_cast<size_t>( sqrt( Exx_Abfs::Jle::Ecut_exx ) * orb_cutoff[TB] / ModuleBase::PI ); // Rydberg Unit
-		if(TA==TB)
+		if(TA==TB) {
 			ofs	<< ecut_numberA << " ne" << std::endl;
-		else
+		} else {
 			ofs	<< ecut_numberA << " " << ecut_numberB << " ne" << std::endl;
+}
 		
 		ofs << "<WEIGHT_OF_KPOINTS>" << std::endl;
 		for( int ik=0; ik!=kv.get_nkstot(); ++ik )		
