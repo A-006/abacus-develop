@@ -8,10 +8,6 @@
 namespace elecstate
 {
 
-double get_ucell_tpiba()
-{
-    return GlobalC::ucell.tpiba;
-}
 
 int get_xc_func_type()
 {
