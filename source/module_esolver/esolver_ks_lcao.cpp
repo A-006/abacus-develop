@@ -1052,7 +1052,7 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
                 occ_number_ks(ik, inb) /= this->kv.wk[ik];
             }
         }
-        this->rdmft_solver.update_elec(occ_number_ks, *(this->psi));
+        this->rdmft_solver.update_elec(ucell,occ_number_ks, *(this->psi));
 
         //! initialize the gradients of Etotal with respect to occupation numbers and wfc, 
         //! and set all elements to 0. 

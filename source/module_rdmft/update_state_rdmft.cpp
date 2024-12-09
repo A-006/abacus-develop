@@ -45,7 +45,10 @@ void RDMFT<TK, TR>::update_ion(UnitCell& ucell_in, ModulePW::PW_Basis& rho_basis
 
 
 template <typename TK, typename TR>
-void RDMFT<TK, TR>::update_elec(const ModuleBase::matrix& occ_number_in, const psi::Psi<TK>& wfc_in, const Charge* charge_in)
+void RDMFT<TK, TR>::update_elec(UnitCell& ucell_in,
+                                const ModuleBase::matrix& occ_number_in, 
+                                const psi::Psi<TK>& wfc_in, 
+                                const Charge* charge_in)
 {
     // update occ_number, wg, wk_fun_occNum
     occ_number = (occ_number_in);
@@ -67,7 +70,7 @@ void RDMFT<TK, TR>::update_elec(const ModuleBase::matrix& occ_number_in, const p
 }
 
     // update charge
-    this->update_charge();
+    this->update_charge(ucell_in);
 
     // "default" = "pbe"
     // if(  !only_exx_type || this->cal_E_type != 1 )
@@ -87,7 +90,7 @@ void RDMFT<TK, TR>::update_elec(const ModuleBase::matrix& occ_number_in, const p
 
 // this code is copying from function ElecStateLCAO<TK>::psiToRho(), in elecstate_lcao.cpp
 template <typename TK, typename TR>
-void RDMFT<TK, TR>::update_charge()
+void RDMFT<TK, TR>::update_charge(UnitCell& ucell_in)
 {
     if( PARAM.inp.gamma_only )
     {
@@ -156,7 +159,7 @@ void RDMFT<TK, TR>::update_charge()
     Symmetry_rho srho;
     for (int is = 0; is < nspin; is++)
     {
-        srho.begin(is, *(this->charge), rho_basis, GlobalC::ucell.symm);
+        srho.begin(is, *(this->charge), rho_basis, ucell_in.symm);
     }
 
 }
