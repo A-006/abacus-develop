@@ -110,7 +110,7 @@ void DFTU::force_stress(const UnitCell& ucell,
 
             double* VU = new double[pv.nloc];
 
-            this->cal_VU_pot_mat_real(spin, false, VU);
+            this->cal_VU_pot_mat_real(spin, false, ucell, VU);
 
             const std::vector<std::vector<double>>& dmk
                 = dynamic_cast<const elecstate::ElecStateLCAO<double>*>(pelec)->get_DM()->get_DMK_vector();
@@ -174,7 +174,7 @@ void DFTU::force_stress(const UnitCell& ucell,
 
             std::complex<double>* VU = new std::complex<double>[pv.nloc];
 
-            this->cal_VU_pot_mat_complex(spin, false, VU);
+            this->cal_VU_pot_mat_complex(spin, false, ucell, VU);
 
             const std::vector<std::vector<std::complex<double>>>& dmk
                 = dynamic_cast<const elecstate::ElecStateLCAO<std::complex<double>>*>(pelec)

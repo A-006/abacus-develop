@@ -156,7 +156,7 @@ void RDMFT<TK, TR>::update_charge()
     Symmetry_rho srho;
     for (int is = 0; is < nspin; is++)
     {
-        srho.begin(is, *(this->charge), rho_basis, ucell.symm);
+        srho.begin(is, *(this->charge), rho_basis, GlobalC::ucell.symm);
     }
 
 }

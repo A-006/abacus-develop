@@ -77,6 +77,7 @@ void sparse_format::cal_HSR(const UnitCell& ucell,
     if (PARAM.inp.dft_plus_u == 2) {
         if (nspin == 1 || nspin == 2) {
             cal_HR_dftu(pv,
+                        ucell,
                         HS_Arrays.all_R_coor,
                         HS_Arrays.SR_sparse,
                         HS_Arrays.HR_sparse,
@@ -84,6 +85,7 @@ void sparse_format::cal_HSR(const UnitCell& ucell,
                         sparse_thr);
         } else if (nspin == 4) {
             cal_HR_dftu_soc(pv,
+                            ucell,
                             HS_Arrays.all_R_coor,
                             HS_Arrays.SR_soc_sparse,
                             HS_Arrays.HR_soc_sparse,

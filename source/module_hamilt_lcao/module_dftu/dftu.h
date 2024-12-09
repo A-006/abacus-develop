@@ -77,10 +77,10 @@ class DFTU
     // For calculating contribution to Hamiltonian matrices
     //=============================================================
   public:
-    void cal_eff_pot_mat_complex(const int ik, std::complex<double>* eff_pot, const std::vector<int>& isk, const std::complex<double>* sk);
-    void cal_eff_pot_mat_real(const int ik, double* eff_pot, const std::vector<int>& isk, const double* sk);
-    void cal_eff_pot_mat_R_double(const int ispin, double* SR, double* HR);
-    void cal_eff_pot_mat_R_complex_double(const int ispin, std::complex<double>* SR, std::complex<double>* HR);
+    void cal_eff_pot_mat_complex(const int ik, const UnitCell& ucell, std::complex<double>* eff_pot, const std::vector<int>& isk, const std::complex<double>* sk);
+    void cal_eff_pot_mat_real(const int ik, const UnitCell& ucell, double* eff_pot, const std::vector<int>& isk, const double* sk);
+    void cal_eff_pot_mat_R_double(const int ispin,const UnitCell& ucell, double* SR, double* HR);
+    void cal_eff_pot_mat_R_complex_double(const int ispin, const UnitCell& ucell, std::complex<double>* SR, std::complex<double>* HR);
 
     //=============================================================
     // In dftu_occup.cpp
@@ -122,8 +122,14 @@ private:
     // for both Hamiltonian and force/stress
     //=============================================================
 
-    void cal_VU_pot_mat_complex(const int spin, const bool newlocale, std::complex<double>* VU);
-    void cal_VU_pot_mat_real(const int spin, const bool newlocale, double* VU);
+    void cal_VU_pot_mat_complex(const int spin, 
+                                const bool newlocale, 
+                                const UnitCell& ucell,
+                                std::complex<double>* VU);
+    void cal_VU_pot_mat_real(const int spin, 
+                             const bool newlocale, 
+                             const UnitCell& ucell,
+                             double* VU);
 
     double get_onebody_eff_pot(const int T,
                                const int iat,

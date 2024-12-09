@@ -223,6 +223,7 @@ HamiltLCAO<TK, TR>::HamiltLCAO(Gint_Gamma* GG_in,
                 dftu = new OperatorDFTU<OperatorLCAO<TK, TR>>(this->hsk,
                                                               kv->kvec_d,
                                                               this->hR, // no explicit call yet
+                                                              ucell,
                                                               this->kv->isk);
             }
             else
@@ -365,6 +366,7 @@ HamiltLCAO<TK, TR>::HamiltLCAO(Gint_Gamma* GG_in,
                 dftu = new OperatorDFTU<OperatorLCAO<TK, TR>>(this->hsk,
                                                               kv->kvec_d,
                                                               this->hR, // no explicit call yet
+                                                              ucell,
                                                               this->kv->isk);
             }
             else

@@ -7,7 +7,11 @@
 namespace ModuleDFTU
 {
 
-void DFTU::cal_eff_pot_mat_complex(const int ik, std::complex<double>* eff_pot, const std::vector<int>& isk, const std::complex<double>* sk)
+void DFTU::cal_eff_pot_mat_complex(const int ik, 
+                                  const UnitCell& ucell, 
+                                  std::complex<double>* eff_pot, 
+                                  const std::vector<int>& isk, 
+                                  const std::complex<double>* sk)
 {
     ModuleBase::TITLE("DFTU", "cal_eff_pot_mat");
     ModuleBase::timer::tick("DFTU", "cal_eff_pot_mat");
@@ -31,7 +35,7 @@ void DFTU::cal_eff_pot_mat_complex(const int ik, std::complex<double>* eff_pot, 
     const std::complex<double> zero = 0.0;
 
     std::vector<std::complex<double>> VU(this->paraV->nloc);
-    this->cal_VU_pot_mat_complex(spin, true, &VU[0]);
+    this->cal_VU_pot_mat_complex(spin, true, ucell,&VU[0]);
 
 #ifdef __MPI
 	pzgemm_(&transN, &transN,
@@ -58,7 +62,11 @@ void DFTU::cal_eff_pot_mat_complex(const int ik, std::complex<double>* eff_pot, 
     return;
 }
 
-void DFTU::cal_eff_pot_mat_real(const int ik, double* eff_pot, const std::vector<int>& isk, const double* sk)
+void DFTU::cal_eff_pot_mat_real(const int ik, 
+                                const UnitCell& ucell,
+                                double* eff_pot, 
+                                const std::vector<int>& isk, 
+                                const double* sk)
 {
     ModuleBase::TITLE("DFTU", "cal_eff_pot_mat");
     ModuleBase::timer::tick("DFTU", "cal_eff_pot_mat");
@@ -80,7 +88,7 @@ void DFTU::cal_eff_pot_mat_real(const int ik, double* eff_pot, const std::vector
     double alpha = 1.0, beta = 0.0, half = 0.5, one = 1.0;
 
     std::vector<double> VU(this->paraV->nloc);
-    this->cal_VU_pot_mat_real(spin, 1, &VU[0]);
+    this->cal_VU_pot_mat_real(spin, 1, ucell, &VU[0]);
 
 #ifdef __MPI
 	pdgemm_(&transN, &transN,
@@ -107,14 +115,14 @@ void DFTU::cal_eff_pot_mat_real(const int ik, double* eff_pot, const std::vector
     return;
 }
 
-void DFTU::cal_eff_pot_mat_R_double(const int ispin, double* SR, double* HR)
+void DFTU::cal_eff_pot_mat_R_double(const int ispin, const UnitCell& ucell,double* SR, double* HR)
 {
     const char transN = 'N', transT = 'T';
     const int one_int = 1;
     const double alpha = 1.0, beta = 0.0, one = 1.0, half = 0.5;
 
     std::vector<double> VU(this->paraV->nloc);
-    this->cal_VU_pot_mat_real(ispin, 1, &VU[0]);
+    this->cal_VU_pot_mat_real(ispin, 1, ucell, &VU[0]);
 
 #ifdef __MPI
     pdgemm_(&transN, &transN,
@@ -137,14 +145,14 @@ void DFTU::cal_eff_pot_mat_R_double(const int ispin, double* SR, double* HR)
     return;
 }
 
-void DFTU::cal_eff_pot_mat_R_complex_double(const int ispin, std::complex<double>* SR, std::complex<double>* HR)
+void DFTU::cal_eff_pot_mat_R_complex_double(const int ispin, const UnitCell& ucell, std::complex<double>* SR, std::complex<double>* HR)
 {
     const char transN = 'N', transT = 'T';
     const int one_int = 1;
     const std::complex<double> zero = 0.0, one = 1.0, half = 0.5;
 
     std::vector<std::complex<double>> VU(this->paraV->nloc);
-    this->cal_VU_pot_mat_complex(ispin, 1, &VU[0]);
+    this->cal_VU_pot_mat_complex(ispin, 1, ucell, &VU[0]);
 
 #ifdef __MPI
     pzgemm_(&transN, &transN,
