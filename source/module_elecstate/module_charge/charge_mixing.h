@@ -75,8 +75,8 @@ class Charge_Mixing
      * @brief Get the drho between rho and rho_save, similar for get_dkin
      *
      */
-    double get_drho(Charge* chr, const double nelec);
-    double get_dkin(Charge* chr, const double nelec);
+    double get_drho(Charge* chr, const double nelec , const double omega);
+    double get_dkin(Charge* chr, const double nelec , const double omega);
 
     /**
      * @brief reset mixing, actually we only call init_mixing() to reset mixing instead of this function 

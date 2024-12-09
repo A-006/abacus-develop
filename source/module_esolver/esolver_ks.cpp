@@ -368,7 +368,7 @@ void ESolver_KS<T, Device>::hamilt2density(UnitCell& ucell, const int istep, con
         // double drho = this->estate.caldr2();
         // EState should be used after it is constructed.
 
-        drho = p_chgmix->get_drho(pelec->charge, PARAM.inp.nelec);
+        drho = p_chgmix->get_drho(pelec->charge, PARAM.inp.nelec,ucell.omega);
         hsolver_error = 0.0;
         if (iter == 1 && PARAM.inp.calculation != "nscf")
         {
@@ -390,7 +390,7 @@ void ESolver_KS<T, Device>::hamilt2density(UnitCell& ucell, const int istep, con
 
                 this->hamilt2density_single(ucell, istep, iter, diag_ethr);
 
-                drho = p_chgmix->get_drho(pelec->charge, PARAM.inp.nelec);
+                drho = p_chgmix->get_drho(pelec->charge, PARAM.inp.nelec ,ucell.omega);
 
                 hsolver_error = hsolver::cal_hsolve_error(PARAM.inp.basis_type,
                                                           PARAM.inp.esolver_type,
@@ -673,7 +673,7 @@ void ESolver_KS<T, Device>::iter_finish(UnitCell& ucell, const int istep, int& i
     double dkin = 0.0; // for meta-GGA
     if (XC_Functional::get_func_type() == 3 || XC_Functional::get_func_type() == 5)
     {
-        dkin = p_chgmix->get_dkin(pelec->charge, PARAM.inp.nelec);
+        dkin = p_chgmix->get_dkin(pelec->charge, PARAM.inp.nelec,ucell.omega);
     }
     this->pelec->print_etot(this->conv_esolver, iter, drho, dkin, duration, PARAM.inp.printe, diag_ethr);
 

@@ -109,6 +109,7 @@ class ElecState
      * @param wfcpw PW basis for wave function if needed
      */
     void init_scf(const int istep,
+                  const UnitCell& ucell,
                   const ModuleBase::ComplexMatrix& strucfac,
                   const bool* numeric,
                   ModuleSymmetry::Symmetry& symm,

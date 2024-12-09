@@ -5,7 +5,9 @@
 #include "module_hamilt_pw/hamilt_pwdft/global.h"
 #include "module_base/parallel_reduce.h"
 
-double Charge_Mixing::get_drho(Charge* chr, const double nelec)
+double Charge_Mixing::get_drho(Charge* chr, 
+                               const double nelec,
+                               const double omega)
 {
     ModuleBase::TITLE("Charge_Mixing", "get_drho");
     ModuleBase::timer::tick("Charge_Mixing", "get_drho");
@@ -60,9 +62,9 @@ double Charge_Mixing::get_drho(Charge* chr, const double nelec)
         Parallel_Reduce::reduce_pool(drho);
 #endif
         assert(nelec != 0);
-        assert(GlobalC::ucell.omega > 0);
+        assert(omega > 0);
         assert(this->rhopw->nxyz > 0);
-        drho *= GlobalC::ucell.omega / static_cast<double>(this->rhopw->nxyz);
+        drho *= omega / static_cast<double>(this->rhopw->nxyz);
         drho /= nelec;
     }
 
@@ -70,7 +72,7 @@ double Charge_Mixing::get_drho(Charge* chr, const double nelec)
     return drho;
 }
 
-double Charge_Mixing::get_dkin(Charge* chr, const double nelec)
+double Charge_Mixing::get_dkin(Charge* chr, const double nelec , const double omega)
 {
     if (!(XC_Functional::get_func_type() == 3 || XC_Functional::get_func_type() == 5)) 
     {
@@ -99,9 +101,9 @@ double Charge_Mixing::get_dkin(Charge* chr, const double nelec)
     Parallel_Reduce::reduce_pool(dkin);
 #endif
     assert(nelec != 0);
-    assert(GlobalC::ucell.omega > 0);
+    assert(omega > 0);
     assert(this->rhopw->nxyz > 0);
-    dkin *= GlobalC::ucell.omega / static_cast<double>(this->rhopw->nxyz);
+    dkin *= omega / static_cast<double>(this->rhopw->nxyz);
     dkin /= nelec;
 
     ModuleBase::timer::tick("Charge_Mixing", "get_dkin");

@@ -70,7 +70,8 @@ class Charge
      * @param klist [in] k points list if needed
      * @param wfcpw [in] PW basis for wave function if needed
      */
-    void init_rho(elecstate::efermi& eferm_iout,
+    void init_rho(const UnitCell& ucell,
+                  elecstate::efermi& eferm_iout,
                   const ModuleBase::ComplexMatrix& strucFac,
                   ModuleSymmetry::Symmetry& symm,
                   const void* klist = nullptr,
@@ -84,7 +85,9 @@ class Charge
                     const ModuleBase::ComplexMatrix& strucFac,
                     const UnitCell& ucell) const;
 
-    void set_rho_core(const ModuleBase::ComplexMatrix& structure_factor, const bool* numeric);
+    void set_rho_core(const UnitCell& ucell,
+                      const ModuleBase::ComplexMatrix& structure_factor, 
+                      const bool* numeric);
     void set_rho_core_paw();
 
     void renormalize_rho();
@@ -98,6 +101,8 @@ class Charge
     (
         const bool &numeric,
         const int mesh,
+        const double omega,
+        const double tpiba2,
         const double *r,
         const double *rab,
         const double *rhoc,
