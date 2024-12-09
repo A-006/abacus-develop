@@ -33,7 +33,7 @@ void Forces<FPTYPE, Device>::cal_force_cc(ModuleBase::matrix& forcecc,
                                           ModulePW::PW_Basis* rho_basis,
                                           const Charge* const chr,
                                           const bool* numeric,
-                                           UnitCell& ucell_in)
+                                          UnitCell& ucell_in)
 {
     ModuleBase::TITLE("Forces", "cal_force_cc");
     // recalculate the exchange-correlation potential.

@@ -9,6 +9,7 @@
 #include <map>
 #include <vector>
 
+#include "module_cell/unitcell.h"
 #include "module_hamilt_lcao/hamilt_lcaodft/LCAO_HS_arrays.hpp"
 #include "module_basis/module_ao/parallel_orbitals.h"
 
@@ -17,6 +18,7 @@ namespace sparse_format
 
 template <typename Tdata>
 void cal_HR_exx(
+    const UnitCell& ucell,
     const Parallel_Orbitals& pv,
     LCAO_HS_Arrays& HS_Arrays,
     const int& current_spin,

@@ -22,6 +22,7 @@
 
 template <typename Tdata>
 void sparse_format::cal_HR_exx(
+    const UnitCell& ucell,
     const Parallel_Orbitals& pv,
     LCAO_HS_Arrays& HS_Arrays,
     const int& current_spin,
@@ -36,15 +37,15 @@ void sparse_format::cal_HR_exx(
     const Tdata frac = GlobalC::exx_info.info_global.hybrid_alpha;
 
     std::map<int, std::array<double, 3>> atoms_pos;
-    for (int iat = 0; iat < GlobalC::ucell.nat; ++iat) {
+    for (int iat = 0; iat < ucell.nat; ++iat) {
         atoms_pos[iat] = RI_Util::Vector3_to_array3(
-            GlobalC::ucell.atoms[GlobalC::ucell.iat2it[iat]]
-                .tau[GlobalC::ucell.iat2ia[iat]]);
+            ucell.atoms[ucell.iat2it[iat]]
+                .tau[ucell.iat2ia[iat]]);
     }
     const std::array<std::array<double, 3>, 3> latvec
-        = {RI_Util::Vector3_to_array3(GlobalC::ucell.a1), // too bad to use GlobalC here, 
-           RI_Util::Vector3_to_array3(GlobalC::ucell.a2),
-           RI_Util::Vector3_to_array3(GlobalC::ucell.a3)};
+        = {RI_Util::Vector3_to_array3(ucell.a1), // too bad to use GlobalC here, 
+           RI_Util::Vector3_to_array3(ucell.a2),
+           RI_Util::Vector3_to_array3(ucell.a3)};
 
     const std::array<int, 3> Rs_period = {nmp[0], nmp[1], nmp[2]};
 
