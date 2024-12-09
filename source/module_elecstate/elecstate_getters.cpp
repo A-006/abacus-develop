@@ -25,9 +25,5 @@ int get_xc_func_type()
 
 
 
-std::string get_ks_solver_type()
-{
-    return PARAM.inp.ks_solver;
-}
 
 } // namespace elecstate

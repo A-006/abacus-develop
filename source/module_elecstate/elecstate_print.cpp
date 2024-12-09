@@ -447,7 +447,7 @@ void ElecState::print_etot(const UnitCell& ucell,
         {
             drho.push_back(scf_thr_kin);
         }
-        elecstate::print_scf_iterinfo(get_ks_solver_type(),
+        elecstate::print_scf_iterinfo(PARAM.inp.ks_solver,
                                       iter,
                                       6,
                                       mag,

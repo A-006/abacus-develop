@@ -7,14 +7,12 @@
 namespace elecstate
 {
 
-/// @brief get the value of GlobalC::ucell.omega
+/// @brief get the value of .omega
 double get_ucell_omega();
-/// @brief get the value of GlobalC::ucell.tpiba
+/// @brief get the value of .tpiba
 double get_ucell_tpiba();
 /// @brief get the value of XC_Functional::func_type
 int get_xc_func_type();
-/// @brief get the type of KS_SOLVER
-std::string get_ks_solver_type();
 
 } // namespace elecstate
 
