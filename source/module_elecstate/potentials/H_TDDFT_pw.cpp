@@ -156,7 +156,7 @@ void H_TDDFT_pw::cal_v_space_length(std::vector<double>& vext_space, int direc)
     ModuleBase::TITLE("H_TDDFT_pw", "cal_v_space_length");
     ModuleBase::timer::tick("H_TDDFT_pw", "cal_v_space_length");
 
-    prepare(GlobalC::ucell, direc);
+    prepare(this->ucell_->G, direc);
 
     for (int ir = 0; ir < this->rho_basis_->nrxx; ++ir)
     {
@@ -436,28 +436,26 @@ double H_TDDFT_pw::cal_v_time_heaviside()
     return vext_time;
 }
 
-void H_TDDFT_pw::prepare(const UnitCell& cell, int& dir)
+void H_TDDFT_pw::prepare(const ModuleBase::Matrix3& G, int& dir)
 {
-    if (dir == 1)
+    switch (dir)
     {
-        bvec[0] = cell.G.e11;
-        bvec[1] = cell.G.e12;
-        bvec[2] = cell.G.e13;
-    }
-    else if (dir == 2)
-    {
-        bvec[0] = cell.G.e21;
-        bvec[1] = cell.G.e22;
-        bvec[2] = cell.G.e23;
-    }
-    else if (dir == 3)
-    {
-        bvec[0] = cell.G.e31;
-        bvec[1] = cell.G.e32;
-        bvec[2] = cell.G.e33;
-    }
-    else
-    {
+    case 1:
+        bvec[0] = G.e11;
+        bvec[1] = G.e12;
+        bvec[2] = G.e13;
+        break;
+    case 2:
+        bvec[0] = G.e21;
+        bvec[1] = G.e22;
+        bvec[2] = G.e23;
+        break;
+    case 3:
+        bvec[0] = G.e31;
+        bvec[1] = G.e32;
+        bvec[2] = G.e33;
+        break;
+    default:
         ModuleBase::WARNING_QUIT("H_TDDFT_pw::prepare", "direction is wrong!");
     }
     bmod = sqrt(pow(bvec[0], 2) + pow(bvec[1], 2) + pow(bvec[2], 2));
