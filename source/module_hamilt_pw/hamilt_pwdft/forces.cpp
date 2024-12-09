@@ -162,7 +162,7 @@ void Forces<FPTYPE, Device>::cal_force(UnitCell& ucell,
     // not relevant for PAW
     if (!PARAM.inp.use_paw)
     {
-        Forces::cal_force_cc(forcecc, rho_basis, chr, locpp->numeric, GlobalC::ucell);
+        Forces::cal_force_cc(forcecc, rho_basis, chr, locpp->numeric, ucell);
     }
     else
     {

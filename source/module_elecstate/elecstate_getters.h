@@ -7,8 +7,6 @@
 namespace elecstate
 {
 
-/// @brief get the value of .omega
-double get_ucell_omega();
 /// @brief get the value of .tpiba
 double get_ucell_tpiba();
 /// @brief get the value of XC_Functional::func_type

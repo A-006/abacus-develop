@@ -149,7 +149,8 @@ class Charge
     void destroy();    // free arrays  liuyu 2023-03-12
 
     bool allocate_rho;
-
+    double omega; // volume of the unit cell
+    double tpiba2; // 2*pi/lat0
     bool allocate_rho_final_scf; // LiuXh add 20180606
 #ifdef __MPI
   private:

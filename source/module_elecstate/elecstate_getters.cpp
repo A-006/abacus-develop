@@ -8,11 +8,6 @@
 namespace elecstate
 {
 
-double get_ucell_omega()
-{
-    return GlobalC::ucell.omega;
-}
-
 double get_ucell_tpiba()
 {
     return GlobalC::ucell.tpiba;

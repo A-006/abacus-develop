@@ -32,6 +32,8 @@ void Charge::init_rho(const UnitCell& ucell,
 
     std::cout << " START CHARGE      : " << PARAM.inp.init_chg << std::endl;
     bool read_error = false;
+    this->omega = ucell.omega;
+    this->tpiba2 = ucell.tpiba2;
     if (PARAM.inp.init_chg == "file" || PARAM.inp.init_chg == "auto")
     {
         GlobalV::ofs_running << " try to read charge from file : " << std::endl;
