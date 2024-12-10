@@ -100,9 +100,9 @@ class Charge
     void non_linear_core_correction
     (
         const bool &numeric,
-        const int mesh,
         const double omega,
         const double tpiba2,
+        const int mesh,
         const double *r,
         const double *rab,
         const double *rhoc,
