@@ -21,6 +21,7 @@ RI::Tensor<Tdata> Matrix_Orbs11::cal_overlap_matrix(
 	const Matrix_Order &matrix_order) const
 {
 	RI::Tensor<Tdata> m;
+	const double lat0 = *this->lat0;
 	const size_t sizeA = index_A[TA].count_size;
 	const size_t sizeB = index_B[TB].count_size;
 	switch(matrix_order)
@@ -75,6 +76,7 @@ std::array<RI::Tensor<Tdata>,3> Matrix_Orbs11::cal_grad_overlap_matrix(
 	const Matrix_Order &matrix_order) const
 {
 	std::array<RI::Tensor<Tdata>,3> m;
+	const double lat0 = *this->lat0;
 	const size_t sizeA = index_A[TA].count_size;
 	const size_t sizeB = index_B[TB].count_size;
 	for(int i=0; i<m.size(); ++i)

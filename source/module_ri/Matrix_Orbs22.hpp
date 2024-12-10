@@ -22,6 +22,7 @@ RI::Tensor<Tdata> Matrix_Orbs22::cal_overlap_matrix(
 	const ModuleBase::Element_Basis_Index::IndexLNM &index_B2,
 	const Matrix_Order &matrix_order) const
 {
+	const double lat0 = *this->lat0;
 	RI::Tensor<Tdata> m;
 	const size_t sizeA1 = index_A1[TA].count_size;
 	const size_t sizeA2 = index_A2[TA].count_size;
@@ -184,7 +185,7 @@ std::array<RI::Tensor<Tdata>,3> Matrix_Orbs22::cal_grad_overlap_matrix(
 			default:	throw std::invalid_argument(std::string(__FILE__)+" line "+std::to_string(__LINE__));
 		}
 	}
-
+	const double lat0 = *this->lat0;
 	for( const auto &co3 : center2_orb22_s.at(TA).at(TB) )
 	{
 		const int LA1 = co3.first;

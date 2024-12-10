@@ -71,7 +71,7 @@ class Matrix_Orbs11
     ModuleBase::Sph_Bessel_Recursive::D2* psb_ = nullptr;
     ORB_gaunt_table MGT;
     const double lcao_dr_ = 0.01;
-    double lat0 = 0.0;                                            // restore ucell.lat0
+    double* lat0=nullptr;                                         // restore ucell.lat0
     std::map<size_t,                                              // TA
              std::map<size_t,                                     // TB
                       std::map<int,                               // LA
