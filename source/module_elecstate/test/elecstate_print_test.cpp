@@ -34,13 +34,13 @@ void ElecState::calculate_weights()
 double Efield::etotefield = 1.1;
 double elecstate::Gatefield::etotgatefield = 2.2;
 
-std::string tmp_ks_solver = "dav";
-std::string get_ks_solver_type()
-{
-    return tmp_ks_solver;
-}
 } // namespace elecstate
-
+UnitCell::UnitCell(){}
+UnitCell::~UnitCell(){}
+Magnetism::Magnetism(){}
+Magnetism::~Magnetism(){}
+InfoNonlocal::InfoNonlocal(){}
+InfoNonlocal::~InfoNonlocal(){}
 Charge::Charge()
 {
 }
@@ -94,11 +94,12 @@ class ElecStatePrintTest : public ::testing::Test
         elecstate.wg(0, 1) = 0.2;
         elecstate.wg(1, 0) = 0.3;
         elecstate.wg(1, 1) = 0.4;
-        ucell.tot_magnetization = 1.1;
-        ucell.abs_magnetization = 2.2;
-        ucell.tot_magnetization_nc[0] = 3.3;
-        ucell.tot_magnetization_nc[1] = 4.4;
-        ucell.tot_magnetization_nc[2] = 5.5;
+        ucell.magnet.tot_magnetization = 1.1;
+        ucell.magnet.abs_magnetization = 2.2;
+        ucell.magnet.tot_magnetization_nc[0] = 3.3;
+        ucell.magnet.tot_magnetization_nc[1] = 4.4;
+        ucell.magnet.tot_magnetization_nc[2] = 5.5;
+        PARAM.input.ks_solver = "dav";
     }
     void TearDown()
     {
@@ -240,31 +241,31 @@ TEST_F(ElecStatePrintTest, PrintEtot)
     std::vector<std::string> ks_solvers = {"cg", "lapack", "genelpa", "dav", "scalapack_gvx", "cusolver"};
     for (int i = 0; i < ks_solvers.size(); i++)
     {
-        elecstate::tmp_ks_solver = ks_solvers[i];
+        PARAM.input.ks_solver = ks_solvers[i];
         testing::internal::CaptureStdout();
         elecstate.print_etot(ucell.magnet,converged, iter, scf_thr, scf_thr_kin, duration, printe, pw_diag_thr, avg_iter, print);
         output = testing::internal::GetCapturedStdout();
-        if (elecstate::tmp_ks_solver == "cg")
+        if (PARAM.input.ks_solver == "cg")
         {
             EXPECT_THAT(output, testing::HasSubstr("CG"));
         }
-        else if (elecstate::tmp_ks_solver == "lapack")
+        else if (PARAM.input.ks_solver == "lapack")
         {
             EXPECT_THAT(output, testing::HasSubstr("LA"));
         }
-        else if (elecstate::tmp_ks_solver == "genelpa")
+        else if (PARAM.input.ks_solver == "genelpa")
         {
             EXPECT_THAT(output, testing::HasSubstr("GE"));
         }
-        else if (elecstate::tmp_ks_solver == "dav")
+        else if (PARAM.input.ks_solver == "dav")
         {
             EXPECT_THAT(output, testing::HasSubstr("DA"));
         }
-        else if (elecstate::tmp_ks_solver == "scalapack_gvx")
+        else if (PARAM.input.ks_solver == "scalapack_gvx")
         {
             EXPECT_THAT(output, testing::HasSubstr("GV"));
         }
-        else if (elecstate::tmp_ks_solver == "cusolver")
+        else if (PARAM.input.ks_solver == "cusolver")
         {
             EXPECT_THAT(output, testing::HasSubstr("CU"));
         }

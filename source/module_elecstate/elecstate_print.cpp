@@ -448,7 +448,7 @@ void ElecState::print_etot(const Magnetism& magnet,
         {
             drho.push_back(scf_thr_kin);
         }
-        elecstate::print_scf_iterinfo(get_ks_solver_type(),
+        elecstate::print_scf_iterinfo(PARAM.inp.ks_solver,
                                       iter,
                                       6,
                                       mag,

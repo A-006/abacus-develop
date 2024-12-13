@@ -32,7 +32,12 @@ Charge::Charge()
 Charge::~Charge()
 {
 }
-
+UnitCell::UnitCell(){}
+UnitCell::~UnitCell(){}
+Magnetism::Magnetism(){}
+Magnetism::~Magnetism(){}
+InfoNonlocal::InfoNonlocal(){}
+InfoNonlocal::~InfoNonlocal(){}
 #include "module_cell/klist.h"
 K_Vectors::K_Vectors()
 {
@@ -140,6 +145,7 @@ class ElecStateTest : public ::testing::Test
 {
   protected:
     elecstate::MockElecState* elecstate;
+    UnitCell ucell;
     std::string output;
     void SetUp()
     {
@@ -250,7 +256,7 @@ TEST_F(ElecStateTest, InitSCF)
     ModuleBase::ComplexMatrix strucfac;
     elecstate->eferm = efermi;
     ModuleSymmetry::Symmetry symm;
-    EXPECT_NO_THROW(elecstate->init_scf(istep, strucfac, nullptr, symm));
+    EXPECT_NO_THROW(elecstate->init_scf(istep, ucell,strucfac, nullptr, symm));
     // delete elecstate->pot is done in the destructor of elecstate
     delete charge;
 }
