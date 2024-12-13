@@ -141,7 +141,7 @@ K_Vectors::~K_Vectors()
 {
 }
 
-void Charge::set_rho_core(ModuleBase::ComplexMatrix const&, const bool*)
+void Charge::set_rho_core(const UnitCell& ucell, ModuleBase::ComplexMatrix const&, const bool*)
 {
 }
 void Charge::set_rho_core_paw()

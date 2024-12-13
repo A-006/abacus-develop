@@ -84,7 +84,9 @@ class Charge
                     const ModuleBase::ComplexMatrix& strucFac,
                     const UnitCell& ucell) const;
 
-    void set_rho_core(const ModuleBase::ComplexMatrix& structure_factor, const bool* numeric);
+    void set_rho_core(const UnitCell& ucell,
+                      const ModuleBase::ComplexMatrix& structure_factor, 
+                      const bool* numeric);
     void set_rho_core_paw();
 
     void renormalize_rho();
@@ -97,6 +99,8 @@ class Charge
     void non_linear_core_correction
     (
         const bool &numeric,
+        const double omega,
+        const double tpiba2,
         const int mesh,
         const double *r,
         const double *rab,
