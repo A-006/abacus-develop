@@ -15,8 +15,6 @@ double get_ucell_tpiba();
 int get_xc_func_type();
 /// @brief get the value of INPUT.vdw_method
 std::string get_input_vdw_method();
-/// @brief get the value of GlobalC::ucell.magnet.tot_magnetization
-double get_ucell_tot_magnetization();
 /// @brief get the value of GlobalC::ucell.magnet.abs_magnetization
 double get_ucell_abs_magnetization();
 /// @brief get the value of GlobalC::ucell.magnet.tot_magnetization_nc[0]

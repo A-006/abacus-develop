@@ -28,11 +28,6 @@ std::string get_input_vdw_method()
     return PARAM.inp.vdw_method;
 }
 
-double get_ucell_tot_magnetization()
-{
-    return GlobalC::ucell.magnet.tot_magnetization;
-}
-
 double get_ucell_abs_magnetization()
 {
     return GlobalC::ucell.magnet.abs_magnetization;

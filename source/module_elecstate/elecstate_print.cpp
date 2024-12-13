@@ -282,6 +282,7 @@ void ElecState::print_band(const int& ik, const int& printe, const int& iter)
 }
 
 /// @brief print total free energy and other energies
+/// @param ucell: unit cell
 /// @param converged: if converged
 /// @param iter_in: iter
 /// @param scf_thr: threshold for scf
@@ -289,7 +290,8 @@ void ElecState::print_band(const int& ik, const int& printe, const int& iter)
 /// @param pw_diag_thr: threshold for diagonalization
 /// @param avg_iter: averaged diagonalization iteration of each scf iteration
 /// @param print: if print to screen
-void ElecState::print_etot(const bool converged,
+void ElecState::print_etot(const Magnetism& magnet,
+                           const bool converged,
                            const int& iter_in,
                            const double& scf_thr,
                            const double& scf_thr_kin,
@@ -429,7 +431,7 @@ void ElecState::print_etot(const bool converged,
         switch (PARAM.inp.nspin)
         {
         case 2:
-            mag = {get_ucell_tot_magnetization(), get_ucell_abs_magnetization()};
+            mag = {magnet.tot_magnetization, get_ucell_abs_magnetization()};
             break;
         case 4:
             mag = {get_ucell_tot_magnetization_nc_x(),
