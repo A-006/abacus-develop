@@ -23,10 +23,6 @@ int get_xc_func_type()
     return XC_Functional::get_func_type();
 }
 
-std::string get_input_vdw_method()
-{
-    return PARAM.inp.vdw_method;
-}
 
 std::string get_ks_solver_type()
 {
