@@ -115,6 +115,11 @@ class ElecStatePrintTest : public ::testing::Test
         elecstate.wg(0, 1) = 0.2;
         elecstate.wg(1, 0) = 0.3;
         elecstate.wg(1, 1) = 0.4;
+        ucell.tot_magnetization = 1.1;
+        ucell.abs_magnetization = 2.2;
+        ucell.tot_magnetization_nc[0] = 3.3;
+        ucell.tot_magnetization_nc[1] = 4.4;
+        ucell.tot_magnetization_nc[2] = 5.5;
     }
     void TearDown()
     {

@@ -431,13 +431,13 @@ void ElecState::print_etot(const Magnetism& magnet,
         switch (PARAM.inp.nspin)
         {
         case 2:
-            mag = {magnet.tot_magnetization, get_ucell_abs_magnetization()};
+            mag = {magnet.tot_magnetization, magnet.abs_magnetization};
             break;
         case 4:
-            mag = {get_ucell_tot_magnetization_nc_x(),
-                   get_ucell_tot_magnetization_nc_y(),
-                   get_ucell_tot_magnetization_nc_z(),
-                   get_ucell_abs_magnetization()};
+            mag = {magnet.tot_magnetization_nc[0],
+                   magnet.tot_magnetization_nc[1],
+                   magnet.tot_magnetization_nc[2],
+                   magnet.abs_magnetization};
             break;
         default:
             mag = {};
