@@ -478,7 +478,7 @@ void ESolver_KS_PW<T, Device>::iter_init(UnitCell& ucell, const int istep, const
     }
     // mohan move harris functional to here, 2012-06-05
     // use 'rho(in)' and 'v_h and v_xc'(in)
-    this->pelec->f_en.deband_harris = this->pelec->cal_delta_eband();
+    this->pelec->f_en.deband_harris = this->pelec->cal_delta_eband(ucell);
 
     // update local occupations for DFT+U
     // should before lambda loop in DeltaSpin
@@ -573,7 +573,7 @@ void ESolver_KS_PW<T, Device>::hamilt2density_single(UnitCell& ucell,
     // deband is calculated from "output" charge density calculated
     // in sum_band
     // need 'rho(out)' and 'vr (v_h(in) and v_xc(in))'
-    this->pelec->f_en.deband = this->pelec->cal_delta_eband();
+    this->pelec->f_en.deband = this->pelec->cal_delta_eband(ucell);
 
     ModuleBase::timer::tick("ESolver_KS_PW", "hamilt2density_single");
 }
