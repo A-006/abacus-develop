@@ -9,8 +9,6 @@ namespace elecstate
 
 /// @brief get the value of GlobalC::ucell.omega
 double get_ucell_omega();
-/// @brief get the value of GlobalC::ucell.tpiba
-double get_ucell_tpiba();
 /// @brief get the value of XC_Functional::func_type
 int get_xc_func_type();
 

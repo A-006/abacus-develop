@@ -13,10 +13,6 @@ double get_ucell_omega()
     return GlobalC::ucell.omega;
 }
 
-double get_ucell_tpiba()
-{
-    return GlobalC::ucell.tpiba;
-}
 
 int get_xc_func_type()
 {

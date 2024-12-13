@@ -15,10 +15,6 @@ double get_ucell_omega()
 {
     return 500.0;
 }
-double get_ucell_tpiba()
-{
-    return 2.0;
-}
 int tmp_xc_func_type = 1;
 int get_xc_func_type()
 {
@@ -184,6 +180,7 @@ void Set_GlobalV_Default()
     GlobalV::KPAR = 1;
     GlobalV::NPROC_IN_POOL = 1;
     PARAM.sys.use_uspp = false;
+    ucell.tpiba = 2.0;
 }
 
 /************************************************

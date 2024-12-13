@@ -222,7 +222,7 @@ void ElecStatePW<T, Device>::rhoBandK(const psi::Psi<T, Device>& psi)
                               j,
                               npw,
                               this->basis->npwk_max,
-                              static_cast<Real>(get_ucell_tpiba()),
+                              static_cast<Real>(ucell->tpiba),
                               this->basis->template get_gcar_data<Real>(),
                               this->basis->template get_kvec_c_data<Real>(),
                               &psi(ibnd, 0),
