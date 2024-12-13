@@ -227,7 +227,7 @@ void ElecState::init_scf(const int istep,
     // choose charge density from ionic step 0.
     if (istep == 0)
     {
-        this->charge->init_rho(this->eferm, strucfac, symm, (const void*)this->klist, wfcpw);
+        this->charge->init_rho(this->eferm,ucell, strucfac, symm, (const void*)this->klist, wfcpw);
         this->charge->check_rho(); // check the rho
     }
 

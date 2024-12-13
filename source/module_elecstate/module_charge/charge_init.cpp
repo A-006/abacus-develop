@@ -22,6 +22,7 @@
 #endif
 
 void Charge::init_rho(elecstate::efermi& eferm_iout,
+                      const UnitCell& ucell,
                       const ModuleBase::ComplexMatrix& strucFac,
                       ModuleSymmetry::Symmetry& symm,
                       const void* klist,
@@ -58,7 +59,7 @@ void Charge::init_rho(elecstate::efermi& eferm_iout,
                     GlobalV::ofs_running,
                     ssc.str(),
                     this->rho[is],
-                    GlobalC::ucell.nat))
+                    ucell.nat))
                 {
                     GlobalV::ofs_running << " Read in the charge density: " << ssc.str() << std::endl;
                 }
@@ -108,7 +109,7 @@ void Charge::init_rho(elecstate::efermi& eferm_iout,
                         GlobalV::ofs_running,
                         ssc.str(),
                         this->kin_r[is],
-                        GlobalC::ucell.nat))
+                        ucell.nat))
                     {
                         GlobalV::ofs_running << " Read in the kinetic energy density: " << ssc.str() << std::endl;
                     }
@@ -134,7 +135,7 @@ void Charge::init_rho(elecstate::efermi& eferm_iout,
     if (PARAM.inp.init_chg == "atomic" || 
         (PARAM.inp.init_chg == "auto" && read_error)) // mohan add 2007-10-17
     {
-        this->atomic_rho(PARAM.inp.nspin, GlobalC::ucell.omega, rho, strucFac, GlobalC::ucell);
+        this->atomic_rho(PARAM.inp.nspin, ucell.omega, rho, strucFac, ucell);
 
         // liuyu 2023-06-29 : move here from atomic_rho(), which will be called several times in charge extrapolation
         // wenfei 2021-7-29 : initial tau = 3/5 rho^2/3, Thomas-Fermi
@@ -171,7 +172,7 @@ void Charge::init_rho(elecstate::efermi& eferm_iout,
                     GlobalV::ofs_running,
                     ssc.str(),
                     this->rho[is],
-                    GlobalC::ucell.nat))
+                    ucell.nat))
                 {
                     GlobalV::ofs_running << " Read in the charge density: " << ssc.str() << std::endl;
                 }

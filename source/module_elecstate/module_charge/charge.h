@@ -65,12 +65,14 @@ class Charge
      * @brief Init charge density from file or atomic pseudo-wave-functions
      *
      * @param eferm_iout [out] fermi energy to be initialized
+     * @param ucell [in] unit cell
      * @param strucFac [in] structure factor
      * @param symm [in] symmetry
      * @param klist [in] k points list if needed
      * @param wfcpw [in] PW basis for wave function if needed
      */
     void init_rho(elecstate::efermi& eferm_iout,
+                  const UnitCell& ucell,
                   const ModuleBase::ComplexMatrix& strucFac,
                   ModuleSymmetry::Symmetry& symm,
                   const void* klist = nullptr,
