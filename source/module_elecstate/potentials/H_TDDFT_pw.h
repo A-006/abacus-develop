@@ -95,7 +95,7 @@ class H_TDDFT_pw : public PotBase
     static std::vector<double> heavi_amp; // Ry/bohr
 
     //update At for velocity gauge by intergral of E(t)dt
-    static void update_At(void);
+    static void update_At();
 
   private:
     // internal time-step,
