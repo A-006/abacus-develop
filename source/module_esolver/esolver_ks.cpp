@@ -548,11 +548,11 @@ void ESolver_KS<T, Device>::iter_finish(UnitCell& ucell, const int istep, int& i
     }
 
     // compute magnetization, only for LSDA(spin==2)
-    ucell.magnet.compute_magnetization(this->pelec->charge->nrxx,
+    ucell.magnet.compute_magnetization(ucell.omega,
+                                       this->pelec->charge->nrxx,
                                        this->pelec->charge->nxyz,
                                        this->pelec->charge->rho,
-                                       this->pelec->nelec_spin.data(),
-                                       ucell.omega);
+                                       this->pelec->nelec_spin.data());
 
     if (GlobalV::MY_STOGROUP == 0)
     {

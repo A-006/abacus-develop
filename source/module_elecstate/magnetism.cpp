@@ -69,8 +69,8 @@ void Magnetism::compute_magnetization(const double& omega,
         Parallel_Reduce::reduce_pool(this->tot_magnetization_nc, 3);
         Parallel_Reduce::reduce_pool(this->abs_magnetization);
 #endif
-		for(int i=0;i<3;i++)this->tot_magnetization_nc[i] *= elecstate::get_ucell_omega() / nxyz;
-		this->abs_magnetization *= elecstate::get_ucell_omega() / nxyz;
+		for(int i=0;i<3;i++)this->tot_magnetization_nc[i] *= omega/ nxyz;
+		this->abs_magnetization *= omega/ nxyz;
 		GlobalV::ofs_running<<"total magnetism (Bohr mag/cell)"<<'\t'<<this->tot_magnetization_nc[0]<<'\t'<<this->tot_magnetization_nc[1]<<'\t'<<this->tot_magnetization_nc[2]<<'\n';
 		ModuleBase::GlobalFunc::OUT(GlobalV::ofs_running,"absolute magnetism (Bohr mag/cell)",this->abs_magnetization);
 	}

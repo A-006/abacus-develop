@@ -149,6 +149,7 @@ class Charge
 
     void destroy();    // free arrays  liuyu 2023-03-12
 
+    double* omega = nullptr; // omega for non-linear core correction
     bool allocate_rho;
 
     bool allocate_rho_final_scf; // LiuXh add 20180606
