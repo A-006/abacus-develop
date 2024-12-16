@@ -8,12 +8,6 @@
 namespace elecstate
 {
 
-double get_ucell_omega()
-{
-    return GlobalC::ucell.omega;
-}
-
-
 int get_xc_func_type()
 {
     return XC_Functional::get_func_type();

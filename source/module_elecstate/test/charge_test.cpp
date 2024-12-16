@@ -39,10 +39,6 @@ int get_xc_func_type()
     return tmp_xc_func_type;
 }
 double tmp_ucell_omega = 500.0;
-double get_ucell_omega()
-{
-    return tmp_ucell_omega;
-}
 double tmp_gridecut = 80.0;
 void Set_GlobalV_Default()
 {

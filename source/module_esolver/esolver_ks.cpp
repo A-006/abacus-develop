@@ -551,7 +551,8 @@ void ESolver_KS<T, Device>::iter_finish(UnitCell& ucell, const int istep, int& i
     ucell.magnet.compute_magnetization(this->pelec->charge->nrxx,
                                        this->pelec->charge->nxyz,
                                        this->pelec->charge->rho,
-                                       this->pelec->nelec_spin.data());
+                                       this->pelec->nelec_spin.data(),
+                                       ucell.omega);
 
     if (GlobalV::MY_STOGROUP == 0)
     {

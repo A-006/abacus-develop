@@ -11,10 +11,6 @@
 // mock functions for testing
 namespace elecstate
 {
-double get_ucell_omega()
-{
-    return 500.0;
-}
 int tmp_xc_func_type = 1;
 int get_xc_func_type()
 {
@@ -218,6 +214,7 @@ class ElecStatePWTest : public ::testing::Test
         klist = new K_Vectors;
         klist->set_nks(5);
         ucell = new UnitCell;
+        ucell->omega = 500.0;
         ucell->tpiba = 2.0;
         ppcell = new pseudopot_cell_vnl;
         rhodpw = new ModulePW::PW_Basis;
