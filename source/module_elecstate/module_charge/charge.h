@@ -138,6 +138,8 @@ class Charge
 	   */
 	  void reduce_diff_pools(double* array_rho) const;
 
+    void set_omega(double* omega_in){this->omega_ = omega_in;};
+
     // mohan add 2021-02-20
     int nrxx; // number of r vectors in this processor
     int nxyz; // total nuber of r vectors
@@ -149,7 +151,8 @@ class Charge
 
     void destroy();    // free arrays  liuyu 2023-03-12
 
-    double* omega = nullptr; // omega for non-linear core correction
+    double* omega_ = nullptr; // omega for non-linear core correction
+
     bool allocate_rho;
 
     bool allocate_rho_final_scf; // LiuXh add 20180606

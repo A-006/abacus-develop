@@ -29,8 +29,11 @@ void Charge::init_rho(elecstate::efermi& eferm_iout,
                       const void* wfcpw)
 {
     ModuleBase::GlobalFunc::OUT(GlobalV::ofs_running, "init_chg", PARAM.inp.init_chg);
-    this->omega = &ucell.omega;
+
     std::cout << " START CHARGE      : " << PARAM.inp.init_chg << std::endl;
+    //here we need to set the omega for the charge density
+    set_omega(ucell.omega);
+    
     bool read_error = false;
     if (PARAM.inp.init_chg == "file" || PARAM.inp.init_chg == "auto")
     {
