@@ -32,7 +32,7 @@ void Charge::init_rho(elecstate::efermi& eferm_iout,
 
     std::cout << " START CHARGE      : " << PARAM.inp.init_chg << std::endl;
     //here we need to set the omega for the charge density
-    set_omega(ucell.omega);
+    set_omega(&ucell.omega);
     
     bool read_error = false;
     if (PARAM.inp.init_chg == "file" || PARAM.inp.init_chg == "auto")
