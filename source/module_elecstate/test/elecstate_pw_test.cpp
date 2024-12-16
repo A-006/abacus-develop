@@ -180,7 +180,6 @@ void Set_GlobalV_Default()
     GlobalV::KPAR = 1;
     GlobalV::NPROC_IN_POOL = 1;
     PARAM.sys.use_uspp = false;
-    ucell.tpiba = 2.0;
 }
 
 /************************************************
@@ -219,6 +218,7 @@ class ElecStatePWTest : public ::testing::Test
         klist = new K_Vectors;
         klist->set_nks(5);
         ucell = new UnitCell;
+        ucell->tpiba = 2.0;
         ppcell = new pseudopot_cell_vnl;
         rhodpw = new ModulePW::PW_Basis;
         rhopw = new ModulePW::PW_Basis;
