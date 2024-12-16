@@ -26,8 +26,8 @@ void Charge_Mixing::set_mixing(const std::string& mixing_mode_in,
                                const double& mixing_gg0_min_in,
                                const double& mixing_angle_in,
                                const bool& mixing_dmr_in,
-                               const double& omega_in,
-                               const double& tpiba_in)
+                               double& omega_in,
+                               double& tpiba_in)
 {
     // get private mixing parameters
     this->mixing_mode = mixing_mode_in;
@@ -40,9 +40,8 @@ void Charge_Mixing::set_mixing(const std::string& mixing_mode_in,
     this->mixing_gg0_min = mixing_gg0_min_in;
     this->mixing_angle = mixing_angle_in;
     this->mixing_dmr = mixing_dmr_in;
-    this->omega = omega_in;
-    this->tpiba = tpiba_in;
-    this->tpiba2 = tpiba_in * tpiba_in;
+    this->omega = &omega_in;
+    this->tpiba = &tpiba_in;
     // check the paramters
     if (this->mixing_beta > 1.0 || this->mixing_beta < 0.0)
     {
