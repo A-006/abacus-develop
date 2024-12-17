@@ -975,7 +975,7 @@ void Force_Stress_LCAO<std::complex<double>>::integral_part(const bool isGammaOn
 
 // vlocal, hartree, ewald, core correction, exchange-correlation terms in stress
 template <typename T>
-void Force_Stress_LCAO<T>::calStressPwPart(const UnitCell& ucell,
+void Force_Stress_LCAO<T>::calStressPwPart(UnitCell& ucell,
                                            ModuleBase::matrix& sigmadvl,
                                            ModuleBase::matrix& sigmahar,
                                            ModuleBase::matrix& sigmaewa,
@@ -1007,7 +1007,7 @@ void Force_Stress_LCAO<T>::calStressPwPart(const UnitCell& ucell,
     //--------------------------------------------------------
     // stress due to core correlation.
     //--------------------------------------------------------
-    sc_pw.stress_cc(sigmacc, rhopw, &sf, 0, nlpp.numeric, chr);
+    sc_pw.stress_cc(sigmacc, rhopw, ucell, &sf, 0, nlpp.numeric, chr);
 
     //--------------------------------------------------------
     // stress due to self-consistent charge.
