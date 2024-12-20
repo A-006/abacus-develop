@@ -12,6 +12,10 @@ install(FILES parallel_kpoints_test.sh DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 install(FILES klist_test_para.sh DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 install(FILES unitcell_test_parallel.sh DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
+if(ENABLE_MPI)
+  message("use mpi")
+  list(APPEND cell_simple_srcs ../bcast_cell.cpp)
+endif()
 list(APPEND cell_simple_srcs
     ../unitcell.cpp
     ../read_atoms.cpp

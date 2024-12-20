@@ -1,6 +1,7 @@
 #include <cstdlib>
 #ifdef __MPI
 #include "mpi.h"
+#include "bcast_cell.h"
 #endif
 
 #include "module_base/constants.h"
@@ -333,7 +334,9 @@ void UnitCell::update_pos_tau(const double* pos) {
     }
     assert(iat == this->nat);
     this->periodic_boundary_adjustment();
-    this->bcast_atoms_tau();
+    #ifdef __MPI
+    bcast_atoms_tau(this->atoms);
+    #endif
 }
 
 void UnitCell::update_pos_taud(double* posd_in) {
@@ -350,7 +353,9 @@ void UnitCell::update_pos_taud(double* posd_in) {
     }
     assert(iat == this->nat);
     this->periodic_boundary_adjustment();
-    this->bcast_atoms_tau();
+    #ifdef __MPI
+    bcast_atoms_tau(this->atoms);
+    #endif
 }
 
 // posd_in is atomic displacements here  liuyu 2023-03-22
@@ -368,7 +373,9 @@ void UnitCell::update_pos_taud(const ModuleBase::Vector3<double>* posd_in) {
     }
     assert(iat == this->nat);
     this->periodic_boundary_adjustment();
-    this->bcast_atoms_tau();
+    #ifdef __MPI
+    bcast_atoms_tau(this->atoms);
+    #endif
 }
 
 void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {
@@ -432,14 +439,6 @@ void UnitCell::periodic_boundary_adjustment() {
     return;
 }
 
-void UnitCell::bcast_atoms_tau() {
-#ifdef __MPI
-    MPI_Barrier(MPI_COMM_WORLD);
-    for (int i = 0; i < ntype; i++) {
-        atoms[i].bcast_atom(); // bcast tau array
-    }
-#endif
-}
 
 //==============================================================
 // Calculate various lattice related quantities for given latvec

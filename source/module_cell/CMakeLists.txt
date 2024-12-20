@@ -3,7 +3,10 @@ add_subdirectory(module_neighbor)
 if(ENABLE_PAW)
   add_subdirectory(module_paw)
 endif()
-
+set (CELL_ADDITIONAL_FILES "")
+if (ENABLE_MPI)
+  list(APPEND CELL_ADDITIONAL_FILES bcast_cell.cpp)
+endif()
 add_library(
     cell
     OBJECT
@@ -23,6 +26,7 @@ add_library(
     parallel_kpoints.cpp
     cell_index.cpp
     check_atomic_stru.cpp
+    ${CELL_ADDITIONAL_FILES}
 )
 
 if(ENABLE_COVERAGE)
