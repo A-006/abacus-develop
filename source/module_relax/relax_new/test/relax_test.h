@@ -10,8 +10,6 @@ namespace GlobalC
 UnitCell::UnitCell(){};
 UnitCell::~UnitCell(){};
 
-void UnitCell::remake_cell(){};
-
 void UnitCell::update_pos_taud(double* posd_in)
 {
     int iat = 0;
