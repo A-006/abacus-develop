@@ -46,21 +46,21 @@ class Grid
     void init(std::ofstream& ofs, const UnitCell& ucell, const Atom_input& input);
 
     // Data
-    bool pbc; // periodic boundary condition
-    bool expand_flag;
-    double sradius2; // searching radius squared
-    double sradius;  // searching radius
-    double d_minX;   // origin of all cells
-    double d_minY;
-    double d_minZ;
-    int cell_nx;
-    int cell_ny;
-    int cell_nz;
-    int layer;
+    bool pbc=false; // periodic boundary condition
+    bool expand_flag=false;
+    double sradius2=0.0; // searching radius squared
+    double sradius =0.0;  // searching radius
+    double d_minX  =0.0;   // origin of all cells
+    double d_minY  =0.0;
+    double d_minZ  =0.0;
+    int cell_nx =0;
+    int cell_ny =0;
+    int cell_nz =0;
+    int layer   =0;
 
-    int true_cell_x;
-    int true_cell_y;
-    int true_cell_z;
+    int true_cell_x =0;
+    int true_cell_y =0;
+    int true_cell_z =0;
 
     std::vector<std::vector<std::vector<CellSet>>> Cell; // dx , dy ,dz is cell number in each direction,respectly.
 

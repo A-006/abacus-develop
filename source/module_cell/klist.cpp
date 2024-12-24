@@ -15,23 +15,13 @@
 
 K_Vectors::K_Vectors()
 {
-#ifdef _MCD_CHECK
-    FILE* out;
-    out = fopen("1_Memory", "w");
-    if (out == NULL)
-    {
-        std::cout << "\n Can't open file!";
-        ModuleBase::QUIT();
-    }
-    _MCD_RealTimeLog(out);
-    _MCD_MemStatLog(out);
-//	showMemStats();
-#endif
 
     nspin = 0; // default spin.
     kc_done = false;
     kd_done = false;
-
+    nmp = {0, 0, 0};
+    nkstot_full = 0;
+    koffset = {0.0, 0.0, 0.0};
     nks = 0;
     nkstot = 0;
     k_nkstot = 0; // LiuXh add 20180619
@@ -39,10 +29,6 @@ K_Vectors::K_Vectors()
 
 K_Vectors::~K_Vectors()
 {
-//	ModuleBase::TITLE("K_Vectors","~K_Vectors");
-#ifdef _MCD_CHECK
-    showMemStats();
-#endif
 }
 
 int K_Vectors::get_ik_global(const int& ik, const int& nkstot)
