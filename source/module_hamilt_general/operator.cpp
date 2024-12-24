@@ -25,7 +25,9 @@ Operator<T, Device>::~Operator()
         }
         else
         {//delete main chain if sub_chain is deleted
+            assert(last != nullptr);
             Operator* node_delete = last;
+            assert(node_delete->next_sub_op != nullptr);
             last_sub = last->next_sub_op;
             node_delete->next_sub_op = nullptr;
             last = last->next_op;

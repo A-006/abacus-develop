@@ -47,9 +47,9 @@ class Vdwd2Parameters : public VdwParameters
     inline double scaling() const { return scaling_; }
 
   private:
-    double scaling_;
-    double damping_;
-    double radius_;
+    double scaling_=0;
+    double damping_=0;
+    double radius_=0;
     std::map<std::string, double> C6_;
     std::map<std::string, double> R0_;
     static const std::map<std::string, double> C6_default_;
