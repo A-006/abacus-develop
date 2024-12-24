@@ -31,7 +31,10 @@ public:
         bz = bz_in;
     }
     int bx,by,bz;
-    int nbx, nby, nbz;
+    int nbx=0;
+    int nby=0;
+    int nbz=0;
+
     virtual void distribute_r()
     {
         bx = (bx == 0) ? 2 : bx;

@@ -16,6 +16,7 @@ Numerical_Nonlocal_Lm::Numerical_Nonlocal_Lm()
 	label = "";
 	index_atom_type = 0;
 	angular_momentum_l = 0;
+	index_proj = 0;
 	
 	nr = 1;
 	nk = 1;

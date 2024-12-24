@@ -49,15 +49,15 @@ public:
 
 	private:
 	
-	std::string label; /// <element label
+	std::string label=""; /// <element label
 
 	int type; ///< element index
 
 	int lmax; ///< max value of L angular momentum
 
-	double rcut_max;
+	double rcut_max=0.0;
 
-	std::string type_ps; ///<local or nonlocal
+	std::string type_ps=""; ///<local or nonlocal
 
 	int nproj;
 

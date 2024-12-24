@@ -13,23 +13,23 @@ public:
 
     /// local size of bands, used for 2d wavefunction
     /// must divided on dim1 because of elpa interface
-    int ncol_bands;
-    int nrow_bands;
+    int ncol_bands=0;
+    int nrow_bands=0;
     
     /// ncol_bands*nrow
-    long nloc_wfc;
+    long nloc_wfc=0;
 
     //ncol_bands*ncol_bands
-    long nloc_Eij;
+    long nloc_Eij=0;
 
-    int lastband_in_proc;
-	int lastband_number; 
+    int lastband_in_proc=0;
+	int lastband_number=0; 
 
     ///---------------------------------------
     /// number of elements(basis-pairs) in this processon
     /// on all adjacent atoms-pairs(2D division)
     ///---------------------------------------
-    int nnr;
+    int nnr=0;
 	int *nlocdim;
 	int *nlocstart;
     
@@ -50,7 +50,7 @@ public:
 #endif
 
     int* loc_sizes;
-    int loc_size;
+    int loc_size=0;
 
     int get_wfc_global_nbands () const;
     int get_wfc_global_nbasis () const;
