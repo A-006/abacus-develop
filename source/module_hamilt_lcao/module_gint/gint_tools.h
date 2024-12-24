@@ -33,17 +33,17 @@ class Gint_inout
 {
   public:
     // input
-    double*** DM;
-    const double* vl;
-    const double* vofk;
-    bool isforce;
-    bool isstress;
-    int ispin;
-    int nspin_rho;  // usually, but not always, equal to global nspin
+    double*** DM=nullptr;
+    const double* vl=nullptr;
+    const double* vofk=nullptr;
+    bool isforce=false;
+    bool isstress=false;
+    int ispin=0;
+    int nspin_rho=0;  // usually, but not always, equal to global nspin
     bool if_symm = false; // if true, use dsymv in gint_kernel_rho; if false, use dgemv.
 
     // output
-    double** rho;
+    double** rho=nullptr;
     ModuleBase::matrix* fvl_dphi;
     ModuleBase::matrix* svl_dphi;
     Gint_Tools::job_type job;
