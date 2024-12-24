@@ -132,7 +132,7 @@ double ElecState::cal_delta_eband(const UnitCell& ucell) const
         {
             v_ofk = this->pot->get_effective_vofk(0);
         }
-
+        assert(v_ofk!=nullptr);
         for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
         {
             deband_aux -= this->charge->rho[0][ir] * (v_eff[ir] - v_fixed[ir]);
@@ -201,7 +201,7 @@ double ElecState::cal_delta_escf() const
     {
         v_ofk = this->pot->get_effective_vofk(0);
     }
-
+    assert(v_ofk!=nullptr);
     for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
     {
         descf -= (this->charge->rho[0][ir] - this->charge->rho_save[0][ir]) * (v_eff[ir] - v_fixed[ir]);

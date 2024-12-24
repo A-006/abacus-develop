@@ -5,14 +5,10 @@
 
 Magnetism::Magnetism()
 {
-    this->tot_magnetization = 0.0;
-    this->abs_magnetization = 0.0;
-    this->start_magnetization = nullptr;
 }
 
 Magnetism::~Magnetism()
 {
-    delete[] this->start_magnetization;
 }
 
 void Magnetism::compute_magnetization(const double& omega,
