@@ -131,13 +131,16 @@ double ElecState::cal_delta_eband(const UnitCell& ucell) const
         if (get_xc_func_type() == 3 || get_xc_func_type() == 5)
         {
             v_ofk = this->pot->get_effective_vofk(0);
+            
         }
-        assert(v_ofk!=nullptr);
+        
         for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
         {
             deband_aux -= this->charge->rho[0][ir] * (v_eff[ir] - v_fixed[ir]);
             if (get_xc_func_type() == 3 || get_xc_func_type() == 5)
             {
+                // cause in the get_effective_vofk, the func will return nullptr
+                assert(v_ofk!=nullptr);
                 deband_aux -= this->charge->kin_r[0][ir] * v_ofk[ir];
             }
         }
@@ -201,12 +204,13 @@ double ElecState::cal_delta_escf() const
     {
         v_ofk = this->pot->get_effective_vofk(0);
     }
-    assert(v_ofk!=nullptr);
     for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
     {
         descf -= (this->charge->rho[0][ir] - this->charge->rho_save[0][ir]) * (v_eff[ir] - v_fixed[ir]);
         if (get_xc_func_type() == 3 || get_xc_func_type() == 5)
         {
+            // cause in the get_effective_vofk, the func will return nullptr
+            assert(v_ofk!=nullptr);
             descf -= (this->charge->kin_r[0][ir] - this->charge->kin_r_save[0][ir]) * v_ofk[ir];
         }
     }
