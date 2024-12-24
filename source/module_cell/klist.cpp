@@ -19,9 +19,7 @@ K_Vectors::K_Vectors()
     nspin = 0; // default spin.
     kc_done = false;
     kd_done = false;
-    nmp = {0, 0, 0};
     nkstot_full = 0;
-    koffset = {0.0, 0.0, 0.0};
     nks = 0;
     nkstot = 0;
     k_nkstot = 0; // LiuXh add 20180619
