@@ -11,7 +11,7 @@
 #include<valarray>
 #include <streambuf>
 #include "prepare_unitcell.h"
-
+#include "module_cell/update_cell.h"
 #ifdef __LCAO
 #include "module_basis/module_ao/ORB_read.h"
 InfoNonlocal::InfoNonlocal(){}
@@ -146,7 +146,7 @@ TEST_F(UcellTest,SetupCellAfterVC)
 	delete[] ucell->magnet.start_magnetization;
 	ucell->magnet.start_magnetization = new double[ucell->ntype];
 	ucell->setup_cell(fn,ofs_running);
-	ucell->setup_cell_after_vc(ofs_running);
+	setup_cell_after_vc(*ucell,ofs_running);
 	ofs_running.close();
 	remove("setup_cell.tmp");
 }

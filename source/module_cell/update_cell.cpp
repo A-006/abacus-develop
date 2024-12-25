@@ -279,3 +279,68 @@ void remake_cell(Lattice& lat)
                                  "latname not supported!");
     }
 }
+
+// LiuXh add a new function here,
+// 20180515
+void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
+    ModuleBase::TITLE("UnitCell", "setup_cell_after_vc");
+    assert(ucell.lat0 > 0.0);
+    ucell.omega = std::abs(ucell.latvec.Det()) * 
+                    ucell.lat0 * ucell.lat0 * ucell.lat0;
+    if (ucell.omega <= 0) {
+        ModuleBase::WARNING_QUIT("setup_cell_after_vc", "omega <= 0 .");
+    } else {
+        log << std::endl;
+        ModuleBase::GlobalFunc::OUT(log, "Volume (Bohr^3)", ucell.omega);
+        ModuleBase::GlobalFunc::OUT(log, "Volume (A^3)",
+                                    ucell.omega * pow(ModuleBase::BOHR_TO_A, 3));
+    }
+
+    ucell.lat0_angstrom = ucell.lat0 * 0.529177;
+    ucell.tpiba = ModuleBase::TWO_PI / ucell.lat0;
+    ucell.tpiba2 = ucell.tpiba * ucell.tpiba;
+
+    // lattice vectors in another form.
+    ucell.a1.x = ucell.latvec.e11;
+    ucell.a1.y = ucell.latvec.e12;
+    ucell.a1.z = ucell.latvec.e13;
+
+    ucell.a2.x = ucell.latvec.e21;
+    ucell.a2.y = ucell.latvec.e22;
+    ucell.a2.z = ucell.latvec.e23;
+
+    ucell.a3.x = ucell.latvec.e31;
+    ucell.a3.y = ucell.latvec.e32;
+    ucell.a3.z = ucell.latvec.e33;
+
+    //==========================================================
+    // Calculate recip. lattice vectors and dot products
+    // latvec has the unit of lat0, but G has the unit 2Pi/lat0
+    //==========================================================
+    ucell.GT = ucell.latvec.Inverse();
+    ucell.G = ucell.GT.Transpose();
+    ucell.GGT = ucell.G * ucell.GT;
+    ucell.invGGT = ucell.GGT.Inverse();
+
+    for (int it = 0; it < ucell.ntype; it++) {
+        Atom* atom = &ucell.atoms[it];
+        for (int ia = 0; ia < atom->na; ia++) {
+            atom->tau[ia] = atom->taud[ia] * ucell.latvec;
+        }
+    }
+
+#ifdef __MPI
+    ucell.bcast_unitcell();
+#endif
+
+    log << std::endl;
+    output::printM3(log,
+                    "Lattice vectors: (Cartesian coordinate: in unit of a_0)",
+                    ucell.latvec);
+    output::printM3(
+        log,
+        "Reciprocal vectors: (Cartesian coordinate: in unit of 2 pi/a_0)",
+        ucell.G);
+
+    return;
+}

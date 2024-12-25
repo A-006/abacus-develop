@@ -1,5 +1,6 @@
 #include "msst.h"
 
+#include "module_cell/update_cell.h"
 #include "md_func.h"
 #ifdef __MPI
 #include "mpi.h"
@@ -256,7 +257,7 @@ void MSST::rescale(std::ofstream& ofs, const double& volume)
     ucell.latvec.e22 *= dilation[1];
     ucell.latvec.e33 *= dilation[2];
 
-    ucell.setup_cell_after_vc(ofs);
+    setup_cell_after_vc(ucell,ofs);
 
     /// rescale velocity
     for (int i = 0; i < ucell.nat; ++i)

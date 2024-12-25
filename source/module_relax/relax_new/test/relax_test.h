@@ -36,7 +36,6 @@ void UnitCell::print_stru_file(const std::string& fn,
                                const bool& dpks_desc,
                                const int& iproc) const {};
 void UnitCell::print_tau()const{};
-void UnitCell::setup_cell_after_vc(std::ofstream &log){};
 
 Magnetism::Magnetism(){};
 Magnetism::~Magnetism(){};

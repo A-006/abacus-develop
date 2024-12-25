@@ -88,6 +88,8 @@ AddTest(
   SOURCES nhchain_test.cpp
   ../md_base.cpp
   ../nhchain.cpp
+  ../../module_cell/update_cell.cpp
+  ../../module_io/output.cpp
   ${depend_files}
 )
 
@@ -97,6 +99,8 @@ AddTest(
   SOURCES msst_test.cpp
   ../md_base.cpp
   ../msst.cpp
+  ../../module_cell/update_cell.cpp
+  ../../module_io/output.cpp
   ${depend_files}
 )
 

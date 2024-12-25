@@ -695,7 +695,7 @@ void Relax::move_cell_ions(UnitCell& ucell, const bool is_new_dir)
     // I do not want to change it
     if (if_cell_moves)
     {
-        ucell.setup_cell_after_vc(GlobalV::ofs_running);
+        setup_cell_after_vc(ucell,GlobalV::ofs_running);
         ModuleBase::GlobalFunc::DONE(GlobalV::ofs_running, "SETUP UNITCELL");
     }
 }
