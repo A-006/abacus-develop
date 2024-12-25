@@ -272,7 +272,7 @@ void Nose_Hoover::first_half(std::ofstream& ofs)
 }
 
 
-void Nose_Hoover::second_half(void)
+void Nose_Hoover::second_half()
 {
     ModuleBase::TITLE("Nose_Hoover", "second_half");
     ModuleBase::timer::tick("Nose_Hoover", "second_half");
