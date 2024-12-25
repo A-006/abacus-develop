@@ -59,8 +59,8 @@ class MSST : public MD_base
     double v0;                            ///< initial volume
     double e0;                            ///< initial energy
     double totmass;                       ///< total mass of the cell
-    double lag_pos;                       ///< Lagrangian location of cell
-    double vsum;                          ///< sum over v^2
+    double lag_pos=0.0;                   ///< Lagrangian location of cell
+    double vsum=0.0;                      ///< sum over v^2
     double msst_vel;                      ///< shock msst_vel (\AA/fs)
     double msst_qmass;                    ///< cell mass-like parameter (mass^2/length^4)
     double msst_vis;                      ///< artificial msst_vis (mass/length/time)
