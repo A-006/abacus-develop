@@ -7,8 +7,8 @@ class Sto_Func
   public:
     Sto_Func();
     ~Sto_Func(){};
-    REAL tem; // temperature
-    REAL mu;  // chemical potential
+    REAL tem=0; // temperature
+    REAL mu=0;  // chemical potential
     REAL* Emin = nullptr;
     REAL* Emax = nullptr;
     void set_E_range(REAL* Emin_in, REAL* Emax_in);
@@ -25,14 +25,14 @@ class Sto_Func
     REAL nroot_mfd(REAL e);
 
   public:
-    REAL t;
+    REAL t=0;
     REAL ncos(REAL e);
     REAL nsin(REAL e);
     REAL n_sin(REAL e);
 
   public:
-    REAL sigma;
-    REAL targ_e;
+    REAL sigma=0;
+    REAL targ_e=0;
     REAL gauss(REAL e);
     REAL ngauss(REAL e);
     REAL nroot_gauss(REAL e);
