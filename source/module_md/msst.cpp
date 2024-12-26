@@ -129,7 +129,7 @@ void MSST::first_half(std::ofstream& ofs)
     return;
 }
 
-void MSST::second_half(void)
+void MSST::second_half()
 {
     ModuleBase::TITLE("MSST", "second_half");
     ModuleBase::timer::tick("MSST", "second_half");
@@ -234,7 +234,7 @@ void MSST::restart(const std::string& global_readin_dir)
     return;
 }
 
-double MSST::vel_sum(void)
+double MSST::vel_sum()
 {
     double vsum = 0;
 
@@ -267,7 +267,7 @@ void MSST::rescale(std::ofstream& ofs, const double& volume)
 }
 
 
-void MSST::propagate_vel(void)
+void MSST::propagate_vel()
 {
     if (my_rank == 0)
     {
@@ -307,7 +307,7 @@ void MSST::propagate_vel(void)
 }
 
 
-void MSST::propagate_voldot(void)
+void MSST::propagate_voldot()
 {
     const int sd = mdp.msst_direction;
     const double dthalf = 0.5 * md_dt;
