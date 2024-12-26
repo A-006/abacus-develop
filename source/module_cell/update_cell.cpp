@@ -337,10 +337,9 @@ void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
     output::printM3(log,
                     "Lattice vectors: (Cartesian coordinate: in unit of a_0)",
                     ucell.latvec);
-    output::printM3(
-        log,
-        "Reciprocal vectors: (Cartesian coordinate: in unit of 2 pi/a_0)",
-        ucell.G);
+    output::printM3(log,
+                   "Reciprocal vectors: (Cartesian coordinate: in unit of 2 pi/a_0)",
+                    ucell.G);
 
     return;
 }
