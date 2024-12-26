@@ -29,7 +29,7 @@ public:
     /// number of elements(basis-pairs) in this processon
     /// on all adjacent atoms-pairs(2D division)
     ///---------------------------------------
-    int nnr=0;
+    int nnr=1;
 	int *nlocdim;
 	int *nlocstart;
     
