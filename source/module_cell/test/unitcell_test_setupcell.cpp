@@ -146,7 +146,7 @@ TEST_F(UcellTest,SetupCellAfterVC)
 	delete[] ucell->magnet.start_magnetization;
 	ucell->magnet.start_magnetization = new double[ucell->ntype];
 	ucell->setup_cell(fn,ofs_running);
-	setup_cell_after_vc(*ucell,ofs_running);
+	unitcell::setup_cell_after_vc(*ucell,ofs_running);
 	ofs_running.close();
 	remove("setup_cell.tmp");
 }

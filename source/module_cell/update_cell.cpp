@@ -1,5 +1,7 @@
 #include "update_cell.h"
 #include "module_base/global_function.h"
+namespace unitcell
+{
 void remake_cell(Lattice& lat)
 {
     ModuleBase::TITLE("Lattice", "rmake_cell");
@@ -11,8 +13,7 @@ void remake_cell(Lattice& lat)
     ModuleBase::Matrix3&  latvec = lat.latvec;
 
     if (latName == "none") {
-        ModuleBase::WARNING_QUIT(
-            "UnitCell",
+        ModuleBase::WARNING_QUIT("UnitCell",
             "to use fixed_ibrav, latname must be provided");
     } else if (latName == "sc") // ibrav = 1
     {
@@ -24,8 +25,7 @@ void remake_cell(Lattice& lat)
     } else if (latName == "fcc") // ibrav = 2
     {
         double celldm = std::sqrt(pow(latvec.e11, 2) + pow(latvec.e12, 2)
-                                  + pow(latvec.e13, 2))
-                        / std::sqrt(2.0);
+                                + pow(latvec.e13, 2)) / std::sqrt(2.0);
 
         latvec.e11 = -celldm;
         latvec.e12 = 0.0;
@@ -286,8 +286,9 @@ void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
     ModuleBase::TITLE("UnitCell", "setup_cell_after_vc");
     assert(ucell.lat0 > 0.0);
     ucell.omega = std::abs(ucell.latvec.Det()) * 
-                    ucell.lat0 * ucell.lat0 * ucell.lat0;
-    if (ucell.omega <= 0) {
+                           pow( ucell.lat0, 3);
+    if (ucell.omega <= 0) 
+    {
         ModuleBase::WARNING_QUIT("setup_cell_after_vc", "omega <= 0 .");
     } else {
         log << std::endl;
@@ -342,4 +343,5 @@ void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
                     ucell.G);
 
     return;
+}
 }

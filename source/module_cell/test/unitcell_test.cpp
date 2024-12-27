@@ -346,7 +346,7 @@ TEST_F(UcellTest, RemakeCell)
         ucell->latvec.e32 = 0.00;
         ucell->latvec.e33 = 10.0;
         ucell->latName = latname_in[i];
-        remake_cell(ucell->lat);
+        unitcell::remake_cell(ucell->lat);
         if (latname_in[i] == "sc")
         {
             double celldm
@@ -591,7 +591,7 @@ TEST_F(UcellDeathTest, RemakeCellWarnings)
         ucell->latvec.e33 = 10.0;
         ucell->latName = latname_in[i];
         testing::internal::CaptureStdout();
-        EXPECT_EXIT(remake_cell(ucell->lat), ::testing::ExitedWithCode(1), "");
+        EXPECT_EXIT(unitcell::remake_cell(ucell->lat), ::testing::ExitedWithCode(1), "");
         std::string output = testing::internal::GetCapturedStdout();
         if (latname_in[i] == "none")
         {

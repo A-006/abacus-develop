@@ -70,7 +70,7 @@ bool Relax_old::relax_step(const int& istep,
             force_step = 1;
             stress_step++;
             ucell.cell_parameter_updated = true;
-            setup_cell_after_vc(ucell,GlobalV::ofs_running);
+            unitcell::setup_cell_after_vc(ucell,GlobalV::ofs_running);
             ModuleBase::GlobalFunc::DONE(GlobalV::ofs_running, "SETUP UNITCELL");
         }
         return converged;
