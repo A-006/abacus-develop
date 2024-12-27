@@ -2060,7 +2060,7 @@ Warning: this function is not robust enough for the current version. Please try 
 - **Type**: int
 - **Availability**: numerical atomic orbital basis
 - **Description**: Include V_delta label for DeePKS training. When `deepks_out_labels` is true and `deepks_v_delta` > 0, ABACUS will output h_base.npy, v_delta.npy and h_tot.npy(h_tot=h_base+v_delta). 
-  Meanwhile, when `deepks_v_delta` equals 1, ABACUS will also output v_delta_precalc.npy, which is used to calculate V_delta during DeePKS training. However, when the number of atoms grows, the size of v_delta_precalc.npy will be very large. In this case, it's recommended to set `deepks_v_delta` as 2, and ABACUS will output psialpha.npy and grad_evdm.npy but not v_delta_precalc.npy. These two files are small and can be used to calculate v_delta_precalc in the procedure of training DeePKS.
+  Meanwhile, when `deepks_v_delta` equals 1, ABACUS will also output v_delta_precalc.npy, which is used to calculate V_delta during DeePKS training. However, when the number of atoms grows, the size of v_delta_precalc.npy will be very large. In this case, it's recommended to set `deepks_v_delta` as 2, and ABACUS will output phialpha.npy and grad_evdm.npy but not v_delta_precalc.npy. These two files are small and can be used to calculate v_delta_precalc in the procedure of training DeePKS.
 - **Default**: 0
 
 ### deepks_out_unittest
@@ -2446,10 +2446,11 @@ These variables are relevant when using hybrid functionals.
 ### exx_ccp_rmesh_times
 
 - **Type**: Real
-- **Description**: This parameter determines how many times larger the radial mesh required for calculating Columb potential is to that of atomic orbitals. For HSE, setting it to 1 is enough. But for PBE0, a much larger number must be used.
+- **Description**: This parameter determines how many times larger the radial mesh required for calculating Columb potential is to that of atomic orbitals. The value should be at least 1. Reducing this value can effectively increase the speed of self-consistent calculations using hybrid functionals.
 - **Default**:
-  - 1.5: if *[dft_functional](#dft_functional)==hse*
-  - 5: else
+  - 5: if *[dft_functional](#dft_functional)==hf/pbe0/scan0/muller/power/wp22*
+  - 1.5: if *[dft_functional](#dft_functional)==hse/cwp22*
+  - 1: else
 
 ### exx_distribute_type
 
@@ -2488,6 +2489,7 @@ These variables are relevant when using hybrid functionals.
 - **Description**:
   - True: Enforce LibRI to use `double` data type.
   - False: Enforce LibRI to use `complex` data type.
+  Setting it to True can effectively improve the speed of self-consistent calculations with hybrid functionals.
 - **Default**: depends on the [gamma_only](#gamma_only) option
   - True: if gamma_only
   - False: else
