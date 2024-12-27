@@ -44,8 +44,8 @@ class Gint_inout
 
     // output
     double** rho=nullptr;
-    ModuleBase::matrix* fvl_dphi;
-    ModuleBase::matrix* svl_dphi;
+    ModuleBase::matrix* fvl_dphi=nullptr;
+    ModuleBase::matrix* svl_dphi=nullptr;
     Gint_Tools::job_type job;
 
     // electron density and kin_r, multi-k

@@ -50,7 +50,7 @@ public:
 	
 	std::vector<ModuleBase::Vector3<double>> ptrans; // the translation vectors of the primitive cell in the input structure
     int ncell=1;	//the number of primitive cells within one supercell
-	int *index;
+	int *index=nullptr;
 	
 	double cel_const[6]={0.0};
 	double pcel_const[6]={0.0};	//cel_const of primitive cell

@@ -30,7 +30,9 @@ public:
         by = by_in;
         bz = bz_in;
     }
-    int bx,by,bz;
+    int bx=0;
+    int by=0;
+    int bz=0;
     int nbx=0;
     int nby=0;
     int nbz=0;

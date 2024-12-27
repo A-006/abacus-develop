@@ -104,12 +104,12 @@ class Grid
     void Construct_Adjacent_final(const FAtom& fatom1, FAtom* fatom2);
 
     void Check_Expand_Condition(const UnitCell& ucell);
-    int glayerX;
-    int glayerX_minus;
-    int glayerY;
-    int glayerY_minus;
-    int glayerZ;
-    int glayerZ_minus;
+    int glayerX=0;
+    int glayerX_minus=0;
+    int glayerY=0;
+    int glayerY_minus=0;
+    int glayerZ=0;
+    int glayerZ_minus=0;
 };
 
 #endif
