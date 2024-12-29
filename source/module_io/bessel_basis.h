@@ -71,24 +71,24 @@ public:
 	/// @brief  get energy cutoff, which is used to truncate SBF Jlq. 
 	/// @param  
 	/// @return energy cutoff in Ry
-	const double &get_ecut(void) const {return ecut;}
+	const double &get_ecut() const {return ecut;}
 	/// @brief cutoff radius of radial SBF Jlq.
 	/// @param  
 	/// @return cutoff radius in a.u.
-	const double &get_rcut(void) const {return rcut;}
+	const double &get_rcut() const {return rcut;}
 
-	const double &get_tolerence(void) const {return tolerence;}
+	const double &get_tolerence() const {return tolerence;}
 
 
 	/// @brief check if SBFs are smoothed (mohan add 2009-08-28)
 	/// @attention in this case, the Jlq are not the true Jlq.
 	/// @param  
 	/// @return boolean whether SBFs are smoothed
-	const bool &get_smooth(void) const {return smooth;}
+	const bool &get_smooth() const {return smooth;}
 	/// @brief get sigma the stddev (standard deviation) used in smooth function (Gaussian function)
 	/// @param  
 	/// @return stddev of smooth function
-	const double &get_sigma(void) const {return sigma;}
+	const double &get_sigma() const {return sigma;}
 
 private:
 	/// @brief the most important array to calculate spillage, has dimension (ntype, lmax+1, max_n, nk)
@@ -146,7 +146,7 @@ private:
 		const UnitCell& ucell
 		);
 
-	void init_TableOne(void);
+	void init_TableOne();
 
 	/// @brief calculate F_{aln}(it, il, in, ik) = sum_{ie}{C4(it, il, in, ie)*TableOne(il, ie, ik)}, where TableOne is overlap integral between two spherical bessel functions (jle(r) and jlk(r))
 	/// @param ntype number of atomtype

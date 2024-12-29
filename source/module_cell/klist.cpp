@@ -947,7 +947,8 @@ void K_Vectors::ibz_kpoint(const ModuleSymmetry::Symmetry& symm,
                         break;
                     }
                 }
-                if (exist_number != -1) break;
+                if (exist_number != -1) { break;
+}
             }
             this->kstars[exist_number].insert(std::make_pair(isym, kvec_d[i]));
         }
