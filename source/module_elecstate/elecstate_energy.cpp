@@ -103,7 +103,8 @@ double ElecState::cal_delta_eband(const UnitCell& ucell) const
     const double* v_eff = this->pot->get_effective_v(0);
     const double* v_fixed = this->pot->get_fixed_v();
     const double* v_ofk = nullptr;
-
+    const bool v_ofk_flag =(get_xc_func_type() == 3 
+                            || get_xc_func_type() == 5);
 #ifdef USE_PAW
     if(PARAM.inp.use_paw)
     {
@@ -128,31 +129,33 @@ double ElecState::cal_delta_eband(const UnitCell& ucell) const
 
     if(!PARAM.inp.use_paw)
     {
-        if (get_xc_func_type() == 3 || get_xc_func_type() == 5)
-        {
-            v_ofk = this->pot->get_effective_vofk(0);
-            
-        }
-        
         for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
         {
             deband_aux -= this->charge->rho[0][ir] * (v_eff[ir] - v_fixed[ir]);
-            if (get_xc_func_type() == 3 || get_xc_func_type() == 5)
+        }
+        if (v_ofk_flag)
+        {
+            v_ofk = this->pot->get_effective_vofk(0);
+            // cause in the get_effective_vofk, the func will return nullptr
+            assert(v_ofk!=nullptr);
+            for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
             {
-                // cause in the get_effective_vofk, the func will return nullptr
-                assert(v_ofk!=nullptr);
                 deband_aux -= this->charge->kin_r[0][ir] * v_ofk[ir];
             }
         }
-
+        
         if (PARAM.inp.nspin == 2)
         {
             v_eff = this->pot->get_effective_v(1);
-            v_ofk = this->pot->get_effective_vofk(1);
             for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
             {
                 deband_aux -= this->charge->rho[1][ir] * (v_eff[ir] - v_fixed[ir]);
-                if (get_xc_func_type() == 3 || get_xc_func_type() == 5)
+            }
+            if (v_ofk_flag)
+            {
+                v_ofk = this->pot->get_effective_vofk(1);
+                assert(v_ofk!=nullptr);
+                for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
                 {
                     deband_aux -= this->charge->kin_r[1][ir] * v_ofk[ir];
                 }
