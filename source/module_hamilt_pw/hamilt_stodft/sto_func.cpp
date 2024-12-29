@@ -7,6 +7,10 @@ template <typename REAL>
 Sto_Func<REAL>::Sto_Func()
 {
     this->tem = Occupy::gaussian_parameter;
+    this->mu  = static_cast<REAL>(0.0);
+    this->t   = static_cast<REAL>(0.0);
+    this->sigma = static_cast<REAL>(0.0);
+    this->targ_e = static_cast<REAL>(0.0);
 }
 
 template <typename REAL>
