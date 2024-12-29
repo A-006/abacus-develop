@@ -13,17 +13,17 @@ public:
 
     /// local size of bands, used for 2d wavefunction
     /// must divided on dim1 because of elpa interface
-    int ncol_bands=0;
-    int nrow_bands=0;
+    int ncol_bands;
+    int nrow_bands;
     
     /// ncol_bands*nrow
-    long nloc_wfc=0;
+    long nloc_wfc;
 
     //ncol_bands*ncol_bands
-    long nloc_Eij=0;
+    long nloc_Eij;
 
-    int lastband_in_proc=0;
-	int lastband_number=0; 
+    int lastband_in_proc;
+	int lastband_number; 
 
     ///---------------------------------------
     /// number of elements(basis-pairs) in this processon
@@ -50,7 +50,7 @@ public:
 #endif
 
     int* loc_sizes;
-    int loc_size=0;
+    int loc_size;
 
     int get_wfc_global_nbands () const;
     int get_wfc_global_nbasis () const;
@@ -80,7 +80,7 @@ public:
 
     int get_nbands() const;
 
-    int nbands = 0;
+    int nbands;
 
     /**
      * @brief gather global indexes of orbitals in this processor

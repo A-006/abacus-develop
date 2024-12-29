@@ -41,7 +41,7 @@ class FIRE : public MD_base
      */
     void check_fire(void);
 
-    double max=0.0;         ///< max force
+    double max;         ///< max force
     double alpha_start; ///< alpha_start begin
     double alpha;       ///< alpha begin
     double finc;        ///< finc begin
@@ -50,7 +50,7 @@ class FIRE : public MD_base
     int n_min;          ///< n_min
     double dt_max;      ///< dt_max
     int negative_count; ///< Negative count
-    double force_thr = 1.0e-3; ///< force convergence threshold in FIRE method
+    double force_thr;   ///< force convergence threshold in FIRE method
 };
 
 #endif
