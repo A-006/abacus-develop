@@ -5,10 +5,15 @@
 
 Magnetism::Magnetism()
 {
+    tot_magnetization = 0.0;
+    abs_magnetization = 0.0;
+    std::fill(tot_magnetization_nc, tot_magnetization_nc + 3, 0.0);
+    std::fill(ux_, ux_ + 3, 0.0);
 }
 
 Magnetism::~Magnetism()
 {
+    delete[] start_magnetization;
 }
 
 void Magnetism::compute_magnetization(const double& omega,

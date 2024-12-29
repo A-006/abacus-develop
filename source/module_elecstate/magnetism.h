@@ -17,9 +17,9 @@ public:
     double *start_magnetization=nullptr;
 
     // tot_magnetization : majority spin - minority spin (nelup - neldw).
-    double tot_magnetization=0.0;
+    double tot_magnetization;
     double tot_magnetization_nc[3]={0.0};
-    double abs_magnetization=0.0;
+    double abs_magnetization;
 
     void compute_magnetization(const double& omega,
                                const int& nrxx, 
