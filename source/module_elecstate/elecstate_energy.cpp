@@ -137,12 +137,13 @@ double ElecState::cal_delta_eband(const UnitCell& ucell) const
         {
             v_ofk = this->pot->get_effective_vofk(0);
             // cause in the get_effective_vofk, the func will return nullptr
-            if(v_ofk!=nullptr)
+            if(v_ofk==nullptr && this->charge->rhopw->nrxx>0)
             {
-                for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
-                {
-                    deband_aux -= this->charge->kin_r[0][ir] * v_ofk[ir];
-                }
+                ModuleBase::WARNING_QUIT("ElecState::cal_delta_eband","v_ofk is nullptr");
+            }
+            for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
+            {
+                deband_aux -= this->charge->kin_r[0][ir] * v_ofk[ir];
             }
         }
         
@@ -156,12 +157,13 @@ double ElecState::cal_delta_eband(const UnitCell& ucell) const
             if (v_ofk_flag)
             {
                 v_ofk = this->pot->get_effective_vofk(1);
-                if(v_ofk!=nullptr)
+                if(v_ofk==nullptr && this->charge->rhopw->nrxx>0)
                 {
-                    for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
-                    {
-                        deband_aux -= this->charge->kin_r[1][ir] * v_ofk[ir];
-                    }
+                    ModuleBase::WARNING_QUIT("ElecState::cal_delta_eband","v_ofk is nullptr");
+                }
+                for (int ir = 0; ir < this->charge->rhopw->nrxx; ir++)
+                {
+                    deband_aux -= this->charge->kin_r[1][ir] * v_ofk[ir];
                 }
             }
         }
