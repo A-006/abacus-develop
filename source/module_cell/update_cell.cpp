@@ -413,9 +413,13 @@ void periodic_boundary_adjustment(Atom* atoms,
                 atom->taud[ia].z -= 1.0;
             }
 
-            if (atom->taud[ia].x < 0 || atom->taud[ia].y < 0
-                || atom->taud[ia].z < 0 || atom->taud[ia].x >= 1.0
-                || atom->taud[ia].y >= 1.0 || atom->taud[ia].z >= 1.0) {
+            if (atom->taud[ia].x < 0 
+                || atom->taud[ia].y < 0
+                || atom->taud[ia].z < 0 
+                || atom->taud[ia].x >= 1.0
+                || atom->taud[ia].y >= 1.0 
+                || atom->taud[ia].z >= 1.0) 
+            {
                 GlobalV::ofs_warning << " it=" << it + 1 << " ia=" << ia + 1 << std::endl;
                 GlobalV::ofs_warning << "d=" << atom->taud[ia].x << " "
                                      << atom->taud[ia].y << " "

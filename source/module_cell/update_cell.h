@@ -13,6 +13,7 @@ the functions are defined in the namespace UnitCell,
 Accually, the functions are focused on the cell-relax part functions
 of the UnitCell class.
 3. periodic_boundary_adjustment: adjust the boundary of the cell
+4. update_pos_tau: update the Cartesian coordinate  postion of the atoms
 */
 namespace unitcell
 {
@@ -21,13 +22,20 @@ namespace unitcell
     void remake_cell(Lattice& lat);
 
     void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log);
-
+    
+    /**
+     * @brief check the boundary of the cell, for each atom,the taud 
+     * in three directions should be in the range of [-1,1)
+     * @param atoms: the atoms to be adjusted [in]
+     * @param latvec: the lattice of the atoms [in]
+     * @param ntype: the number of types of the atoms [in]
+    */
     void periodic_boundary_adjustment(Atom* atoms,
                                       const ModuleBase::Matrix3& latvec,
                                       const int ntype);
 
     /** 
-    * update the position and tau of the atoms
+    * @brief update the position and tau of the atoms
     * 
     * @param lat: the lattice of the atoms [in]
     * @param pos: the position of the atoms [in]
