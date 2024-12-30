@@ -105,7 +105,7 @@ void Ions_Move_Basic::move_atoms(UnitCell &ucell, double *move, double *pos)
             pos[i] += move[i];
         }
     }
-    unitcell::update_pos_tau(ucell,ucell.lat,pos,ucell.ntype,ucell.nat,ucell.atoms);
+    unitcell::update_pos_tau(ucell.lat,pos,ucell.ntype,ucell.nat,ucell.atoms);
 
     //--------------------------------------------
     // Print out the structure file.

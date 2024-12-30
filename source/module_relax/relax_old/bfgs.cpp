@@ -334,7 +334,7 @@ void BFGS::UpdatePos(UnitCell& ucell)
     }
     std::cout<<std::endl;
     int k=0;
-    unitcell::update_pos_tau(ucell,ucell.lat,a,ucell.ntype,ucell.nat,ucell.atoms);
+    unitcell::update_pos_tau(ucell.lat,a,ucell.ntype,ucell.nat,ucell.atoms);
     /*double move_ion[3*size];
     ModuleBase::zeros(move_ion, size*3);
 

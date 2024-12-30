@@ -346,8 +346,7 @@ void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
     return;
 }
 
-void update_pos_tau(UnitCell& ucell,
-                    const Lattice& lat,
+void update_pos_tau(const Lattice& lat,
                     const double* pos,
                     const int ntype,
                     const int nat,

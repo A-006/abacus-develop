@@ -29,17 +29,13 @@ namespace unitcell
     /** 
     * update the position and tau of the atoms
     * 
-    * temprarily use refernce to ucell,it will be change after the 
-    * bcast_atoms_tau has been implemented
-    * 
-    * @param atoms: the atoms to be updated [out]
     * @param lat: the lattice of the atoms [in]
     * @param pos: the position of the atoms [in]
     * @param ntype: the number of types of the atoms [in]
     * @param nat: the number of atoms [in]
+    * @param atoms: the atoms to be updated [out]
     */
-    void update_pos_tau(UnitCell& ucell,
-                        const Lattice& lat,
+    void update_pos_tau(const Lattice& lat,
                         const double* pos,
                         const int ntype,
                         const int nat,
