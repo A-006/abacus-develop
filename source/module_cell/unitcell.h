@@ -204,7 +204,6 @@ class UnitCell {
     void update_pos_taud(const ModuleBase::Vector3<double>* posd_in);
     void update_pos_taud(double* posd_in);
     void update_vel(const ModuleBase::Vector3<double>* vel_in);
-    void periodic_boundary_adjustment();
     void bcast_atoms_tau();
     bool judge_big_cell() const;
 

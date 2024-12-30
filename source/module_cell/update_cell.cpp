@@ -344,4 +344,61 @@ void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
 
     return;
 }
+
+void periodic_boundary_adjustment(Atom* atoms,
+                                  ModuleBase::Matrix3& latvec,
+                                  int ntype) 
+{
+    //----------------------------------------------
+    // because of the periodic boundary condition
+    // we need to adjust the atom positions,
+    // first adjust direct coordinates,
+    // then update them into cartesian coordinates,
+    //----------------------------------------------
+    for (int it = 0; it < ntype; it++) {
+        Atom* atom = &atoms[it];
+        for (int ia = 0; ia < atom->na; ia++) {
+            // mohan update 2011-03-21
+            if (atom->taud[ia].x < 0)
+            {
+                atom->taud[ia].x += 1.0;
+            }
+            if (atom->taud[ia].y < 0)
+            {
+                atom->taud[ia].y += 1.0;
+            }
+            if (atom->taud[ia].z < 0)
+            {
+                atom->taud[ia].z += 1.0;
+            }
+            if (atom->taud[ia].x >= 1.0)
+            {
+                atom->taud[ia].x -= 1.0;
+            }
+            if (atom->taud[ia].y >= 1.0)
+            {
+                atom->taud[ia].y -= 1.0;
+            }
+            if (atom->taud[ia].z >= 1.0)
+            {
+                atom->taud[ia].z -= 1.0;
+            }
+
+            if (atom->taud[ia].x < 0 || atom->taud[ia].y < 0
+                || atom->taud[ia].z < 0 || atom->taud[ia].x >= 1.0
+                || atom->taud[ia].y >= 1.0 || atom->taud[ia].z >= 1.0) {
+                GlobalV::ofs_warning << " it=" << it + 1 << " ia=" << ia + 1 << std::endl;
+                GlobalV::ofs_warning << "d=" << atom->taud[ia].x << " "
+                                     << atom->taud[ia].y << " "
+                                     << atom->taud[ia].z << std::endl;
+                ModuleBase::WARNING_QUIT("Ions_Move_Basic::move_ions",
+                    "the movement of atom is larger than the length of cell.");
+            }
+
+            atom->tau[ia] = atom->taud[ia] * latvec;
+        }
+    }
+    return;
 }
+
+} // namespace unitcell

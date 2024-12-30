@@ -12,6 +12,7 @@ is fixed, adjust the lattice vectors
 the functions are defined in the namespace UnitCell,
 Accually, the functions are focused on the cell-relax part functions
 of the UnitCell class.
+3. periodic_boundary_adjustment: adjust the boundary of the cell
 */
 namespace unitcell
 {
@@ -20,6 +21,10 @@ namespace unitcell
     void remake_cell(Lattice& lat);
 
     void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log);
+
+    void periodic_boundary_adjustment(Atom* atoms,
+                                    ModuleBase::Matrix3& latvec,
+                                    int ntype);
 }
 //
 #endif // UPDATE_CELL_H
