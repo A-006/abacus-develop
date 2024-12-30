@@ -68,9 +68,6 @@ UnitCell::UnitCell()
 UnitCell::~UnitCell()
 {
 }
-void UnitCell::update_pos_tau(const double* pos)
-{
-}
 void UnitCell::print_tau(void) const
 {
 }

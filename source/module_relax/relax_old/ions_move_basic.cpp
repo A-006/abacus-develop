@@ -3,7 +3,7 @@
 #include "module_parameter/parameter.h"
 #include "module_base/global_function.h"
 #include "module_base/global_variable.h"
-
+#include "module_cell/update_cell.h"
 int Ions_Move_Basic::dim = 0;
 bool Ions_Move_Basic::converged = false;
 double Ions_Move_Basic::largest_grad = 0.0;
@@ -105,7 +105,7 @@ void Ions_Move_Basic::move_atoms(UnitCell &ucell, double *move, double *pos)
             pos[i] += move[i];
         }
     }
-    ucell.update_pos_tau(pos);
+    unitcell::update_pos_tau(ucell,ucell.lat,pos,ucell.ntype,ucell.nat,ucell.atoms);
 
     //--------------------------------------------
     // Print out the structure file.

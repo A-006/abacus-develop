@@ -23,8 +23,27 @@ namespace unitcell
     void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log);
 
     void periodic_boundary_adjustment(Atom* atoms,
-                                    ModuleBase::Matrix3& latvec,
-                                    int ntype);
+                                      const ModuleBase::Matrix3& latvec,
+                                      const int ntype);
+
+    /** 
+    * update the position and tau of the atoms
+    * 
+    * temprarily use refernce to ucell,it will be change after the 
+    * bcast_atoms_tau has been implemented
+    * 
+    * @param atoms: the atoms to be updated [out]
+    * @param lat: the lattice of the atoms [in]
+    * @param pos: the position of the atoms [in]
+    * @param ntype: the number of types of the atoms [in]
+    * @param nat: the number of atoms [in]
+    */
+    void update_pos_tau(UnitCell& ucell,
+                        const Lattice& lat,
+                        const double* pos,
+                        const int ntype,
+                        const int nat,
+                        Atom* atoms);
 }
 //
 #endif // UPDATE_CELL_H

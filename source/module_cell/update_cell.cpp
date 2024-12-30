@@ -1,4 +1,5 @@
 #include "update_cell.h"
+#include "bcast_cell.h"
 #include "module_base/global_function.h"
 namespace unitcell
 {
@@ -345,9 +346,38 @@ void setup_cell_after_vc(UnitCell& ucell, std::ofstream& log) {
     return;
 }
 
+void update_pos_tau(UnitCell& ucell,
+                    const Lattice& lat,
+                    const double* pos,
+                    const int ntype,
+                    const int nat,
+                    Atom* atoms) 
+{
+    int iat = 0;
+    for (int it = 0; it < ntype; it++) {
+        Atom* atom = &atoms[it];
+        for (int ia = 0; ia < atom->na; ia++) {
+            for (int ik = 0; ik < 3; ++ik) {
+                if (atom->mbl[ia][ik]) 
+                {
+                    atom->dis[ia][ik] = pos[3 * iat + ik] / lat.lat0 - atom->tau[ia][ik];
+                    atom->tau[ia][ik] = pos[3 * iat + ik] / lat.lat0;
+                }
+            }
+            // the direct coordinates also need to be updated.
+            atom->dis[ia] = atom->dis[ia] * lat.GT;
+            atom->taud[ia] = atom->tau[ia] * lat.GT;
+            iat++;
+        }
+    }
+    assert(iat == nat);
+    periodic_boundary_adjustment(atoms,lat.latvec,ntype);
+    bcast_atoms_tau(atoms, ntype);
+}
+
 void periodic_boundary_adjustment(Atom* atoms,
-                                  ModuleBase::Matrix3& latvec,
-                                  int ntype) 
+                                  const ModuleBase::Matrix3& latvec,
+                                  const int ntype) 
 {
     //----------------------------------------------
     // because of the periodic boundary condition

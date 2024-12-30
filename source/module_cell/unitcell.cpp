@@ -314,29 +314,7 @@ std::vector<ModuleBase::Vector3<int>> UnitCell::get_constrain() const
 	return constrain;
 }
 
-void UnitCell::update_pos_tau(const double* pos) {
-    int iat = 0;
-    for (int it = 0; it < this->ntype; it++) {
-        Atom* atom = &this->atoms[it];
-        for (int ia = 0; ia < atom->na; ia++) {
-            for (int ik = 0; ik < 3; ++ik) {
-                if (atom->mbl[ia][ik]) {
-                    atom->dis[ia][ik]
-                        = pos[3 * iat + ik] / this->lat0 - atom->tau[ia][ik];
-                    atom->tau[ia][ik] = pos[3 * iat + ik] / this->lat0;
-                }
-            }
 
-            // the direct coordinates also need to be updated.
-            atom->dis[ia] = atom->dis[ia] * this->GT;
-            atom->taud[ia] = atom->tau[ia] * this->GT;
-            iat++;
-        }
-    }
-    assert(iat == this->nat);
-    unitcell::periodic_boundary_adjustment(this->atoms,this->latvec, this->ntype);
-    this->bcast_atoms_tau();
-}
 
 void UnitCell::update_pos_taud(double* posd_in) {
     int iat = 0;
