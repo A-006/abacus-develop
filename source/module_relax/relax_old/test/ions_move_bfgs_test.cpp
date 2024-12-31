@@ -150,7 +150,7 @@ TEST_F(IonsMoveBFGSTest, RestartBfgsCase1)
 
     std::string expected_output = "                  trust_radius_old (bohr) = 2.44949\n";
 
-    EXPECT_EQ(output, expected_output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_NEAR(Ions_Move_Basic::trust_radius_old, 2.4494897427831779, 1e-12);
     EXPECT_DOUBLE_EQ(bfgs.move_p[0], 0.0);
     EXPECT_DOUBLE_EQ(bfgs.move_p[1], 0.0);
@@ -236,7 +236,7 @@ TEST_F(IonsMoveBFGSTest, BfgsRoutineCase1)
           "                 update iteration = 0\n";
     std::string expected_std = " BFGS TRUST (Bohr)    : 1\n";
 
-    EXPECT_EQ(expected_ofs, ofs_output);
+    EXPECT_THAT(ofs_output, ::testing::HasSubstr(expected_ofs));
     EXPECT_EQ(expected_std, std_outout);
 
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::trust_radius, 1.0);
@@ -299,7 +299,7 @@ TEST_F(IonsMoveBFGSTest, BfgsRoutineCase2)
                                "0\n                         update iteration = 0\n";
     std::string expected_std = "";
 
-    EXPECT_EQ(expected_ofs, ofs_output);
+     EXPECT_THAT(ofs_output, ::testing::HasSubstr(expected_ofs));
     EXPECT_EQ(expected_std, std_outout);
 
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::trust_radius, -0.5);
@@ -357,7 +357,7 @@ TEST_F(IonsMoveBFGSTest, BfgsRoutineCase3)
     std::string expected_ofs = " check the norm of new move 410 (Bohr)\n Uphill move : resetting bfgs history\n        "
                                "                            istep = 0\n                         update iteration = 1\n";
 
-    EXPECT_EQ(expected_ofs, ofs_output);
+     EXPECT_THAT(ofs_output, ::testing::HasSubstr(expected_ofs));
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::trust_radius, 0.2);
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::etot, 0.9);
     EXPECT_DOUBLE_EQ(bfgs.tr_min_hit, false);

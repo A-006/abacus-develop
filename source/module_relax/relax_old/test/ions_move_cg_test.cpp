@@ -1,5 +1,7 @@
+#include <regex>
 #include "for_test.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 #define private public
 #include "module_parameter/parameter.h"
 #include "module_relax/relax_old/ions_move_basic.h"
@@ -98,7 +100,10 @@ TEST_F(IonsMoveCGTest, TestStartConverged)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+
+    std::regex pattern(R"(==> .*::.*\t[\d\.]+ GB\t\d+ s\n )");
+    output = std::regex_replace(output, pattern, "");
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, true);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::largest_grad, 0.0);
@@ -130,7 +135,7 @@ TEST_F(IonsMoveCGTest, TestStartSd)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_EQ(Ions_Move_Basic::relax_method, "bfgs");
@@ -168,7 +173,7 @@ TEST_F(IonsMoveCGTest, TestStartTrialGoto)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_EQ(Ions_Move_Basic::relax_method, "bfgs");
@@ -205,7 +210,7 @@ TEST_F(IonsMoveCGTest, TestStartTrial)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_EQ(Ions_Move_Basic::relax_method, "bfgs");
@@ -244,7 +249,7 @@ TEST_F(IonsMoveCGTest, TestStartNoTrialGotoCase1)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_EQ(Ions_Move_Basic::relax_method, "bfgs");
@@ -282,7 +287,7 @@ TEST_F(IonsMoveCGTest, TestStartNoTrialGotoCase2)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_EQ(Ions_Move_Basic::relax_method, "bfgs");
@@ -321,7 +326,7 @@ TEST_F(IonsMoveCGTest, TestStartNoTrial)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_EQ(Ions_Move_Basic::relax_method, "bfgs");

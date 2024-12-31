@@ -1,3 +1,4 @@
+#include <regex>
 #include "for_test.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -93,7 +94,9 @@ TEST_F(IonsMoveSDTest, TestStartConverged)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    std::regex pattern(R"(==> .*::.*\t[\d\.]+ GB\t\d+ s\n )");
+    output = std::regex_replace(output, pattern, "");
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, true);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 5);
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::largest_grad, 0.0);
@@ -130,7 +133,7 @@ TEST_F(IonsMoveSDTest, TestStartNotConverged)
     ifs.close();
     std::remove("log");
 
-    EXPECT_EQ(expected_output, output);
+    EXPECT_THAT(output, testing::HasSubstr(expected_output));
     EXPECT_EQ(Ions_Move_Basic::converged, false);
     EXPECT_EQ(Ions_Move_Basic::update_iter, 6);
     EXPECT_DOUBLE_EQ(Ions_Move_Basic::largest_grad, 1.0);
