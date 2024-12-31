@@ -81,7 +81,9 @@ Atom::Atom()
 {
     na = 2;
     tau.resize(na);
+    dis.resize(na);
     mbl.resize(na);
+    taud.resize(na);
 }
 Atom::~Atom()
 {

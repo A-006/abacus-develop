@@ -38,7 +38,22 @@ class IonsMoveCGTest : public ::testing::Test
     {
         // Clean up after each test
     }
-
+    void setupucell(UnitCell& ucell)
+    {
+        for (int it = 0; it < ucell.ntype; it++)
+        {
+            Atom* atom = &ucell.atoms[it];
+            for (int ia = 0; ia < atom->na; ia++)
+            {
+                for (int ik = 0; ik < 3; ++ik)
+                {
+                    atom->tau[ia][ik] = 1;
+                    atom->mbl[ia][ik] = 1;
+                }
+            }
+        }
+        ucell.lat.GT.Zero();
+    }
     Ions_Move_CG im_cg;
 };
 
@@ -82,6 +97,7 @@ TEST_F(IonsMoveCGTest, TestStartConverged)
     Ions_Move_Basic::istep = 1;
     Ions_Move_Basic::converged = true;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     double etot = 0.0;
 
@@ -118,6 +134,7 @@ TEST_F(IonsMoveCGTest, TestStartSd)
     Ions_Move_Basic::relax_method = "cg_bfgs";
     Ions_Move_CG::RELAX_CG_THR = 100.0;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     force(0, 0) = 0.01;
     double etot = 0.0;
@@ -151,6 +168,7 @@ TEST_F(IonsMoveCGTest, TestStartTrialGoto)
     Ions_Move_Basic::istep = 1;
     Ions_Move_Basic::converged = false;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     force(0, 0) = 0.1;
     double etot = 0.0;
@@ -189,6 +207,7 @@ TEST_F(IonsMoveCGTest, TestStartTrial)
     Ions_Move_Basic::istep = 1;
     Ions_Move_Basic::converged = false;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     force(0, 0) = 0.01;
     double etot = 0.0;
@@ -226,6 +245,7 @@ TEST_F(IonsMoveCGTest, TestStartNoTrialGotoCase1)
     Ions_Move_Basic::istep = 1;
     Ions_Move_Basic::converged = false;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     force(0, 0) = 0.1;
     double etot = 0.0;
@@ -265,6 +285,7 @@ TEST_F(IonsMoveCGTest, TestStartNoTrialGotoCase2)
     Ions_Move_Basic::istep = 1;
     Ions_Move_Basic::converged = false;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     force(0, 0) = 0.01;
     double etot = 0.0;
@@ -303,6 +324,7 @@ TEST_F(IonsMoveCGTest, TestStartNoTrial)
     Ions_Move_Basic::istep = 1;
     Ions_Move_Basic::converged = false;
     UnitCell ucell;
+    setupucell(ucell);
     ModuleBase::matrix force(2, 3);
     force(0, 0) = 0.01;
     double etot = 0.0;

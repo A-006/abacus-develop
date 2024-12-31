@@ -1,11 +1,9 @@
 #include "for_test.h"
+#include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #define private public
-#include "module_parameter/parameter.h"
-#undef private
-#include "gtest/gtest.h"
-#define private public
 #define protected public
+#include "module_parameter/parameter.h"
 #include "module_relax/relax_old/ions_move_basic.h"
 #include "module_relax/relax_old/ions_move_bfgs.h"
 #undef private
@@ -109,7 +107,7 @@ TEST_F(IonsMoveBFGSTest, StartCase2)
     // Call the function being tested
     bfgs.allocate();
     GlobalV::ofs_running.open("log");
-    bfgs.start(ucell, force, energy_in);
+    EXPECT_EXIT(bfgs.start(ucell, force, energy_in) , ::testing::ExitedWithCode(1), "");
     GlobalV::ofs_running.close();
 
     // Check the results

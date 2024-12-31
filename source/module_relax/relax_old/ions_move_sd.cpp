@@ -55,6 +55,8 @@ void Ions_Move_SD::start(UnitCell& ucell, const ModuleBase::matrix& force, const
 
     if (istep == 1 || etot_in <= energy_saved)
     {
+        printf("in cheak_converged");
+        printf("pos[0]: %f\n", pos[0]);
         energy_saved = etot_in;
         for (int i = 0; i < dim; i++)
             pos_saved[i] = pos[i];
