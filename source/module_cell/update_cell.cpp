@@ -374,8 +374,9 @@ void update_pos_tau(const Lattice& lat,
     bcast_atoms_tau(atoms, ntype);
 }
 
+template <typename T>
 void update_pos_taud(const Lattice& lat,
-                     const double* posd_in,
+                     const T* posd_in,
                      const int ntype,
                      const int nat,
                      Atom* atoms)
@@ -407,8 +408,9 @@ void update_pos_taud(const Lattice& lat,
                      Atom* atoms)
 {
     int iat = 0;
-    for (int it = 0; it < ntype; it++) {
-        Atom* atom = &atoms[it];
+    for (int it = 0; it < this->ntype; it++) 
+    {
+        Atom* atom = &this->atoms[it];
         for (int ia = 0; ia < atom->na; ia++) 
         {
             for (int ik = 0; ik < 3; ++ik) 
@@ -419,9 +421,9 @@ void update_pos_taud(const Lattice& lat,
             iat++;
         }
     }
-    assert(iat == nat);
-    periodic_boundary_adjustment(atoms,lat.latvec,ntype);
-    bcast_atoms_tau(atoms, ntype);
+    assert(iat == this->nat);
+    unitcell::periodic_boundary_adjustment(this->atoms,this->latvec, this->ntype);
+    this->bcast_atoms_tau();
 }
 
 void periodic_boundary_adjustment(Atom* atoms,
