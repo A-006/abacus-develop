@@ -374,6 +374,32 @@ void update_pos_tau(const Lattice& lat,
     bcast_atoms_tau(atoms, ntype);
 }
 
+void update_pos_taud(const Lattice& lat,
+                     const double* posd_in,
+                     const int ntype,
+                     const int nat,
+                     Atom* atoms)
+{
+    int iat = 0;
+    for (int it = 0; it < ntype; it++) 
+    {
+        Atom* atom = &atoms[it];
+        for (int ia = 0; ia < atom->na; ia++) 
+        {
+            for (int ik = 0; ik < 3; ++ik) 
+            {
+                atom->taud[ia][ik] += posd_in[3 * iat + ik];
+                atom->dis[ia][ik] = posd_in[3 * iat + ik];
+            }
+            iat++;
+        }
+    }
+    assert(iat == nat);
+    periodic_boundary_adjustment(atoms,lat.latvec,ntype);
+    bcast_atoms_tau(atoms, ntype);
+}
+
+
 void periodic_boundary_adjustment(Atom* atoms,
                                   const ModuleBase::Matrix3& latvec,
                                   const int ntype) 
@@ -384,12 +410,6 @@ void periodic_boundary_adjustment(Atom* atoms,
     // first adjust direct coordinates,
     // then update them into cartesian coordinates,
     //----------------------------------------------
-    for (int i=0;i<ntype;i++) {
-        Atom* atom = &atoms[i];
-        for (int j=0;j<atom->na;j++) {
-            printf("the taud is %f %f %f\n",atom->taud[j].x,atom->taud[j].y,atom->taud[j].z);
-        }
-    }
     for (int it = 0; it < ntype; it++) {
         Atom* atom = &atoms[it];
         for (int ia = 0; ia < atom->na; ia++) {

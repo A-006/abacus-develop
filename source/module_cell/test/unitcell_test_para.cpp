@@ -167,7 +167,8 @@ TEST_F(UcellTest, UpdatePosTaud)
         ucell->iat2iait(iat, &ia, &it);
         tmp[iat] = ucell->atoms[it].taud[ia];
     }
-    ucell->update_pos_taud(pos_in);
+    unitcell::update_pos_taud(ucell->lat,pos_in,ucell->ntype,
+                              ucell->nat,ucell->atoms);
     for (int iat = 0; iat < ucell->nat; ++iat)
     {
         int it, ia;

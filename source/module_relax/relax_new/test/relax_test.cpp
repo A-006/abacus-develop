@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include <iomanip>
 #define private public
 #include "module_parameter/parameter.h"
 #undef private
@@ -27,13 +28,13 @@ class Test_SETGRAD : public testing::Test
             force_in.create(nat,3);
             stress_in.create(3,3);
 
-            force_in(0,0) = 1; force_in(0,1) = 2; force_in(0,2)= 3;
-            force_in(1,0) = 4; force_in(1,1) = 5; force_in(1,2)= 6;
-            force_in(2,0) = 7; force_in(2,1) = 8; force_in(2,2)= 9;
+            force_in(0,0) = 0.1; force_in(0,1) = 0.1; force_in(0,2)= 0.1;
+            force_in(1,0) = 0; force_in(1,1) = 0.1; force_in(1,2)= 0.1;
+            force_in(2,0) = 0; force_in(2,1) = 0; force_in(2,2)= 0.1;
 
-            stress_in(0,0) = 1; stress_in(0,1) = 2; stress_in(0,2)= 3;
-            stress_in(1,0) = 4; stress_in(1,1) = 5; stress_in(1,2)= 6;
-            stress_in(2,0) = 7; stress_in(2,1) = 8; stress_in(2,2)= 9;
+            stress_in(0,0) = 1; stress_in(0,1) = 1; stress_in(0,2)= 1;
+            stress_in(1,0) = 0; stress_in(1,1) = 1; stress_in(1,2)= 1;
+            stress_in(2,0) = 0; stress_in(2,1) = 0; stress_in(2,2)= 1;
 
             ucell.ntype = 1;
             ucell.nat = nat;
@@ -46,6 +47,8 @@ class Test_SETGRAD : public testing::Test
             ucell.iat2ia = new int[nat];
             ucell.atoms[0].mbl.resize(nat);
             ucell.atoms[0].taud.resize(nat);
+            ucell.atoms[0].tau.resize(nat);
+            ucell.atoms[0].dis.resize(nat);
             ucell.lc = new int[3];
 
             ucell.iat2it[0] = 0;
@@ -136,14 +139,25 @@ TEST_F(Test_SETGRAD, relax_new)
 {
     std::vector<double> result_ref = 
     {
-        0,0,0.1709672056,0,0.2849453427,0,0.3989234797,0,0,1.005319517,
-        0.01063903455,0.01595855183,0.0212780691,1.026597586,0.03191710366,
-        0.03723662093,0.04255613821,1.047875655,1.059181731,0,0,0,1.059181731,
-        0,0,0,1.059181731,1.034363264,0.01301504537,0.01952256806,
-        0.02603009074,1.060393355,0.03904513611,0.0455526588,0.05206018148,
-        1.086423445,1,0,0,0,1,0,0,0,1
+        0,           0,            0.24293434145, 
+        0,           0.242934341453,           0,
+        0,           0,           0,
+        //paramter for taud
+        1.2267616333,0.2267616333,0.22676163333, 
+        0,            1.2267616333 ,0.2267616333,
+        0,            0,           1.22676163333,
+        // paramter for fisrt time after relaxation
+        1.3677603495, 0,            0,
+        0,            1.36776034956, 0,
+        0,            0,            1.36776034956,
+        // paramter for second time after relaxation
+        1.3677603495  ,0.3633367476,0.36333674766,
+        0,            1.3677603495 ,0.36333674766,
+        0,            0,            1.3677603495 ,
+        // paramter for third time after relaxation
+        1,0,0,0,1,0,0,0,1
+        // paramter for fourth time after relaxation
     };
-
     for(int i=0;i<result.size();i++)
     {
         EXPECT_NEAR(result[i],result_ref[i],1e-8);
@@ -258,6 +272,7 @@ class Test_RELAX : public testing::Test
                 ucell.atoms[i].mbl.resize(na);
                 ucell.atoms[i].taud.resize(na);
                 ucell.atoms[i].tau.resize(na);
+                ucell.atoms[i].dis.resize(na);
                 for (int j=0;j<na;j++)
                 {
                     ucell.atoms[i].mbl[j] = {1,1,1};
@@ -291,7 +306,6 @@ TEST_F(Test_RELAX, relax_new)
     int size = 1584;
     double tmp;
     std::ifstream result_ref("./support/result_ref.txt");
-
     for(int i=0;i<size;i++)
     {
         result_ref >> tmp;
