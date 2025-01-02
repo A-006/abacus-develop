@@ -73,6 +73,11 @@ namespace unitcell
      * @param nat: the number of atoms [in]
      * @param atoms: the atoms to be updated [out]
      */
+     void update_pos_taud(const Lattice& lat,
+                          const ModuleBase::Vector3<double>* posd_in,
+                          const int ntype,
+                          const int nat,
+                          Atom* atoms);
 }
 //
 #endif // UPDATE_CELL_H
