@@ -314,18 +314,6 @@ std::vector<ModuleBase::Vector3<int>> UnitCell::get_constrain() const
 	return constrain;
 }
 
-void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {
-    int iat = 0;
-    for (int it = 0; it < this->ntype; ++it) {
-        Atom* atom = &this->atoms[it];
-        for (int ia = 0; ia < atom->na; ++ia) {
-            this->atoms[it].vel[ia] = vel_in[iat];
-            ++iat;
-        }
-    }
-    assert(iat == this->nat);
-}
-
 //==============================================================
 // Calculate various lattice related quantities for given latvec
 //==============================================================

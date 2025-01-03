@@ -73,11 +73,23 @@ namespace unitcell
      * @param nat: the number of atoms [in]
      * @param atoms: the atoms to be updated [out]
      */
-     void update_pos_taud(const Lattice& lat,
-                          const ModuleBase::Vector3<double>* posd_in,
-                          const int ntype,
-                          const int nat,
-                          Atom* atoms);
+    void update_pos_taud(const Lattice& lat,
+                         const ModuleBase::Vector3<double>* posd_in,
+                         const int ntype,
+                         const int nat,
+                         Atom* atoms);
+    /**
+     * @brief update the velocity of the atoms
+     * 
+     * @param vel_in: the velocity of the atoms [in]
+     * @param ntype: the number of types of the atoms [in]
+     * @param nat: the number of atoms [in]
+     * @param atoms: the atoms to be updated [out]
+    */
+    void update_vel(const ModuleBase::Vector3<double>* vel_in,
+                    const int ntype,
+                    const int nat,
+                    Atom* atoms);
 }
 //
 #endif // UPDATE_CELL_H

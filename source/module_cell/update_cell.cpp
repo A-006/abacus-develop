@@ -425,6 +425,24 @@ void update_pos_taud(const Lattice& lat,
     bcast_atoms_tau(atoms, ntype);
 }
 
+void update_vel(const ModuleBase::Vector3<double>* vel_in,
+                const int ntype,
+                const int nat,
+                Atom* atoms) 
+{
+    int iat = 0;
+    for (int it = 0; it < ntype; ++it) 
+    {
+        Atom* atom = &atoms[it];
+        for (int ia = 0; ia < atom->na; ++ia) 
+        {
+            atoms[it].vel[ia] = vel_in[iat];
+            ++iat;
+        }
+    }
+    assert(iat == nat);
+}
+
 void periodic_boundary_adjustment(Atom* atoms,
                                   const ModuleBase::Matrix3& latvec,
                                   const int ntype) 

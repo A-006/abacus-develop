@@ -34,7 +34,6 @@ bool UnitCell::read_atom_positions(std::ifstream& ifpos,
     return true;
 }
 
-void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {}
 bool UnitCell::judge_big_cell() const { return true; }
 void UnitCell::update_stress(ModuleBase::matrix& scs) {}
 void UnitCell::update_force(ModuleBase::matrix& fcs) {}
