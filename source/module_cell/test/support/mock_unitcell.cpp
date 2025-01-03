@@ -36,7 +36,7 @@ bool UnitCell::read_atom_positions(std::ifstream& ifpos,
 void UnitCell::update_pos_taud(double* posd_in) {}
 void UnitCell::update_pos_taud(const ModuleBase::Vector3<double>* posd_in) {}
 void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {}
-void UnitCell::bcast_atoms_tau() {}
+void UnitCell::bcast_atoms() {}
 bool UnitCell::judge_big_cell() const { return true; }
 void UnitCell::update_stress(ModuleBase::matrix& scs) {}
 void UnitCell::update_force(ModuleBase::matrix& fcs) {}

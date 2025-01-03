@@ -3,7 +3,7 @@
 #include "module_parameter/parameter.h"
 namespace unitcell
 {
-    void bcast_atoms_tau(Atom* atoms,
+    void bcast_atoms(Atom* atoms,
                          const int ntype)
     {
     #ifdef __MPI
@@ -83,7 +83,7 @@ namespace unitcell
     
         bcast_Lattice(ucell.lat);
         bcast_magnetism(ucell.magnet,ntype);
-        bcast_atoms_tau(ucell.atoms,ntype);
+        bcast_atoms(ucell.atoms,ntype);
 
         if(ucell.orbital_fn == nullptr)
         {

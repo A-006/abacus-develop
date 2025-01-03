@@ -232,7 +232,7 @@ void UnitCell::update_pos_taud(double* posd_in) {
     }
     assert(iat == this->nat);
     unitcell::periodic_boundary_adjustment(this->atoms,this->latvec, this->ntype);
-    this->bcast_atoms_tau();
+    this->bcast_atoms();
 }
 
 // posd_in is atomic displacements here  liuyu 2023-03-22
@@ -250,7 +250,7 @@ void UnitCell::update_pos_taud(const ModuleBase::Vector3<double>* posd_in) {
     }
     assert(iat == this->nat);
     unitcell::periodic_boundary_adjustment(this->atoms,this->latvec, this->ntype);
-    this->bcast_atoms_tau();
+    this->bcast_atoms();
 }
 
 void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {
@@ -266,7 +266,7 @@ void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {
 }
 
 
-void UnitCell::bcast_atoms_tau() {
+void UnitCell::bcast_atoms() {
 #ifdef __MPI
     MPI_Barrier(MPI_COMM_WORLD);
     for (int i = 0; i < ntype; i++) {

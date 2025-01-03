@@ -47,7 +47,7 @@ Magnetism::~Magnetism()
  *   - UpdatePosTaud
  *     - update_pos_tau(double* pos)
  *     - update_pos_taud(const double* pos)
- *     - bcast_atoms_tau() is also called in the above function, which calls Atom::bcast_atom with many
+ *     - bcast_atoms() is also called in the above function, which calls Atom::bcast_atom with many
  *       atomic info in addition to tau
  *   - BcastUnitcell
  *     - bcast basic info of unitcell and basic info of atoms

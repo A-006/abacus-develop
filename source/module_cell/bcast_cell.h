@@ -10,7 +10,7 @@ namespace unitcell
      * @param atoms: the atoms to be broadcasted [in/out]
      * @param ntype: the number of types of the atoms [in]
      */
-    void bcast_atoms_tau(Atom* atoms,
+    void bcast_atoms(Atom* atoms,
                          const int ntype);
     /**
      * @brief broadcast the lattice

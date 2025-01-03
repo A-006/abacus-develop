@@ -371,7 +371,7 @@ void update_pos_tau(const Lattice& lat,
     }
     assert(iat == nat);
     periodic_boundary_adjustment(atoms,lat.latvec,ntype);
-    bcast_atoms_tau(atoms, ntype);
+    bcast_atoms(atoms, ntype);
 }
 
 void periodic_boundary_adjustment(Atom* atoms,
