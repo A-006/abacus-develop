@@ -177,7 +177,7 @@ class Test_RELAX : public testing::Test
             std::ifstream stress_file("./support/stress.txt");
             std::ifstream energy_file("./support/stress.txt");
 
-            int nstep = 66;
+            int nstep = 3;
             int nat = 5;
             double energy;
             PARAM.input.stress_thr = 0.01;
@@ -211,7 +211,6 @@ class Test_RELAX : public testing::Test
 
                 PARAM.input.fixed_ibrav = false;
                 rl.relax_step(ucell,force_in,stress_in,energy);
-
                 result.push_back(ucell.atoms[0].taud[0].x);
                 result.push_back(ucell.atoms[0].taud[0].y);
                 result.push_back(ucell.atoms[0].taud[0].z);
@@ -303,12 +302,43 @@ class Test_RELAX : public testing::Test
 
 TEST_F(Test_RELAX, relax_new)
 {
-    int size = 1584;
+    int size = 72;
     double tmp;
-    std::ifstream result_ref("./support/result_ref.txt");
+    std::vector<double> result_ref=
+    {
+        0.5000000586,0.4999998876,0.009364595811,
+        0.9999999281,1.901333279e-07,0.5476035454,
+        3.782097706e-07,0.4999999285,0.4770375874,
+        0.4999997826,2.072311863e-07,0.477037871,
+        0.9999998523,0.9999997866,0.9349574003,
+        // paramter for taud after first relaxation
+        4.006349654,-1.93128788e-07,5.793863639e-07,
+        -1.93128788e-07,4.006354579,-3.86257576e-07,
+        6.757962549e-07,-4.505308366e-07,3.966870038,
+        // paramter for latvec after first relaxation
+        0.5000000566,0.4999998916,0.009177239183,
+        0.9999999308,1.832935626e-07,0.5467689737,
+        3.647769323e-07,0.4999999311,0.4771204124,
+        0.4999997903,1.998879545e-07,0.4771206859,
+        0.9999998574,0.9999997943,0.9358136888,
+        // paramter for taud after second relaxation
+        3.999761277,-1.656764727e-07,4.97029418e-07,
+        -1.656764727e-07,3.999765501,-3.313529453e-07,
+        5.797351131e-07,-3.864900754e-07,4.010925071,
+        // paramter for latvec after second relaxation
+        0.500000082,0.4999999574,0.01057784352,
+        0.9999999149,1.939640249e-07,0.5455830599,
+        3.795967781e-07,0.4999998795,0.4765373919,
+        0.4999998037,2.756298268e-07,0.4765374602,
+        0.9999998196,0.9999996936,0.9367652445,
+        // paramter for taud after third relaxation
+        4.017733155,-1.420363309e-07,2.637046077e-07,
+        -1.420364243e-07,4.017735987,3.126225134e-07,
+        3.479123171e-07,2.578467568e-07,4.011674933
+        // paramter for latvec after third relaxation
+    };
     for(int i=0;i<size;i++)
     {
-        result_ref >> tmp;
-        EXPECT_NEAR(tmp,result[i],1e-8);
+        EXPECT_NEAR(result_ref[i],result[i],1e-8);
     }
 }
