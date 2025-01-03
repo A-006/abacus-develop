@@ -1,6 +1,8 @@
 #ifndef ELECSTATE_LCAO_CAL_TAU_H
 #define ELECSTATE_LCAO_CAL_TAU_H
-
+#include "module_elecstate/module_charge/charge.h"
+#include "module_hamilt_lcao/module_gint/gint_gamma.h"
+#include "module_hamilt_lcao/module_gint/gint_k.h"
 namespace elecstate
 {
 

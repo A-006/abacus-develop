@@ -65,7 +65,7 @@ void ElecStateLCAO<std::complex<double>>::psiToRho(const psi::Psi<std::complex<d
 
     if (XC_Functional::get_func_type() == 3 || XC_Functional::get_func_type() == 5)
     {
-        elecstate::cal_tau_k(gint_k, this->charge);
+        elecstate::lcao_cal_tau_k(gint_k, this->charge);
     }
 
     this->charge->renormalize_rho();
