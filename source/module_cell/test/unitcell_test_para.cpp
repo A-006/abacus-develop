@@ -113,6 +113,39 @@ TEST_F(UcellTest, BcastUnitcell)
         EXPECT_EQ(atom_labels[1], atom_type2_expected);
     }
 }
+TEST_F(UcellTest, BcastLattice)
+{
+    unitcell::bcast_Lattice(ucell->lat);
+    if (GlobalV::MY_RANK != 0)
+    {
+        EXPECT_EQ(ucell->Coordinate, "Direct");
+        EXPECT_DOUBLE_EQ(ucell->a1.x, 10.0);
+        EXPECT_EQ(ucell->atoms[0].na, 1);
+        EXPECT_EQ(ucell->atoms[1].na, 2);
+        /// this is to ensure all processes have the atom label info
+        auto atom_labels = ucell->get_atomLabels();
+        std::string atom_type1_expected = "C";
+        std::string atom_type2_expected = "H";
+        EXPECT_EQ(atom_labels[0], atom_type1_expected);
+        EXPECT_EQ(atom_labels[1], atom_type2_expected);
+    }
+}
+
+TEST_F(UcellTest, BcastMagnitism)
+{
+    unitcell::bcast_magnetism(ucell->magnet, ucell->ntype);
+    PARAM.input.nspin = 4;
+    if (GlobalV::MY_RANK != 0)
+    {
+        EXPECT_DOUBLE_EQ(ucell->magnet.start_magnetization[0], 0.0);
+        EXPECT_DOUBLE_EQ(ucell->magnet.start_magnetization[1], 0.0);
+        for (int i = 0; i < 3; ++i)
+        {
+            EXPECT_DOUBLE_EQ(ucell->magnet.ux_[i], 0.0);
+        }
+    }
+}
+
 TEST_F(UcellTest, UpdatePosTau)
 {
     double* pos_in = new double[ucell->nat * 3];

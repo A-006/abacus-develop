@@ -13,6 +13,7 @@ namespace unitcell
         }
     #endif
     }
+
     void bcast_Lattice(Lattice& lat)
     {
     #ifdef __MPI
@@ -62,6 +63,7 @@ namespace unitcell
         // distribute Change the lattice vectors or not
     #endif
     }
+    
     void bcast_magnetism(Magnetism& magnet, const int ntype)
     {
     #ifdef __MPI
