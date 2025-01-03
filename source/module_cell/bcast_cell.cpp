@@ -1,6 +1,10 @@
 #include "unitcell.h"   
 #include "module_base/parallel_common.h"
 #include "module_parameter/parameter.h"
+#ifdef __EXX
+#include "module_ri/serialization_cereal.h"
+#include "module_hamilt_pw/hamilt_pwdft/global.h"
+#endif
 namespace unitcell
 {
     void bcast_atoms(Atom* atoms,
