@@ -216,10 +216,6 @@ class UnitCell {
     std::string* orbital_fn = nullptr;  // filenames of orbitals, liuyu add 2022-10-19
     std::string  descriptor_file; // filenames of descriptor_file, liuyu add 2023-04-06
 
-#ifdef __MPI
-    void bcast_unitcell2();
-#endif
-
     void set_iat2itia();
 
     void setup_cell(const std::string& fn, std::ofstream& log);

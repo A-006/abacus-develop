@@ -94,23 +94,11 @@ class UcellTest : public ::testing::Test
 };
 
 #ifdef __MPI
-TEST_F(UcellTest, BcastUnitcell2)
-{
-    elecstate::read_cell_pseudopots(pp_dir, ofs, *ucell);
-    ucell->bcast_unitcell2();
-    if (GlobalV::MY_RANK != 0)
-    {
-        EXPECT_EQ(ucell->atoms[0].ncpp.nbeta, 4);
-        EXPECT_EQ(ucell->atoms[0].ncpp.nchi, 2);
-        EXPECT_EQ(ucell->atoms[1].ncpp.nbeta, 3);
-        EXPECT_EQ(ucell->atoms[1].ncpp.nchi, 1);
-    }
-}
 
 TEST_F(UcellTest, BcastUnitcell)
 {
     PARAM.input.nspin = 4;
-    bcast_unitcell(*ucell);
+    unitcell::bcast_unitcell(*ucell);
     if (GlobalV::MY_RANK != 0)
     {
         EXPECT_EQ(ucell->Coordinate, "Direct");
@@ -204,7 +192,6 @@ TEST_F(UcellTest, ReadPseudo)
         EXPECT_EQ(error2, 0);
     }
     // read_cell_pseudopots
-    // bcast_unitcell2
     EXPECT_FALSE(ucell->atoms[0].ncpp.has_so);
     EXPECT_FALSE(ucell->atoms[1].ncpp.has_so);
     EXPECT_EQ(ucell->atoms[0].ncpp.nbeta, 4);

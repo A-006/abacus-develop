@@ -45,16 +45,6 @@ UnitCell::~UnitCell() {
     }
 }
 
-#include "module_base/parallel_common.h"
-#ifdef __MPI
-
-void UnitCell::bcast_unitcell2() {
-    for (int i = 0; i < ntype; i++) {
-        atoms[i].bcast_atom2();
-    }
-    return;
-}
-#endif
 
 void UnitCell::print_cell(std::ofstream& ofs) const {
 
