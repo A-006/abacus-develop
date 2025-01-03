@@ -927,8 +927,9 @@ void ESolver_KS_LCAO<TK, TR>::after_scf(UnitCell& ucell, const int istep)
     // 1) calculate the kinetic energy density tau, sunliang 2024-09-18
     if (PARAM.inp.out_elf[0] > 0)
     {
-        assert(this->psi != nullptr);
-        this->pelec->cal_tau(*(this->psi));
+        elecstate::lcao_cal_tau<double>(this->GK, 
+                                        this->GG,
+                                        this->pelec->charge);
     }
 
     //! 2) call after_scf() of ESolver_KS

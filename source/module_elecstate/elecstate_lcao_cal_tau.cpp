@@ -6,7 +6,7 @@ namespace elecstate
 {
 
 // calculate the kinetic energy density tau, multi-k case
-void cal_tau_k(Gint_k& gint_k, 
+void lcao_cal_tau_k(Gint_k* gint_k, 
                Charge* charge)
 {
     ModuleBase::timer::tick("ElecStateLCAO", "cal_tau");
@@ -23,8 +23,8 @@ void cal_tau_k(Gint_k& gint_k,
 }
 
 // calculate the kinetic energy density tau, gamma-only case
-void cal_tau_gamma(Gint_Gamma& gint_gamma,
-                   Charge& charge)
+void lcao_cal_tau_gamma(Gint_Gamma* gint_gamma,
+                        Charge* charge)
 {
     ModuleBase::timer::tick("ElecStateLCAO", "cal_tau");
 
@@ -38,4 +38,20 @@ void cal_tau_gamma(Gint_Gamma& gint_gamma,
     ModuleBase::timer::tick("ElecStateLCAO", "cal_tau");
     return;
 }
+template <double> 
+void lcao_cal_tau(Gint_Gamma* gint_gamma, 
+                  Gint_k* gint_k, 
+                  Charge* charge)
+{
+    lcao_cal_tau_gamma(gint_gamma, charge);
 }
+template <complex<double>> 
+void lcao_cal_tau(Gint_Gamma* gint_gamma, 
+                    Gint_k* gint_k, 
+                    Charge* charge,
+                    const std::complex<double>* flag)
+{
+    lcao_cal_tau_k(gint_k, charge);
+}
+
+} // namespace elecstate
