@@ -41,7 +41,6 @@ bool UnitCell::judge_big_cell() const { return true; }
 void UnitCell::update_stress(ModuleBase::matrix& scs) {}
 void UnitCell::update_force(ModuleBase::matrix& fcs) {}
 #ifdef __MPI
-void UnitCell::bcast_unitcell() {}
 void UnitCell::bcast_unitcell2() {}
 #endif
 void UnitCell::set_iat2itia() {}

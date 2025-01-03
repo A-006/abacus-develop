@@ -110,7 +110,7 @@ TEST_F(UcellTest, BcastUnitcell2)
 TEST_F(UcellTest, BcastUnitcell)
 {
     PARAM.input.nspin = 4;
-    ucell->bcast_unitcell();
+    bcast_unitcell(*ucell);
     if (GlobalV::MY_RANK != 0)
     {
         EXPECT_EQ(ucell->Coordinate, "Direct");

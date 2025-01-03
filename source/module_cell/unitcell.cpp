@@ -7,6 +7,7 @@
 #include "module_base/global_function.h"
 #include "module_base/global_variable.h"
 #include "unitcell.h"
+#include "bcast_cell.h"
 #include "module_parameter/parameter.h"
 
 #ifdef __LCAO
@@ -30,9 +31,6 @@
 
 #include "update_cell.h"
 UnitCell::UnitCell() {
-    if (test_unitcell) {
-        ModuleBase::TITLE("unitcell", "Constructor");
-}
     itia2iat.create(1, 1);
 }
 
@@ -49,87 +47,6 @@ UnitCell::~UnitCell() {
 
 #include "module_base/parallel_common.h"
 #ifdef __MPI
-void UnitCell::bcast_unitcell() {
-    if (test_unitcell) {
-        ModuleBase::TITLE("UnitCell", "bcast_unitcell");
-}
-    Parallel_Common::bcast_string(Coordinate);
-    Parallel_Common::bcast_int(nat);
-
-    Parallel_Common::bcast_double(lat0);
-    Parallel_Common::bcast_double(lat0_angstrom);
-    Parallel_Common::bcast_double(tpiba);
-    Parallel_Common::bcast_double(tpiba2);
-
-    // distribute lattice vectors.
-    Parallel_Common::bcast_double(latvec.e11);
-    Parallel_Common::bcast_double(latvec.e12);
-    Parallel_Common::bcast_double(latvec.e13);
-    Parallel_Common::bcast_double(latvec.e21);
-    Parallel_Common::bcast_double(latvec.e22);
-    Parallel_Common::bcast_double(latvec.e23);
-    Parallel_Common::bcast_double(latvec.e31);
-    Parallel_Common::bcast_double(latvec.e32);
-    Parallel_Common::bcast_double(latvec.e33);
-
-    Parallel_Common::bcast_int(lc[0]);
-    Parallel_Common::bcast_int(lc[1]);
-    Parallel_Common::bcast_int(lc[2]);
-
-    if(this->orbital_fn == nullptr)
-    {
-        this->orbital_fn = new std::string[ntype];
-    }
-    for (int i = 0; i < ntype; i++)
-    {
-        Parallel_Common::bcast_string(orbital_fn[i]);
-    }
-
-    // distribute lattice vectors.
-    Parallel_Common::bcast_double(a1.x);
-    Parallel_Common::bcast_double(a1.y);
-    Parallel_Common::bcast_double(a1.z);
-    Parallel_Common::bcast_double(a2.x);
-    Parallel_Common::bcast_double(a2.y);
-    Parallel_Common::bcast_double(a2.z);
-    Parallel_Common::bcast_double(a3.x);
-    Parallel_Common::bcast_double(a3.y);
-    Parallel_Common::bcast_double(a3.z);
-
-    // distribute latcenter
-    Parallel_Common::bcast_double(latcenter.x);
-    Parallel_Common::bcast_double(latcenter.y);
-    Parallel_Common::bcast_double(latcenter.z);
-
-    // distribute superlattice vectors.
-    Parallel_Common::bcast_double(latvec_supercell.e11);
-    Parallel_Common::bcast_double(latvec_supercell.e12);
-    Parallel_Common::bcast_double(latvec_supercell.e13);
-    Parallel_Common::bcast_double(latvec_supercell.e21);
-    Parallel_Common::bcast_double(latvec_supercell.e22);
-    Parallel_Common::bcast_double(latvec_supercell.e23);
-    Parallel_Common::bcast_double(latvec_supercell.e31);
-    Parallel_Common::bcast_double(latvec_supercell.e32);
-    Parallel_Common::bcast_double(latvec_supercell.e33);
-    Parallel_Common::bcast_double(magnet.start_magnetization, ntype);
-
-    if (PARAM.inp.nspin == 4) {
-        Parallel_Common::bcast_double(magnet.ux_[0]);
-        Parallel_Common::bcast_double(magnet.ux_[1]);
-        Parallel_Common::bcast_double(magnet.ux_[2]);
-    }
-
-    for (int i = 0; i < ntype; i++) {
-        atoms[i].bcast_atom(); // init tau and mbl array
-    }
-
-#ifdef __EXX
-    ModuleBase::bcast_data_cereal(GlobalC::exx_info.info_ri.files_abfs,
-                                  MPI_COMM_WORLD,
-                                  0);
-#endif
-    return;
-}
 
 void UnitCell::bcast_unitcell2() {
     for (int i = 0; i < ntype; i++) {
@@ -140,9 +57,6 @@ void UnitCell::bcast_unitcell2() {
 #endif
 
 void UnitCell::print_cell(std::ofstream& ofs) const {
-    if (test_unitcell) {
-        ModuleBase::TITLE("UnitCell", "print_cell");
-}
 
     ModuleBase::GlobalFunc::OUT(ofs, "print_unitcell()");
 
@@ -166,8 +80,6 @@ void UnitCell::print_cell(std::ofstream& ofs) const {
 /*
 void UnitCell::print_cell_xyz(const std::string& fn) const
 {
-    if (test_unitcell)
-        ModuleBase::TITLE("UnitCell", "print_cell_xyz");
 
     if (GlobalV::MY_RANK != 0)
         return; // xiaohui add 2015-03-15
@@ -473,7 +385,7 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
     }
 
 #ifdef __MPI
-    this->bcast_unitcell();
+    unitcell::bcast_unitcell(*this);
 #endif
 
     //========================================================

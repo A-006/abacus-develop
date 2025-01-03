@@ -78,7 +78,6 @@ class UnitCell {
   private:
     std::vector<int> iat2iwt; // iat ==> iwt, the first global index for orbital of this atom
     int npol = 1; // number of spin polarizations, initialized in set_iat2iwt
-    const int test_unitcell = 0;
                   // ----------------- END of iat2iwt part -----------------
 
   public:
@@ -215,11 +214,9 @@ class UnitCell {
     std::string* pseudo_type = new std::string[1]; // pseudopotential types for each elements,
                                                    // sunliang added 2022-09-15.
     std::string* orbital_fn = nullptr;  // filenames of orbitals, liuyu add 2022-10-19
-    std::string
-        descriptor_file; // filenames of descriptor_file, liuyu add 2023-04-06
+    std::string  descriptor_file; // filenames of descriptor_file, liuyu add 2023-04-06
 
 #ifdef __MPI
-    void bcast_unitcell();
     void bcast_unitcell2();
 #endif
 
