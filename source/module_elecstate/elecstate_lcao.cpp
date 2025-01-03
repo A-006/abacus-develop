@@ -8,6 +8,7 @@
 #include "module_hamilt_lcao/module_gint/grid_technique.h"
 #include "module_hamilt_pw/hamilt_pwdft/global.h"
 #include "module_parameter/parameter.h"
+#include "elecstate_lcao_cal_tau.h"
 
 #include <vector>
 
