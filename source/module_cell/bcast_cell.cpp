@@ -7,13 +7,24 @@
 #endif
 namespace unitcell
 {
-    void bcast_atoms(Atom* atoms,
+    void bcast_atoms_tau(Atom* atoms,
                          const int ntype)
     {
     #ifdef __MPI
         MPI_Barrier(MPI_COMM_WORLD);
         for (int i = 0; i < ntype; i++) {
             atoms[i].bcast_atom(); // bcast tau array
+        }
+    #endif
+    }
+    
+    void bcast_atoms_ncpp_pesudo(Atom* atoms,
+                                 const int ntype)
+    {
+    #ifndef __MPI
+        for (int i = 0; i < ntype; i++) 
+        {
+            atoms[i].bcast_atom2();
         }
     #endif
     }
@@ -86,10 +97,10 @@ namespace unitcell
     #ifdef __MPI
         const int ntype = ucell.ntype;
         Parallel_Common::bcast_int(ucell.nat);
-    
+        
         bcast_Lattice(ucell.lat);
         bcast_magnetism(ucell.magnet,ntype);
-        bcast_atoms(ucell.atoms,ntype);
+        bcast_atoms_tau(ucell.atoms,ntype);
 
         if(ucell.orbital_fn == nullptr)
         {

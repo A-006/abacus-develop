@@ -146,7 +146,7 @@ void Atom::bcast_atom()
     return;
 }
 
-void Atom::bcast_atom2()
+void Atom::bcast_atom_()
 {
     this->ncpp.bcast_atom_pseudo();
 }

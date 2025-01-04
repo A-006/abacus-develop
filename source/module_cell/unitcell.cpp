@@ -23,10 +23,6 @@
 #ifdef USE_PAW
 #include "module_cell/module_paw/paw_cell.h"
 #endif
-#ifdef __EXX
-#include "module_hamilt_pw/hamilt_pwdft/global.h"
-#include "module_ri/serialization_cereal.h"
-#endif
 
 
 #include "update_cell.h"
@@ -232,7 +228,7 @@ void UnitCell::update_pos_taud(double* posd_in) {
     }
     assert(iat == this->nat);
     unitcell::periodic_boundary_adjustment(this->atoms,this->latvec, this->ntype);
-    this->bcast_atoms();
+    this->bcast_atoms_tau();
 }
 
 // posd_in is atomic displacements here  liuyu 2023-03-22
@@ -250,7 +246,7 @@ void UnitCell::update_pos_taud(const ModuleBase::Vector3<double>* posd_in) {
     }
     assert(iat == this->nat);
     unitcell::periodic_boundary_adjustment(this->atoms,this->latvec, this->ntype);
-    this->bcast_atoms();
+    this->bcast_atoms_tau();
 }
 
 void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {
@@ -266,7 +262,7 @@ void UnitCell::update_vel(const ModuleBase::Vector3<double>* vel_in) {
 }
 
 
-void UnitCell::bcast_atoms() {
+void UnitCell::bcast_atoms_tau() {
 #ifdef __MPI
     MPI_Barrier(MPI_COMM_WORLD);
     for (int i = 0; i < ntype; i++) {
