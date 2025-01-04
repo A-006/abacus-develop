@@ -18,7 +18,7 @@ namespace unitcell
     #endif
     }
     
-    void bcast_atoms_ncpp_pesudo(Atom* atoms,
+    void bcast_atoms_pseudo(Atom* atoms,
                                  const int ntype)
     {
     #ifndef __MPI
@@ -97,7 +97,7 @@ namespace unitcell
     #ifdef __MPI
         const int ntype = ucell.ntype;
         Parallel_Common::bcast_int(ucell.nat);
-        
+
         bcast_Lattice(ucell.lat);
         bcast_magnetism(ucell.magnet,ntype);
         bcast_atoms_tau(ucell.atoms,ntype);
