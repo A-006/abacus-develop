@@ -136,7 +136,7 @@ void read_pseudo(std::ofstream& ofs, UnitCell& ucell) {
     }
 
 #ifdef __MPI
-    unitcell::bcast_atoms_pseduo(ucell.atoms,ucell.ntype);
+    unitcell::bcast_atoms_pseudo(ucell.atoms,ucell.ntype);
 #endif
 
     for (int it = 0; it < ucell.ntype; it++) {

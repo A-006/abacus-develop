@@ -12,6 +12,7 @@ namespace unitcell
      */
     void bcast_atoms_tau(Atom* atoms,
                      const int ntype);
+                     
     /**
      * @brief broadcast the pseduo of the atoms
      * 

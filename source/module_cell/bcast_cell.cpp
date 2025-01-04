@@ -21,7 +21,8 @@ namespace unitcell
     void bcast_atoms_pseudo(Atom* atoms,
                                  const int ntype)
     {
-    #ifndef __MPI
+    #ifdef __MPI
+        MPI_Barrier(MPI_COMM_WORLD);
         for (int i = 0; i < ntype; i++) 
         {
             atoms[i].bcast_atom2();
@@ -32,6 +33,7 @@ namespace unitcell
     void bcast_Lattice(Lattice& lat)
     {
     #ifdef __MPI
+        MPI_Barrier(MPI_COMM_WORLD);
         // distribute lattice parameters.
         ModuleBase::Matrix3& latvec = lat.latvec;
         ModuleBase::Matrix3& latvec_supercell = lat.latvec_supercell;
@@ -82,6 +84,7 @@ namespace unitcell
     void bcast_magnetism(Magnetism& magnet, const int ntype)
     {
     #ifdef __MPI
+        MPI_Barrier(MPI_COMM_WORLD);
         Parallel_Common::bcast_double(magnet.start_magnetization, ntype);
         if (PARAM.inp.nspin == 4) 
         {
