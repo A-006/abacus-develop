@@ -64,7 +64,6 @@ void UnitCell::check_dtau() {}
 void UnitCell::cal_nwfc(std::ofstream& log) {}
 void UnitCell::cal_meshx() {}
 void UnitCell::cal_natomwfc(std::ofstream& log) {}
-bool UnitCell::check_tau() const { return true; }
 bool UnitCell::if_atoms_can_move() const { return true; }
 bool UnitCell::if_cell_can_change() const { return true; }
 void UnitCell::setup(const std::string& latname_in,

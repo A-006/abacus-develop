@@ -759,7 +759,7 @@ TEST_F(UcellTest, CheckTau)
     PARAM.input.relax_new = utp.relax_new;
     ucell = utp.SetUcellInfo();
     GlobalV::ofs_warning.open("checktau_warning");
-    ucell->check_tau();
+    check_tau(ucell->atoms ,ucell->ntype);
     GlobalV::ofs_warning.close();
     std::ifstream ifs;
     ifs.open("checktau_warning");
