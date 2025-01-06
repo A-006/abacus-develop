@@ -403,7 +403,8 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
             ok = false;
         }
 
-        if (ok) {
+        if (ok) 
+        {
             log << "\n\n\n\n";
             log << " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
                    ">>>>>>>>>>>>"
@@ -450,8 +451,11 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
             //========================
             // call read_atom_species
             //========================
-            const int error = unitcell::read_atom_species(ifa, log ,*this);
-
+            const bool read_atom_species = unitcell::read_atom_species(ifa, log ,*this);
+            //========================
+            // call read_lattice_constant
+            //========================
+            const bool read_lattice_constant = unitcell::read_lattice_constant(ifa, log ,this->lat);
             //==========================
             // call read_atom_positions
             //==========================

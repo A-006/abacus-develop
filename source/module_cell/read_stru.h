@@ -9,9 +9,12 @@ namespace unitcell
                    const int ntype,
                    const int lat0);
                    
-    int read_atom_species(std::ifstream& ifa,
+    bool read_atom_species(std::ifstream& ifa,
                           std::ofstream& ofs_running,
                           UnitCell& ucell); // read in the atom information for each type of atom
-
+    
+    bool read_lattice_constant(std::ifstream& ifa,
+                               std::ofstream& ofs_running,
+                               Lattice& lat);
 }
 #endif // READ_STRU_H
