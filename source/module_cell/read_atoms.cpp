@@ -1,5 +1,6 @@
 #include "unitcell.h"
 #include "module_parameter/parameter.h"
+#include "read_stru.h"
 #ifdef __LCAO
 #include "../module_basis/module_ao/ORB_read.h" // to use 'ORB' -- mohan 2021-01-30
 #endif
@@ -915,7 +916,7 @@ bool UnitCell::read_atom_positions(std::ifstream &ifpos, std::ofstream &ofs_runn
     //this->print_cell_xyz("STRU_READIN.xyz");
     this->check_dtau();
 
-    if (unitcell::check_tau(this->atoms, this->ntype))
+    if (unitcell::check_tau(this->atoms, this->ntype, this->lat0))
     {
         this->print_tau();
     //xiaohui modify 2015-03-15, cancel outputfile "STRU_READIN.xyz"

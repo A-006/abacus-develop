@@ -16,6 +16,7 @@ list(APPEND cell_simple_srcs
     ../unitcell.cpp
     ../update_cell.cpp
     ../bcast_cell.cpp
+    ../read_stru.cpp
     ../read_atoms.cpp
     ../atom_spec.cpp
     ../atom_pseudo.cpp

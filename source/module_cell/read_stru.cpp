@@ -5,7 +5,8 @@
 namespace unitcell
 {
     bool check_tau(const Atom* atoms,
-                   const int ntype) 
+                   const int ntype,
+                   const int lat0) 
     {
         ModuleBase::TITLE("UnitCell","check_tau");
         ModuleBase::timer::tick("UnitCell","check_tau");

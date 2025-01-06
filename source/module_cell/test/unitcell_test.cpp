@@ -7,6 +7,7 @@
 #include "module_elecstate/read_pseudo.h"
 
 #include "memory"
+#include "module_cell/read_stru.h"
 #include "module_base/global_variable.h"
 #include "module_base/mathzone.h"
 #include "prepare_unitcell.h"
@@ -759,7 +760,7 @@ TEST_F(UcellTest, CheckTau)
     PARAM.input.relax_new = utp.relax_new;
     ucell = utp.SetUcellInfo();
     GlobalV::ofs_warning.open("checktau_warning");
-    check_tau(ucell->atoms ,ucell->ntype);
+    unitcell::check_tau(ucell->atoms ,ucell->ntype, ucell->lat0);
     GlobalV::ofs_warning.close();
     std::ifstream ifs;
     ifs.open("checktau_warning");
