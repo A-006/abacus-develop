@@ -649,8 +649,8 @@ TEST_F(toQOTest, CalculateSelfOvlpRMinimal)
              PARAM.input.qo_screening_coeff);
     std::vector<ModuleBase::Vector3<double>> kvecs_d;
     kvecs_d.push_back(ModuleBase::Vector3<double>(0.0, 0.0, 0.0)); // Gamma point
-    ucell.orbital_fn.data()[0] = "Si_special_use_unittest.orb"; // generated in unittest BuildAo
-    ucell.orbital_fn.data()[1] = "C_special_use_unittest.orb"; // generated in unittest BuildAo
+    ucell.orbital_fn[0] = "Si_special_use_unittest.orb"; // generated in unittest BuildAo
+    ucell.orbital_fn[1] = "C_special_use_unittest.orb"; // generated in unittest BuildAo
     ucell.atoms[1].nwl = 1; // only s and p for C
     tqo.initialize(PARAM.sys.global_out_dir,
                    "",
@@ -718,8 +718,8 @@ TEST_F(toQOTest, CalculateSelfOvlpKSymmetrical)
              {"minimal-nodeless", "minimal-nodeless"},
              PARAM.input.qo_thr,
              PARAM.input.qo_screening_coeff);
-    ucell.orbital_fn.data()[0] = "Si_special_use_unittest.orb"; // generated in unittest BuildAo
-    ucell.orbital_fn.data()[1] = "C_special_use_unittest.orb"; // generated in unittest BuildAo
+    ucell.orbital_fn[0] = "Si_special_use_unittest.orb"; // generated in unittest BuildAo
+    ucell.orbital_fn[1] = "C_special_use_unittest.orb"; // generated in unittest BuildAo
     ucell.atoms[1].nwl = 1; // only s and p for C
 
     std::vector<ModuleBase::Vector3<double>> kvecs_d;
@@ -894,8 +894,8 @@ TEST_F(toQOTest, CalculateSelfOvlpRFull)
              PARAM.input.qo_screening_coeff);
     std::vector<ModuleBase::Vector3<double>> kvecs_d;
     kvecs_d.push_back(ModuleBase::Vector3<double>(0.0, 0.0, 0.0)); // Gamma point
-    ucell.orbital_fn.data()[0] = "Si_special_use_unittest.orb"; // generated in unittest BuildAo
-    ucell.orbital_fn.data()[1] = "C_special_use_unittest.orb"; // generated in unittest BuildAo
+    ucell.orbital_fn[0] = "Si_special_use_unittest.orb"; // generated in unittest BuildAo
+    ucell.orbital_fn[1] = "C_special_use_unittest.orb"; // generated in unittest BuildAo
     ucell.atoms[1].nwl = 1; // only s and p for C
     PARAM.input.qo_thr = 1e-10;
     tqo.initialize(PARAM.sys.global_out_dir,
