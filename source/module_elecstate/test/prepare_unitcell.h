@@ -189,7 +189,7 @@ public:
 		}
 		ucell->nat = this->natom.sum();
 		return ucell;
-	}
+	};
 };
 
 UcellTestPrepare::UcellTestPrepare(std::string latname_in,
