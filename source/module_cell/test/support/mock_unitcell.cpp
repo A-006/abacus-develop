@@ -24,10 +24,6 @@ UnitCell::~UnitCell() {
 }
 void UnitCell::print_cell(std::ofstream& ofs) const {}
 void UnitCell::print_cell_xyz(const std::string& fn) const {}
-int UnitCell::read_atom_species(std::ifstream& ifa,
-                                std::ofstream& ofs_running) {
-    return 0;
-}
 bool UnitCell::read_atom_positions(std::ifstream& ifpos,
                                    std::ofstream& ofs_running,
                                    std::ofstream& ofs_warning) {

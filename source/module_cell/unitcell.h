@@ -241,10 +241,6 @@ class UnitCell {
                        std::string& orb_file,
                        std::ofstream& ofs_running,
                        Atom* atom);
-    int read_atom_species(
-        std::ifstream& ifa,
-        std::ofstream&
-            ofs_running); // read in the atom information for each type of atom
     bool read_atom_positions(
         std::ifstream& ifpos,
         std::ofstream& ofs_running,

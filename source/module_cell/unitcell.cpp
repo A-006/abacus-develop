@@ -8,7 +8,7 @@
 #include "module_base/global_variable.h"
 #include "unitcell.h"
 #include "module_parameter/parameter.h"
-
+#include "read_stru.h"
 #ifdef __LCAO
 #include "../module_basis/module_ao/ORB_read.h" // to use 'ORB' -- mohan 2021-01-30
 #endif
@@ -397,13 +397,13 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
     if (GlobalV::MY_RANK == 0) {
         // open "atom_unitcell" file.
         std::ifstream ifa(fn.c_str(), std::ios::in);
-        if (!ifa) {
+        if (!ifa) 
+        {
             GlobalV::ofs_warning << fn;
             ok = false;
         }
 
         if (ok) {
-
             log << "\n\n\n\n";
             log << " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
                    ">>>>>>>>>>>>"
@@ -450,7 +450,7 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
             //========================
             // call read_atom_species
             //========================
-            const int error = this->read_atom_species(ifa, log);
+            const int error = unitcell::read_atom_species(ifa, log ,*this);
 
             //==========================
             // call read_atom_positions
