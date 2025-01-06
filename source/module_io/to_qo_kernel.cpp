@@ -80,7 +80,7 @@ void toQO::initialize(const std::string& out_dir,
     // build two-center overlap calculator
     overlap_calculator_ = std::unique_ptr<TwoCenterIntegrator>(new TwoCenterIntegrator);
     // build the numerical atomic orbital basis
-    build_nao(ntype_, orbital_dir_, p_ucell_->orbital_fn, iproc_);
+    build_nao(ntype_, orbital_dir_, p_ucell_->orbital_fn.data(), iproc_);
     // build another atomic orbital
     build_ao(ntype_, pseudo_dir_, p_ucell_->pseudo_fn, screening_coeffs_, qo_thr_, ofs_running, iproc_);
 

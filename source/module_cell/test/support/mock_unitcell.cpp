@@ -17,7 +17,6 @@ UnitCell::~UnitCell() {
     delete[] atom_mass;
     delete[] pseudo_fn;
     delete[] pseudo_type;
-    delete[] orbital_fn;
     if (set_atom_flag) {
         delete[] atoms;
     }

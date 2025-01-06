@@ -35,7 +35,6 @@ UnitCell::~UnitCell() {
     delete[] atom_mass;
     delete[] pseudo_fn;
     delete[] pseudo_type;
-    delete[] orbital_fn;
     if (set_atom_flag) {
         delete[] atoms;
     }
@@ -233,6 +232,7 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
     bool ok2 = true;
 
     // (3) read in atom information
+    orbital_fn.resize(ntype);
     if (GlobalV::MY_RANK == 0) {
         // open "atom_unitcell" file.
         std::ifstream ifa(fn.c_str(), std::ios::in);
@@ -728,8 +728,7 @@ void UnitCell::setup(const std::string& latname_in,
 
 
 void UnitCell::compare_atom_labels(std::string label1, std::string label2) {
-    if (label1
-        != label2) //'!( "Ag" == "Ag" || "47" == "47" || "Silver" == Silver" )'
+    if (label1!= label2) //'!( "Ag" == "Ag" || "47" == "47" || "Silver" == Silver" )'
     {
         atom_in ai;
         if (!(std::to_string(ai.atom_Z[label1]) == label2

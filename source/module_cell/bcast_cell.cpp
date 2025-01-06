@@ -105,10 +105,6 @@ namespace unitcell
         bcast_magnetism(ucell.magnet,ntype);
         bcast_atoms_tau(ucell.atoms,ntype);
 
-        if(ucell.orbital_fn == nullptr)
-        {
-            ucell.orbital_fn = new std::string[ntype];
-        }
         for (int i = 0; i < ntype; i++)
         {
             Parallel_Common::bcast_string(ucell.orbital_fn[i]);
