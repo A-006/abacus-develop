@@ -76,10 +76,10 @@ class UcellTestPrepare
         delete[] ucell.orbital_fn;
         delete[] ucell.magnet.start_magnetization; // mag set here
         
-        ucell->atom_label.resize(ucell->ntype);
-		ucell->atom_mass.resize(ucell->ntype);
-		ucell->pseudo_fn.resize(ucell->ntype);
-		ucell->pseudo_type.resize(ucell->ntype);
+        ucell.atom_label.resize(ucell.ntype);
+		ucell.atom_mass.resize(ucell.ntype);
+		ucell.pseudo_fn.resize(ucell.ntype);
+		ucell.pseudo_type.resize(ucell.ntype);
         ucell.orbital_fn = new std::string[ucell.ntype];
         ucell.magnet.start_magnetization = new double[ucell.ntype]; // mag set here
         ucell.magnet.ux_[0] = 0.0;                                  // ux_ set here
