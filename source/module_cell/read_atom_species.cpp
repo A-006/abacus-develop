@@ -33,7 +33,7 @@ bool read_atom_species(std::ifstream& ifa,
         {
             std::getline(ifa, one_line);
             ss << one_line;
-            ss >> ucell.atom_label[i] 
+            ss >> ucell.atom_label[i]; 
             ss >> ucell.atom_mass[i];
             ucell.pseudo_fn[i] = "auto";
             ucell.pseudo_type[i] = "auto";
@@ -103,7 +103,7 @@ bool read_atom_species(std::ifstream& ifa,
             ucell.descriptor_file = PARAM.inp.orbital_dir + ucell.orbital_fn[0];
         }
     }
-#ifdef (__LCAO) && (__MPI) && (__EXX)
+#if defined(__LCAO) && defined(__MPI) && defined(__EXX)
     // Peize Lin add 2016-09-23
     if( GlobalC::exx_info.info_global.cal_exx || PARAM.inp.rpa )
     {
