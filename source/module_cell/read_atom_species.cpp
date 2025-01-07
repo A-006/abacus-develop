@@ -15,15 +15,7 @@ bool read_atom_species(std::ifstream& ifa,
     ModuleBase::TITLE("UnitCell","read_atom_species");
     const int ntype = ucell.ntype;
     
-    delete[] ucell.atom_label;
-    delete[] ucell.atom_mass;
-    delete[] ucell.pseudo_fn;
-    delete[] ucell.pseudo_type;
     delete[] ucell.orbital_fn;
-    ucell.atom_mass  = new double[ntype]; //atom masses
-    ucell.atom_label = new std::string[ntype]; //atom labels
-    ucell.pseudo_fn  = new std::string[ntype]; //file name of pseudopotential
-    ucell.pseudo_type = new std::string[ntype]; // type of pseudopotential
     ucell.orbital_fn = new std::string[ntype]; // filename of orbitals
     std::string word;
 

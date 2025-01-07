@@ -44,7 +44,7 @@ UnitCell::UnitCell()
     omega = 0.0;
 
     atom_label = new std::string[1];
-    atom_mass = nullptr;
+    atom_mass.shrink_to_fit();
     pseudo_fn = new std::string[1];
     pseudo_type = new std::string[1];
     orbital_fn = new std::string[1];

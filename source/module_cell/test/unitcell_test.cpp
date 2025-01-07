@@ -186,7 +186,6 @@ TEST_F(UcellTest, Constructor)
     EXPECT_DOUBLE_EQ(ucell->tpiba, 0.0);
     EXPECT_DOUBLE_EQ(ucell->tpiba2, 0.0);
     EXPECT_DOUBLE_EQ(ucell->omega, 0.0);
-    EXPECT_EQ(ucell->atom_mass, nullptr);
     EXPECT_FALSE(ucell->set_atom_flag);
 }
 

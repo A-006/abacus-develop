@@ -139,9 +139,8 @@ class PsiIntializerUnitTest : public ::testing::Test {
             this->p_ucell->tpiba = 2.0 * M_PI / this->p_ucell->lat0;
             this->p_ucell->tpiba2 = this->p_ucell->tpiba * this->p_ucell->tpiba;
             // atom
-            if(this->p_ucell->atom_label != nullptr) { delete[] this->p_ucell->atom_label;
-}
-            this->p_ucell->atom_label = new std::string[1];
+            this->p_ucell->atom_label.shrink_to_fit()
+            this->p_ucell->atom_label.resize(1);
             this->p_ucell->atom_label[0] = "Si";
             // atom properties
             this->p_ucell->nat = 1;
