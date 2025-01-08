@@ -42,14 +42,6 @@ void FFT_Bundle::initfft(int nx_in,
     float_flag  = (this->precision=="single" || this->precision=="mixing")? true:false;
     double_flag = true;
 
-    #if not defined (__ENABLE_FLOAT_FFTW)
-        if (this->device == "cpu")
-        {
-            float_define = false;
-            ModuleBase::WARNING_QUIT("initfft", "please complie abacus with fftw3_FLOAT");
-        }
-    #endif
-
     if (this->device=="gpu")
     {
         #if defined(__ROCM)
@@ -75,13 +67,20 @@ void FFT_Bundle::initfft(int nx_in,
                 fft_double->initfft(nx_in,ny_in,nz_in);
             }
         #else
-            std::cout<<"wihout the CUDA OR DCU,but set the device as gpu, \
-                        use cpu insetead\n";
+            std::cout<<"wihout the CUDA OR DCU,but set the device as gpu, use cpu instead\n";
             this->device="cpu";
         #endif
     }
     
-    if (device=="cpu")
+    #if not defined (__ENABLE_FLOAT_FFTW)
+        if (this->device == "cpu" && float_flag)
+        {
+            float_define = false;
+            ModuleBase::WARNING_QUIT("initfft", "please complie abacus with fftw3_FLOAT");
+        }
+    #endif
+
+    if (this->device=="cpu")
     {
         fft_float = make_unique<FFT_CPU<float>>(this->fft_mode);
         fft_double = make_unique<FFT_CPU<double>>(this->fft_mode);

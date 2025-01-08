@@ -37,11 +37,9 @@ class FftBundleTest : public ::testing::Test
     TEST_F(FftBundleTest,initfft)
     {
         fft_bundle.setfft("cpu","single");
-        testing::internal::CaptureStdout();
-        EXPECT_EXIT(fft_bundle.initfft(16,16,16,7,8,256,16,1,false,true),
-                            ::testing::ExitedWithCode(1),"");
-        output = testing::internal::GetCapturedStdout();
-        EXPECT_THAT(output,testing::HasSubstr("complie"));
+        fft_bundle.initfft(16,16,16,7,8,256,16,1,false,true);
+        EXPECT_EQ(fft_bundle.float_flag,true);
+        EXPECT_EQ(fft_bundle.double_flag,true);
 
         fft_bundle.setfft("cpu","double");
         fft_bundle.initfft(16,16,16,7,8,256,16,1,false,true);
@@ -57,6 +55,6 @@ class FftBundleTest : public ::testing::Test
         fft_bundle.initfft(16,16,16,7,8,256,16,1,false,true);
         EXPECT_EQ(fft_bundle.float_flag,true);
         EXPECT_EQ(fft_bundle.double_flag,true);
-        
+
     }
 }
