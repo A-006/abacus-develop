@@ -18,9 +18,6 @@ bool read_atom_species(std::ifstream& ifa,
     delete[] ucell.orbital_fn;
     ucell.orbital_fn = new std::string[ntype]; // filename of orbitals
     std::string word;
-    std::string one_line;
-    std::string one_string;
-    std::stringstream ss;
 
     //==========================================
     // read in information of each type of atom
@@ -31,10 +28,12 @@ bool read_atom_species(std::ifstream& ifa,
         ModuleBase::GlobalFunc::OUT(ofs_running,"ntype",ntype);
         for (int i = 0;i < ntype;i++)
         {
+            std::string one_line;
+            std::string one_string;
             std::getline(ifa, one_line);
+            std::stringstream ss;
             ss << one_line;
-            ss >> ucell.atom_label[i] 
-            ss >> ucell.atom_mass[i];
+            ss >> ucell.atom_label[i] >> ucell.atom_mass[i];
             ucell.pseudo_fn[i] = "auto";
             ucell.pseudo_type[i] = "auto";
 
@@ -103,8 +102,10 @@ bool read_atom_species(std::ifstream& ifa,
             ucell.descriptor_file = PARAM.inp.orbital_dir + ucell.orbital_fn[0];
         }
     }
-#ifdef (__LCAO) && (__MPI) && (__EXX)
+#ifdef __LCAO
     // Peize Lin add 2016-09-23
+#ifdef __MPI 
+#ifdef __EXX
     if( GlobalC::exx_info.info_global.cal_exx || PARAM.inp.rpa )
     {
         if( ModuleBase::GlobalFunc::SCAN_BEGIN(ifa, "ABFS_ORBITAL") )
@@ -117,6 +118,9 @@ bool read_atom_species(std::ifstream& ifa,
             }
         }
     }
+
+#endif // __EXX
+#endif // __MPI
 #endif // __LCAO
     return true;
 }
@@ -137,19 +141,19 @@ bool read_lattice_constant(std::ifstream& ifa,
         ModuleBase::GlobalFunc::READ_VALUE(ifa, lat0);
         if(lat0<=0.0)
         {
-            ModuleBase::WARNING_QUIT("read_lattice_constant","lat0<=0.0");
+            ModuleBase::WARNING_QUIT("read_atom_species","lat0<=0.0");
         }
         lat0_angstrom = lat0 * 0.529177;
-        lat.tpiba  = ModuleBase::TWO_PI / lat0;
-        lat.tpiba2 = lat.tpiba * lat.tpiba;
         ModuleBase::GlobalFunc::OUT(ofs_running,"lattice constant (Bohr)",lat0);
         ModuleBase::GlobalFunc::OUT(ofs_running,"lattice constant (Angstrom)",lat0_angstrom);
-    
+        lat.tpiba  = ModuleBase::TWO_PI / lat0;
+        lat.tpiba2 = lat.tpiba * lat.tpiba;
     }
 
     //===========================
     // Read in latticies vector
     //===========================
+
     if(latName=="none")
     {
         if (ModuleBase::GlobalFunc::SCAN_BEGIN(ifa,
@@ -157,8 +161,7 @@ bool read_lattice_constant(std::ifstream& ifa,
                                                true,
                                                false)) 
         {
-            ModuleBase::WARNING_QUIT("unitcell::read_lattice_constant",
-                "do not use LATTICE_PARAMETERS without explicit specification of lattice type");
+            ModuleBase::WARNING_QUIT("unitcell::read_lattice_constant","do not use LATTICE_PARAMETERS without explicit specification of lattice type");
         }
         if( !ModuleBase::GlobalFunc::SCAN_BEGIN(ifa, "LATTICE_VECTORS") )
         {
@@ -184,8 +187,7 @@ bool read_lattice_constant(std::ifstream& ifa,
                                                true,
                                                false)) 
         {
-            ModuleBase::WARNING_QUIT("unitcell::read_lattice_constant",
-                "do not use LATTICE_VECTORS along with explicit specification of lattice type");
+            ModuleBase::WARNING_QUIT("unitcell::read_lattice_constant","do not use LATTICE_VECTORS along with explicit specification of lattice type");
         }
         if(latName=="sc")
         {//simple-cubic, ibrav = 1
