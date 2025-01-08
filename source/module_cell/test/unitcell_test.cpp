@@ -1102,6 +1102,10 @@ class UcellTestReadStru : public ::testing::Test
   	void SetUp() override
     {
     	ucell->ntype = 2;
+        ucell->atom_mass.resize(ucell->ntype);
+        ucell->atom_label.resize(ucell->ntype);
+        ucell->pseudo_fn.resize(ucell->ntype);
+        ucell->pseudo_type.resize(ucell->ntype);
         ucell->orbital_fn.resize(ucell->ntype);
     }
     void TearDown() override
@@ -1132,7 +1136,7 @@ TEST_F(UcellTestReadStru, ReadAtomSpecies)
     remove("read_atom_species.tmp");
 }
 
-TEST_F(UcellDeathTest, ReadAtomSpeciesWarning1)
+TEST_F(UcellTestReadStru, ReadAtomSpeciesWarning1)
 {
     std::string fn = "./support/STRU_MgO_Warning1";
     std::ifstream ifa(fn.c_str());
@@ -1150,7 +1154,7 @@ TEST_F(UcellDeathTest, ReadAtomSpeciesWarning1)
     remove("read_atom_species.tmp");
 }
 
-TEST_F(UcellDeathTest, ReadLatticeConstantWarning1)
+TEST_F(UcellTestReadStru, ReadLatticeConstantWarning1)
 {
     std::string fn = "./support/STRU_MgO_Warning2";
     std::ifstream ifa(fn.c_str());
@@ -1168,7 +1172,7 @@ TEST_F(UcellDeathTest, ReadLatticeConstantWarning1)
     remove("read_atom_species.tmp");
 }
 
-TEST_F(UcellDeathTest, ReadLatticeConstantWarning2)
+TEST_F(UcellTestReadStru, ReadLatticeConstantWarning2)
 {
     std::string fn = "./support/STRU_MgO_Warning3";
     std::ifstream ifa(fn.c_str());
@@ -1187,7 +1191,7 @@ TEST_F(UcellDeathTest, ReadLatticeConstantWarning2)
     remove("read_atom_species.tmp");
 }
 
-TEST_F(UcellDeathTest, ReadLatticeConstantWarning3)
+TEST_F(UcellTestReadStru, ReadLatticeConstantWarning3)
 {
     std::string fn = "./support/STRU_MgO_Warning4";
     std::ifstream ifa(fn.c_str());
@@ -1793,7 +1797,7 @@ TEST_F(UcellTestReadStru, ReadAtomPositionsWarning3)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellDeathTest, ReadAtomPositionsWarning4)
+TEST_F(UcellTestReadStru, ReadAtomPositionsWarning4)
 {
     std::string fn = "./support/STRU_MgO_WarningC4";
     std::ifstream ifa(fn.c_str());

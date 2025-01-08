@@ -14,9 +14,6 @@ bool read_atom_species(std::ifstream& ifa,
 {
     ModuleBase::TITLE("UnitCell","read_atom_species");
     const int ntype = ucell.ntype;
-    
-    delete[] ucell.orbital_fn;
-    ucell.orbital_fn = new std::string[ntype]; // filename of orbitals
     std::string word;
 
     //==========================================

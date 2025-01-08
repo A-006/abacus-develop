@@ -230,9 +230,9 @@ void UnitCell::setup_cell(const std::string& fn, std::ofstream& log) {
     // (3) read in atom information
     this->atom_mass.resize(ntype);
     this->atom_label.resize(ntype);
-    this->pseudo_fn.reszie(ntype);
+    this->pseudo_fn.resize(ntype);
     this->pseudo_type.resize(ntype);
-    orbital_fn.resize(ntype);
+    this->orbital_fn.resize(ntype);
     if (GlobalV::MY_RANK == 0) {
         // open "atom_unitcell" file.
         std::ifstream ifa(fn.c_str(), std::ios::in);
