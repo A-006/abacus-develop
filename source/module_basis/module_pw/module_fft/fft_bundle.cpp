@@ -3,6 +3,7 @@
 
 #include "module_base/module_device/device.h"
 #include "module_base/module_device/memory_op.h"
+#include "module_base/tool_quit.h"
 #if defined(__CUDA)
 #include "fft_cuda.h"
 #endif
@@ -10,11 +11,6 @@
 #include "fft_rocm.h"
 #endif
 
-template<typename FFT_BASE, typename... Args>
-std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
-{
-    return std::unique_ptr<FFT_BASE>(new FFT_BASE(std::forward<Args>(args)...));
-}
 namespace ModulePW
 {
 FFT_Bundle::~FFT_Bundle()
@@ -43,11 +39,12 @@ void FFT_Bundle::initfft(int nx_in,
     assert(this->device=="cpu" || this->device=="gpu");
     assert(this->precision=="single" || this->precision=="double" || this->precision=="mixing");
 
-    if (this->precision=="single")
+    if (this->precision=="single" || this->precision=="mixing")
     {
         #if not defined (__ENABLE_FLOAT_FFTW)
         if (this->device == "cpu"){
             float_define = false;
+            ModuleBase::WARNING_QUIT("initfft", "please complie abacus with fftw3_FLOAT");
         }
         #endif
         #if defined(__CUDA) || defined (__ROCM)

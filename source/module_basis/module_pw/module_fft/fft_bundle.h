@@ -6,6 +6,12 @@
 #include "fft_cpu.h"
 namespace ModulePW
 {
+template<typename FFT_BASE, typename... Args>
+std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
+{
+    return std::unique_ptr<FFT_BASE>(new FFT_BASE(std::forward<Args>(args)...));
+}
+
 class FFT_Bundle
 {
     public:
