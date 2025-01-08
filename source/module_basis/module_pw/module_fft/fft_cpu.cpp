@@ -300,7 +300,7 @@ void FFT_CPU<double>::setupFFT()
 template <>
 void FFT_CPU<double>::clearfft(fftw_plan& plan)
 {
-    if (plan)
+    if (plan!=nullptr)
     {
         fftw_destroy_plan(plan);
         plan = nullptr;

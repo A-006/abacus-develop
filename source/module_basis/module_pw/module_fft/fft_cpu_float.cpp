@@ -269,7 +269,7 @@ void FFT_CPU<float>::setupFFT()
 template <>
 void FFT_CPU<float>::clearfft(fftwf_plan& plan)
 {
-    if (plan)
+    if (plan!=nullptr)
     {
         fftwf_destroy_plan(plan);
         plan = nullptr;
