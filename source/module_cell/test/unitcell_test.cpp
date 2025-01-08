@@ -1094,8 +1094,23 @@ TEST_F(UcellDeathTest, ReadOrbFileWarning)
     ofs_running.close();
     remove("tmp_readorbfile");
 }
+class UcellTestReadStru : public ::testing::Test
+{
+  protected:
+    std::unique_ptr<UnitCell> ucell{new UnitCell};
+    std::string output;
+  	void SetUp() override
+    {
+    	ucell->ntype = 2;
+        ucell->orbital_fn.resize(ucell->ntype);
+    }
+    void TearDown() override
+    {
+        ucell->orbital_fn.shrink_to_fit();
+    }
+};
 
-TEST_F(UcellTest, ReadAtomSpecies)
+TEST_F(UcellTestReadStru, ReadAtomSpecies)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());
@@ -1192,7 +1207,7 @@ TEST_F(UcellDeathTest, ReadLatticeConstantWarning3)
     remove("read_atom_species.tmp");
 }
 
-TEST_F(UcellTest, ReadAtomSpeciesLatName)
+TEST_F(UcellTestReadStru, ReadAtomSpeciesLatName)
 {
     ucell->ntype = 2;
     ucell->atoms = new Atom[ucell->ntype];
@@ -1250,7 +1265,7 @@ TEST_F(UcellDeathTest, ReadAtomSpeciesWarning5)
     remove("read_atom_species.tmp");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsS1)
+TEST_F(UcellTestReadStru, ReadAtomPositionsS1)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());
@@ -1282,7 +1297,7 @@ TEST_F(UcellTest, ReadAtomPositionsS1)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsS2)
+TEST_F(UcellTestReadStru, ReadAtomPositionsS2)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());
@@ -1314,7 +1329,7 @@ TEST_F(UcellTest, ReadAtomPositionsS2)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsS4Noncolin)
+TEST_F(UcellTestReadStru, ReadAtomPositionsS4Noncolin)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());
@@ -1347,7 +1362,7 @@ TEST_F(UcellTest, ReadAtomPositionsS4Noncolin)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsS4Colin)
+TEST_F(UcellTestReadStru, ReadAtomPositionsS4Colin)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());
@@ -1380,7 +1395,7 @@ TEST_F(UcellTest, ReadAtomPositionsS4Colin)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsC)
+TEST_F(UcellTestReadStru, ReadAtomPositionsC)
 {
     std::string fn = "./support/STRU_MgO_c";
     std::ifstream ifa(fn.c_str());
@@ -1412,7 +1427,7 @@ TEST_F(UcellTest, ReadAtomPositionsC)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsCA)
+TEST_F(UcellTestReadStru, ReadAtomPositionsCA)
 {
     std::string fn = "./support/STRU_MgO_ca";
     std::ifstream ifa(fn.c_str());
@@ -1444,7 +1459,7 @@ TEST_F(UcellTest, ReadAtomPositionsCA)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsCACXY)
+TEST_F(UcellTestReadStru, ReadAtomPositionsCACXY)
 {
     std::string fn = "./support/STRU_MgO_cacxy";
     std::ifstream ifa(fn.c_str());
@@ -1476,7 +1491,7 @@ TEST_F(UcellTest, ReadAtomPositionsCACXY)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsCACXZ)
+TEST_F(UcellTestReadStru, ReadAtomPositionsCACXZ)
 {
     std::string fn = "./support/STRU_MgO_cacxz";
     std::ifstream ifa(fn.c_str());
@@ -1508,7 +1523,7 @@ TEST_F(UcellTest, ReadAtomPositionsCACXZ)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsCACYZ)
+TEST_F(UcellTestReadStru, ReadAtomPositionsCACYZ)
 {
     std::string fn = "./support/STRU_MgO_cacyz";
     std::ifstream ifa(fn.c_str());
@@ -1540,7 +1555,7 @@ TEST_F(UcellTest, ReadAtomPositionsCACYZ)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsCACXYZ)
+TEST_F(UcellTestReadStru, ReadAtomPositionsCACXYZ)
 {
     std::string fn = "./support/STRU_MgO_cacxyz";
     std::ifstream ifa(fn.c_str());
@@ -1572,7 +1587,7 @@ TEST_F(UcellTest, ReadAtomPositionsCACXYZ)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsCAU)
+TEST_F(UcellTestReadStru, ReadAtomPositionsCAU)
 {
     std::string fn = "./support/STRU_MgO_cau";
     std::ifstream ifa(fn.c_str());
@@ -1605,7 +1620,7 @@ TEST_F(UcellTest, ReadAtomPositionsCAU)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsAutosetMag)
+TEST_F(UcellTestReadStru, ReadAtomPositionsAutosetMag)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());
@@ -1660,7 +1675,7 @@ TEST_F(UcellTest, ReadAtomPositionsAutosetMag)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsWarning1)
+TEST_F(UcellTestReadStru, ReadAtomPositionsWarning1)
 {
     std::string fn = "./support/STRU_MgO_WarningC1";
     std::ifstream ifa(fn.c_str());
@@ -1704,7 +1719,7 @@ TEST_F(UcellTest, ReadAtomPositionsWarning1)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsWarning2)
+TEST_F(UcellTestReadStru, ReadAtomPositionsWarning2)
 {
     std::string fn = "./support/STRU_MgO_WarningC2";
     std::ifstream ifa(fn.c_str());
@@ -1742,7 +1757,7 @@ TEST_F(UcellTest, ReadAtomPositionsWarning2)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsWarning3)
+TEST_F(UcellTestReadStru, ReadAtomPositionsWarning3)
 {
     std::string fn = "./support/STRU_MgO_WarningC3";
     std::ifstream ifa(fn.c_str());
@@ -1789,6 +1804,7 @@ TEST_F(UcellDeathTest, ReadAtomPositionsWarning4)
     // mandatory preliminaries
     ucell->ntype = 2;
     ucell->atoms = new Atom[ucell->ntype];
+    ucell->orbital_fn.resize(ucell->ntype);
     ucell->set_atom_flag = true;
     PARAM.input.test_pseudo_cell = 2;
     PARAM.input.basis_type = "lcao";
@@ -1812,7 +1828,7 @@ TEST_F(UcellDeathTest, ReadAtomPositionsWarning4)
     remove("read_atom_positions.warn");
 }
 
-TEST_F(UcellTest, ReadAtomPositionsWarning5)
+TEST_F(UcellTestReadStru, ReadAtomPositionsWarning5)
 {
     std::string fn = "./support/STRU_MgO";
     std::ifstream ifa(fn.c_str());

@@ -47,7 +47,7 @@ UnitCell::UnitCell()
     atom_label.resize(1);
     pseudo_fn.resize(1);
     pseudo_type.resize(1);
-    orbital_fn = new std::string[1];
+    orbital_fn.resize(1);
 
     atoms = new Atom[ntype];
     set_atom_flag = true;
