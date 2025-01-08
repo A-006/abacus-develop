@@ -20,5 +20,5 @@ AddTest(
   TARGET fft_bundle_test
   LIBS parameter ${math_libs} base device FFTW3::FFTW3 FFTW3::FFTW3_FLOAT
   SOURCES fft_bundle_test.cpp
-            ../fft_bundle.cpp ../fft_cpu.cpp 
+            ../fft_bundle.cpp ../fft_cpu.cpp ../fft_cpu_float.cpp
 )

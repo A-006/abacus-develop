@@ -39,27 +39,48 @@ void FFT_Bundle::initfft(int nx_in,
     assert(this->device=="cpu" || this->device=="gpu");
     assert(this->precision=="single" || this->precision=="double" || this->precision=="mixing");
 
-    if (this->precision=="single" || this->precision=="mixing")
-    {
-        #if not defined (__ENABLE_FLOAT_FFTW)
-        if (this->device == "cpu"){
+    float_flag  = (this->precision=="single" || this->precision=="mixing")? true:false;
+    double_flag = true;
+
+    #if not defined (__ENABLE_FLOAT_FFTW)
+        if (this->device == "cpu")
+        {
             float_define = false;
             ModuleBase::WARNING_QUIT("initfft", "please complie abacus with fftw3_FLOAT");
         }
-        #endif
-        #if defined(__CUDA) || defined (__ROCM)
-        if (this->device == "gpu"){
-            float_flag = float_define;
-        }
-        #endif
-        float_flag = float_define;
-        double_flag = true;
-    }
-    if (this->precision=="double")
-    {
-        double_flag = true;
-    }
+    #endif
 
+    if (this->device=="gpu")
+    {
+        #if defined(__ROCM)
+            if (float_flag)
+            {
+                fft_float = make_unique<FFT_ROCM<float>>();
+                fft_float->initfft(nx_in,ny_in,nz_in);
+            }
+            if (double_flag)
+            {
+                fft_double = make_unique<FFT_ROCM<double>>();
+                fft_double->initfft(nx_in,ny_in,nz_in);
+            }
+        #elif defined(__CUDA)
+            if (float_flag)
+            {
+                fft_float = make_unique<FFT_CUDA<float>>();
+                fft_float->initfft(nx_in,ny_in,nz_in);
+            }
+            if {double_flag}
+            {
+                fft_double = make_unique<FFT_CUDA<double>>();
+                fft_double->initfft(nx_in,ny_in,nz_in);
+            }
+        #else
+            std::cout<<"wihout the CUDA OR DCU,but set the device as gpu, \
+                        use cpu insetead\n";
+            this->device="cpu";
+        #endif
+    }
+    
     if (device=="cpu")
     {
         fft_float = make_unique<FFT_CPU<float>>(this->fft_mode);
@@ -91,21 +112,6 @@ void FFT_Bundle::initfft(int nx_in,
                                 xprime_in);
         }
     }
-    if (device=="gpu")
-    {
-        #if defined(__ROCM)
-            fft_float = make_unique<FFT_ROCM<float>>();
-            fft_float->initfft(nx_in,ny_in,nz_in);
-            fft_double = make_unique<FFT_ROCM<double>>();
-            fft_double->initfft(nx_in,ny_in,nz_in);
-        #elif defined(__CUDA)
-            fft_float = make_unique<FFT_CUDA<float>>();
-            fft_float->initfft(nx_in,ny_in,nz_in);
-            fft_double = make_unique<FFT_CUDA<double>>();
-            fft_double->initfft(nx_in,ny_in,nz_in);
-        #endif
-    }
-
 }
 
 void FFT_Bundle::setupFFT()

@@ -50,12 +50,13 @@ class FftBundleTest : public ::testing::Test
 
         fft_bundle.setfft("gpu","double");
         fft_bundle.initfft(16,16,16,7,8,256,16,1,false,true);
-        EXPECT_EQ(fft_bundle.float_flag,true);
+        EXPECT_EQ(fft_bundle.float_flag,false);
         EXPECT_EQ(fft_bundle.double_flag,true);
 
-        fft_bundle.setfft("gpu","true");
+        fft_bundle.setfft("gpu","single");
         fft_bundle.initfft(16,16,16,7,8,256,16,1,false,true);
         EXPECT_EQ(fft_bundle.float_flag,true);
         EXPECT_EQ(fft_bundle.double_flag,true);
+        
     }
 }
