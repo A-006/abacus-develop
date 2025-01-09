@@ -77,7 +77,7 @@ bool read_atom_species(std::ifstream& ifa,
 
     if((PARAM.inp.basis_type == "lcao")
       ||(PARAM.inp.basis_type == "lcao_in_pw")
-      ||((PARAM.inp.basis_type == "pw")&&(PARAM.inp.psi_initializer)&&(PARAM.inp.init_wfc.substr(0, 3) == "nao"))
+      ||((PARAM.inp.basis_type == "pw")&&(PARAM.inp.init_wfc.substr(0, 3) == "nao"))
       || PARAM.inp.onsite_radius > 0.0)
     {
         if( ModuleBase::GlobalFunc::SCAN_BEGIN(ifa, "NUMERICAL_ORBITAL") )
