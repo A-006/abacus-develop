@@ -776,6 +776,9 @@ TEST_F(UcellTest, CheckTauTrue)
     ucell = utp.SetUcellInfo();
     GlobalV::ofs_warning.open("checktau_warning");
     int atom=0;
+    //cause the ucell->lat0 is 0.5,if the type of the check_tau has 
+    //an int type,it will set to zero,and it will not pass the unittest
+    ucell->lat0=0.5;
     ucell->nat=3;
     for (int it=0;it<ucell->ntype;it++)
     {
@@ -785,7 +788,6 @@ TEST_F(UcellTest, CheckTauTrue)
             for (int i=0;i<3;i++)
             {
                 ucell->atoms[it].tau[ia][i]=((atom+i)/(ucell->nat*3.0));
-                std::cout<<"the tau is "<<ucell->atoms[it].tau[ia][i];
             }
             atom+=3;
         }
