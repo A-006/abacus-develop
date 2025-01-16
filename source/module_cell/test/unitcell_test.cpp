@@ -753,7 +753,7 @@ TEST_F(UcellTest, CheckDTau)
     }
 }
 
-TEST_F(UcellTest, CheckTau)
+TEST_F(UcellTest, CheckTauFalse)
 {
     UcellTestPrepare utp = UcellTestLib["C1H2-CheckTau"];
     PARAM.input.relax_new = utp.relax_new;
@@ -767,6 +767,31 @@ TEST_F(UcellTest, CheckTau)
     EXPECT_THAT(str, testing::HasSubstr("two atoms are too close!"));
     ifs.close();
     remove("checktau_warning");
+}
+
+TEST_F(UcellTest, CheckTauTrue)
+{
+    UcellTestPrepare utp = UcellTestLib["C1H2-CheckTau"];
+    PARAM.input.relax_new = utp.relax_new;
+    ucell = utp.SetUcellInfo();
+    GlobalV::ofs_warning.open("checktau_warning");
+    int atom=0;
+    ucell->nat=3;
+    for (int it=0;it<ucell->ntype;it++)
+    {
+        for(int ia=0; ia<ucell->atoms[it].na; ++ia)
+        {
+            
+            for (int i=0;i<3;i++)
+            {
+                ucell->atoms[it].tau[ia][i]=((atom+i)/(ucell->nat*3.0));
+                std::cout<<"the tau is "<<ucell->atoms[it].tau[ia][i];
+            }
+            atom+=3;
+        }
+    }
+    EXPECT_EQ(unitcell::check_tau(ucell->atoms ,ucell->ntype, ucell->lat0),true);
+    GlobalV::ofs_warning.close();
 }
 
 TEST_F(UcellTest, SelectiveDynamics)
