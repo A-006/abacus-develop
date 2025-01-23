@@ -9,7 +9,9 @@
 #if defined(__ROCM)
 #include "fft_rocm.h"
 #endif
-
+#if defined(__DSP)
+#include "fft_dsp.h"
+#endif
 template<typename FFT_BASE, typename... Args>
 std::unique_ptr<FFT_BASE> make_unique(Args &&... args)
 {
@@ -67,7 +69,7 @@ void FFT_Bundle::initfft(int nx_in,
     {
         #if defined(__DSP)
         if (float_flag==true)
-            ModuleBase::WARNING_QUT("device","now dsp is not support for the float type");
+            ModuleBase::WARNING_QUT("device","now dsp fft is not support for the float type");
         fft_double=make_unique<FFT_DSP<double>>();
         fft_double->initfft(nx_in,ny_in,nz_in);
         #endif

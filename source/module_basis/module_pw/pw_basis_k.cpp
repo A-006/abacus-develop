@@ -22,6 +22,9 @@ PW_Basis_K::~PW_Basis_K()
     delete[] igl2isz_k;
     delete[] igl2ig_k;
     delete[] gk2;
+#if defined(__DSP)
+    delete[] ig2ixyz_k_cpu;
+#endif
 #if defined(__CUDA) || defined(__ROCM)
     if (this->device == "gpu") {
         if (this->precision == "single") {
@@ -357,7 +360,9 @@ void PW_Basis_K::get_ig2ixyz_k()
     }
     resmem_int_op()(ig2ixyz_k, this->npwk_max * this->nks);
     syncmem_int_h2d_op()(this->ig2ixyz_k, ig2ixyz_k_cpu, this->npwk_max * this->nks);
-    delete[] ig2ixyz_k_cpu;
+    #if not defined (__DSP)
+        delete[] this->ig2ixyz_k_cpu;
+    #endif
 }
 
 std::vector<int> PW_Basis_K::get_ig2ix(const int ik) const

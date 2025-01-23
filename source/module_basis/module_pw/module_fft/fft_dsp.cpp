@@ -1,11 +1,7 @@
-// #define protected public
-// #define private public
 #include "fft_dsp.h"
 #include <string.h>
 #include <iostream>
 #include <vector>
-// #undef private
-// #undef protected
 namespace ModulePW
 {
 template<> 

@@ -307,7 +307,11 @@ void PW_Basis_K::real_to_recip(const base_device::DEVICE_CPU* /*dev*/,
                                const bool add,
                                const double factor) const
 {
+    #if defined(__DSP)
+        this->real2recip_3d(in,out,ik,add,factor);
+    #else
     this->real2recip(in, out, ik, add, factor);
+    #endif
 }
 
 template <>
@@ -318,7 +322,11 @@ void PW_Basis_K::recip_to_real(const base_device::DEVICE_CPU* /*dev*/,
                                const bool add,
                                const float factor) const
 {
+    #if defined(__DSP)
+        this->recip2real_3d(in,out,add,factor);
+    #else
     this->recip2real(in, out, ik, add, factor);
+    #endif
 }
 template <>
 void PW_Basis_K::recip_to_real(const base_device::DEVICE_CPU* /*dev*/,
