@@ -13,6 +13,11 @@ if (USE_ROCM)
     module_fft/fft_rocm.cpp
   )
 endif()
+if (USE_DSP)
+  list (APPEND FFT_SRC
+      module_fft/fft_dsp.cpp
+      pw_transform_k_dsp.cpp)
+endif()
 
 list(APPEND objects
     pw_basis.cpp

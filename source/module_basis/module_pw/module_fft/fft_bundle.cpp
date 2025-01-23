@@ -65,6 +65,12 @@ void FFT_Bundle::initfft(int nx_in,
 
     if (device=="cpu")
     {
+        #if defined(__DSP)
+        if (float_flag==true)
+            ModuleBase::WARNING_QUT("device","now dsp is not support for the float type");
+        fft_double=make_unique<FFT_DSP<double>>();
+        fft_double->initfft(nx_in,ny_in,nz_in);
+        #endif
         fft_float = make_unique<FFT_CPU<float>>(this->fft_mode);
         fft_double = make_unique<FFT_CPU<double>>(this->fft_mode);
         if (float_flag)
