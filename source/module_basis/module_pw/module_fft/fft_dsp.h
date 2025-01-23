@@ -2,9 +2,9 @@
 #define FFT_CUDA_H
 
 #include "fft_base.h"
-#include <time.h>
-#include <stdlib.h>
-#include <math.h>
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
 
 #include "hthread_host.h"
 #include "mtfft.h"
