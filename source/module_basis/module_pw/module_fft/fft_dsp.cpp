@@ -1,4 +1,5 @@
 #include "fft_dsp.h"
+#include "module_base/global_variable.h"
 #include <string.h>
 #include <iostream>
 #include <vector>
@@ -10,7 +11,7 @@ void FFT_DSP<double>::initfft(int nx_in,int ny_in,int nz_in)
     this->nx=nx_in;
     this->ny=ny_in;
     this->nz=nz_in;
-    cluster_id = 1;
+    cluster_id = GlobalV::MY_RANK;
 }
 template<>
 void FFT_DSP<double>::setupFFT()
