@@ -72,7 +72,7 @@ void FFT_Bundle::initfft(int nx_in,
             ModuleBase::WARNING_QUT("device","now dsp fft is not support for the float type");
         fft_double=make_unique<FFT_DSP<double>>();
         fft_double->initfft(nx_in,ny_in,nz_in);
-        #endif
+        #else
         fft_float = make_unique<FFT_CPU<float>>(this->fft_mode);
         fft_double = make_unique<FFT_CPU<double>>(this->fft_mode);
         if (float_flag)
@@ -101,6 +101,7 @@ void FFT_Bundle::initfft(int nx_in,
                                 gamma_only_in,
                                 xprime_in);
         }
+        #endif
     }
     if (device=="gpu")
     {

@@ -21,7 +21,6 @@ void FFT_DSP<double>::setupFFT()
     PLAN* ptr_plan_forward;
     PLAN* ptr_plan_backward;
     INT   num_thread=8;
-
     INT   size;
     //open cluster id
     hthread_dev_open(cluster_id);
