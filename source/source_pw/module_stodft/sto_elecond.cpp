@@ -5,6 +5,7 @@
 #include "source_base/memory.h"
 #include "source_base/module_container/ATen/tensor.h"
 #include "source_base/parallel_device.h"
+#include "source_base/parallel_reduce.h"
 #include "source_base/timer.h"
 #include "source_base/vector3.h"
 #include "source_io/module_parameter/parameter.h"
@@ -667,8 +668,8 @@ void Sto_EleCond<FPTYPE, Device>::sKG(const int& smear_type,
         int perbands = perbands_sto + perbands_ks;
         int allbands_sto = perbands_sto;
         int allbands = perbands;
+        Parallel_Reduce::reduce_bp(&allbands, 1);
 #ifdef __MPI
-        MPI_Allreduce(&perbands, &allbands, 1, MPI_INT, MPI_SUM, BP_WORLD);
         allbands_sto = allbands - allbands_ks;
         info_gatherv ks_fact(perbands_ks, PARAM.inp.bndpar, 1, BP_WORLD);
         info_gatherv sto_npwx(perbands_sto, PARAM.inp.bndpar, npwx, BP_WORLD);
@@ -1058,11 +1059,9 @@ void Sto_EleCond<FPTYPE, Device>::sKG(const int& smear_type,
         std::cout << std::endl;
     } // ik loop
     ModuleBase::timer::tick("Sto_EleCond", "kloop");
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, ct11.data(), nt, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    MPI_Allreduce(MPI_IN_PLACE, ct12.data(), nt, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    MPI_Allreduce(MPI_IN_PLACE, ct22.data(), nt, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    Parallel_Reduce::reduce_all(ct11.data(), nt);
+    Parallel_Reduce::reduce_all(ct12.data(), nt);
+    Parallel_Reduce::reduce_all(ct22.data(), nt);
 
     //------------------------------------------------------------------
     //                    Output

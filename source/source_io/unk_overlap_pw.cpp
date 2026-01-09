@@ -2,6 +2,7 @@
 
 #include "source_pw/module_pwdft/global.h"
 #include "source_io/module_parameter/parameter.h"
+#include "source_base/parallel_reduce.h"
 
 unkOverlap_pw::unkOverlap_pw()
 {
@@ -48,8 +49,10 @@ std::complex<double> unkOverlap_pw::unkdotp_G(const ModulePW::PW_Basis_K* wfcpw,
     double in_date_imag = result.imag();
     double out_date_real = 0.0;
     double out_date_imag = 0.0;
-    MPI_Allreduce(&in_date_real, &out_date_real, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-    MPI_Allreduce(&in_date_imag, &out_date_imag, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
+    Parallel_Reduce::reduce_pool(in_date_real);
+    out_date_real = in_date_real;
+    Parallel_Reduce::reduce_pool(in_date_imag);
+    out_date_imag = in_date_imag;
     result = std::complex<double>(out_date_real, out_date_imag);
 #endif
 
@@ -106,8 +109,10 @@ std::complex<double> unkOverlap_pw::unkdotp_G0(const ModulePW::PW_Basis* rhopw,
     double in_date_imag = result.imag();
     double out_date_real = 0.0;
     double out_date_imag = 0.0;
-    MPI_Allreduce(&in_date_real, &out_date_real, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-    MPI_Allreduce(&in_date_imag, &out_date_imag, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
+    Parallel_Reduce::reduce_pool(in_date_real);
+    out_date_real = in_date_real;
+    Parallel_Reduce::reduce_pool(in_date_imag);
+    out_date_imag = in_date_imag;
     result = std::complex<double>(out_date_real, out_date_imag);
 #endif
 
@@ -158,8 +163,10 @@ std::complex<double> unkOverlap_pw::unkdotp_soc_G(const ModulePW::PW_Basis_K* wf
     double in_date_imag = result.imag();
     double out_date_real = 0.0;
     double out_date_imag = 0.0;
-    MPI_Allreduce(&in_date_real, &out_date_real, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-    MPI_Allreduce(&in_date_imag, &out_date_imag, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
+    Parallel_Reduce::reduce_pool(in_date_real);
+    out_date_real = in_date_real;
+    Parallel_Reduce::reduce_pool(in_date_imag);
+    out_date_imag = in_date_imag;
     result = std::complex<double>(out_date_real, out_date_imag);
 #endif
 
@@ -231,8 +238,10 @@ std::complex<double> unkOverlap_pw::unkdotp_soc_G0(const ModulePW::PW_Basis* rho
     double in_date_imag = result.imag();
     double out_date_real = 0.0;
     double out_date_imag = 0.0;
-    MPI_Allreduce(&in_date_real, &out_date_real, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-    MPI_Allreduce(&in_date_imag, &out_date_imag, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
+    Parallel_Reduce::reduce_pool(in_date_real);
+    out_date_real = in_date_real;
+    Parallel_Reduce::reduce_pool(in_date_imag);
+    out_date_imag = in_date_imag;
     result = std::complex<double>(out_date_real, out_date_imag);
 #endif
 

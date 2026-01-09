@@ -13,6 +13,7 @@
 
 #include "RPA_LRI.h"
 #include "source_io/module_parameter/parameter.h"
+#include "source_base/parallel_reduce.h"
 
 template <typename T, typename Tdata>
 void RPA_LRI<T, Tdata>::init(const MPI_Comm& mpi_comm_in, const K_Vectors& kv_in, const std::vector<double>& orb_cutoff)
@@ -194,9 +195,7 @@ void RPA_LRI<T, Tdata>::out_eigen_vector(const Parallel_Orbitals& parav, const p
                 }
 
                 std::vector<std::complex<double>> tmp = wfc_iks;
-#ifdef __MPI
-                MPI_Allreduce(&tmp[0], &wfc_iks[0], PARAM.globalv.nlocal, MPI_DOUBLE_COMPLEX, MPI_SUM, MPI_COMM_WORLD);
-#endif
+                Parallel_Reduce::reduce_all(wfc_iks.data(), PARAM.globalv.nlocal);
                 for (int iw = 0; iw < PARAM.globalv.nlocal; iw++)
                 {
                     is_wfc_ib_iw[is](ib_global, iw) = wfc_iks[iw];

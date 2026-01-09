@@ -1,4 +1,5 @@
 #include "dftu.h"
+#include "source_base/parallel_reduce.h"
 #include "source_base/timer.h"
 #include "source_io/module_parameter/parameter.h"
 #include "source_pw/module_pwdft/global.h"
@@ -317,31 +318,16 @@ void Plus_U::cal_occup_m_k(const int iter,
 #ifdef __MPI
                     if (PARAM.inp.nspin == 1 || PARAM.inp.nspin == 4)
                     {
-                        ModuleBase::matrix temp(locale[iat][l][n][0]);
-                        MPI_Allreduce(&temp(0, 0),
-                                      &locale[iat][l][n][0](0, 0),
-                                      (2 * l + 1) * PARAM.globalv.npol * (2 * l + 1) * PARAM.globalv.npol,
-                                      MPI_DOUBLE,
-                                      MPI_SUM,
-                                      MPI_COMM_WORLD);
+                        Parallel_Reduce::reduce_all(&locale[iat][l][n][0](0, 0),
+                                      (2 * l + 1) * PARAM.globalv.npol * (2 * l + 1) * PARAM.globalv.npol);
                     }
                     else if (PARAM.inp.nspin == 2)
                     {
-                        ModuleBase::matrix temp0(locale[iat][l][n][0]);
-                        MPI_Allreduce(&temp0(0, 0),
-                                      &locale[iat][l][n][0](0, 0),
-                                      (2 * l + 1) * (2 * l + 1),
-                                      MPI_DOUBLE,
-                                      MPI_SUM,
-                                      MPI_COMM_WORLD);
+                        Parallel_Reduce::reduce_all(&locale[iat][l][n][0](0, 0),
+                                      (2 * l + 1) * (2 * l + 1));
 
-                        ModuleBase::matrix temp1(locale[iat][l][n][1]);
-                        MPI_Allreduce(&temp1(0, 0),
-                                      &locale[iat][l][n][1](0, 0),
-                                      (2 * l + 1) * (2 * l + 1),
-                                      MPI_DOUBLE,
-                                      MPI_SUM,
-                                      MPI_COMM_WORLD);
+                        Parallel_Reduce::reduce_all(&locale[iat][l][n][1](0, 0),
+                                      (2 * l + 1) * (2 * l + 1));
                     }
 #endif
 
@@ -495,16 +481,8 @@ void Plus_U::cal_occup_m_gamma(const int iter,
                             }
                         }
 
-                        ModuleBase::matrix temp(locale[iat][l][n][is]);
-
-#ifdef __MPI
-                        MPI_Allreduce(&temp(0, 0),
-                                      &locale[iat][l][n][is](0, 0),
-                                      (2 * l + 1) * PARAM.globalv.npol * (2 * l + 1) * PARAM.globalv.npol,
-                                      MPI_DOUBLE,
-                                      MPI_SUM,
-                                      MPI_COMM_WORLD);
-#endif
+                        Parallel_Reduce::reduce_all(&locale[iat][l][n][is](0, 0),
+                                      (2 * l + 1) * PARAM.globalv.npol * (2 * l + 1) * PARAM.globalv.npol);
 
                         // for the case spin independent calculation
                         switch (PARAM.inp.nspin)

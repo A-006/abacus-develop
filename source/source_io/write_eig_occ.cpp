@@ -198,9 +198,7 @@ void ModuleIO::write_eig_file(const ModuleBase::matrix &ekb,
 		}
 	}
 
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &wrong, 1, MPI_C_BOOL, MPI_LOR, MPI_COMM_WORLD);
-#endif
+    Parallel_Reduce::gather_or_bool_all(wrong);
     if (wrong)
     {
         ModuleBase::WARNING_QUIT("ModuleIO::write_eig_file", "Eigenvalues are too large!");

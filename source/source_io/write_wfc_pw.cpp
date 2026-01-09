@@ -7,6 +7,7 @@
 #include "binstream.h"
 #include "source_base/global_variable.h"
 #include "source_base/parallel_global.h"
+#include "source_base/parallel_reduce.h" // Parallel_Reduce
 #include "source_base/tool_title.h"
 #include "source_io/module_parameter/parameter.h"
 #include "source_io/filename.h"
@@ -100,11 +101,8 @@ void ModuleIO::write_wfc_pw(
                 const int ng = kv.ngk[ik];
                 const int ng_max = wfcpw->npwk_max;
                 const int ikstot = kv.ik2iktot[ik];
-#ifdef __MPI
-                MPI_Allreduce(&kv.ngk[ik], &ikngtot, 1, MPI_INT, MPI_SUM, POOL_WORLD);
-#else
                 ikngtot = kv.ngk[ik];
-#endif
+                Parallel_Reduce::reduce_pool(ikngtot);
                 const int ikngtot_npol = ikngtot * npol;
 #ifdef __MPI
                 for (int id = 0; id < nproc_in_pool; id++)

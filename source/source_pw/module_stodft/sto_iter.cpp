@@ -203,11 +203,9 @@ void Stochastic_Iter<T, Device>::checkemm(const int& ik,
     }
     if (ik == nks - 1)
     {
-#ifdef __MPI
-        MPI_Allreduce(MPI_IN_PLACE, p_hamilt_sto->emax, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
-        MPI_Allreduce(MPI_IN_PLACE, p_hamilt_sto->emin, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
-        MPI_Allreduce(MPI_IN_PLACE, &change, 1, MPI_CHAR, MPI_LOR, MPI_COMM_WORLD);
-#endif
+        Parallel_Reduce::gather_max_double_all(GlobalV::NPROC, *p_hamilt_sto->emax);
+        Parallel_Reduce::gather_min_double_all(GlobalV::NPROC, *p_hamilt_sto->emin);
+        Parallel_Reduce::gather_or_bool_all(change);
         if (change)
         {
             GlobalV::ofs_running << "New Emax Ry" << *p_hamilt_sto->emax << " ; new Emin " << *p_hamilt_sto->emin
@@ -248,9 +246,7 @@ void Stochastic_Iter<T, Device>::check_precision(const double ref, const double 
         error = last_coef * (dot1 + dot2 - last_coef * last_spolyv);
     }
 
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &error, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    Parallel_Reduce::reduce_all(error);
     double relative_error = std::abs(error / ref);
     GlobalV::ofs_running << info << "Relative Chebyshev Precision: " << relative_error * 1e9 << "E-09" << std::endl;
     if (relative_error > thr)
@@ -467,14 +463,12 @@ double Stochastic_Iter<T, Device>::calne(elecstate::ElecState* pes)
         }
     }
     KS_ne /= GlobalV::NPROC_IN_POOL;
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &KS_ne, 1, MPI_DOUBLE, MPI_SUM, INT_BGROUP);
+    Parallel_Reduce::reduce_bgroup(&KS_ne, 1);
     if(PARAM.globalv.all_ks_run)
     {
-        MPI_Allreduce(MPI_IN_PLACE, &KS_ne, 1, MPI_DOUBLE, MPI_SUM, BP_WORLD);
+        Parallel_Reduce::reduce_bp(&KS_ne, 1);
     }
-    MPI_Allreduce(MPI_IN_PLACE, &sto_ne, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    Parallel_Reduce::reduce_all(sto_ne);
 
     totne = KS_ne + sto_ne;
     ModuleBase::timer::tick("Stochastic_Iter", "calne");
@@ -534,14 +528,12 @@ void Stochastic_Iter<T, Device>::sum_stoeband(Stochastic_WF<T, Device>& stowf,
         }
     }
     pes->f_en.demet /= GlobalV::NPROC_IN_POOL;
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &pes->f_en.demet, 1, MPI_DOUBLE, MPI_SUM, INT_BGROUP);
+    Parallel_Reduce::reduce_bgroup(&pes->f_en.demet, 1);
     if(PARAM.globalv.all_ks_run)
     {
-        MPI_Allreduce(MPI_IN_PLACE, &pes->f_en.demet, 1, MPI_DOUBLE, MPI_SUM, BP_WORLD);
+        Parallel_Reduce::reduce_bp(&pes->f_en.demet, 1);
     }
-    MPI_Allreduce(MPI_IN_PLACE, &stodemet, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    Parallel_Reduce::reduce_all(stodemet);
     pes->f_en.demet += stodemet;
     this->check_precision(pes->f_en.demet, 1e-4, "TS");
     pes->f_en.demet *= Occupy::gaussian_parameter;
@@ -580,9 +572,7 @@ void Stochastic_Iter<T, Device>::sum_stoeband(Stochastic_WF<T, Device>& stowf,
             delmem_complex_op()(hshchi);
         }
     }
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &sto_eband, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    Parallel_Reduce::reduce_all(sto_eband);
     pes->f_en.eband += sto_eband;
     ModuleBase::timer::tick("Stochastic_Iter", "sum_stoeband");
 }
@@ -665,7 +655,6 @@ void Stochastic_Iter<T, Device>::cal_storho(const UnitCell& ucell,
     }
 
     delmem_complex_op()(porter);
-#ifdef __MPI
     if(GlobalV::KPAR * PARAM.inp.bndpar > 1)
     {
         for (int is = 0; is < nspin; ++is)
@@ -673,11 +662,10 @@ void Stochastic_Iter<T, Device>::cal_storho(const UnitCell& ucell,
             pes->charge->reduce_diff_pools(sto_rho[is]);
             if (!PARAM.globalv.all_ks_run && PARAM.inp.bndpar > 1)
             {
-                MPI_Allreduce(MPI_IN_PLACE, sto_rho[is], nrxx, MPI_DOUBLE, MPI_SUM, BP_WORLD);
+                Parallel_Reduce::reduce_bp(sto_rho[is], nrxx);
             }
         }
     }
-#endif
 
     double sto_ne = 0;
     for(int is = 0; is < nspin; ++is)
@@ -694,9 +682,7 @@ void Stochastic_Iter<T, Device>::cal_storho(const UnitCell& ucell,
 
     sto_ne *= ucell.omega / wfc_basis->nxyz;
 
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &sto_ne, 1, MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-#endif
+    Parallel_Reduce::reduce_pool(sto_ne);
     double factor = targetne / (KS_ne + sto_ne);
     if (std::abs(factor - 1) > 1e-10)
     {

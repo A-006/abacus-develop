@@ -124,7 +124,9 @@ void Parallel_Kpoints::gatherkvec(const std::vector<ModuleBase::Vector3<double>>
         }
     }
 
-    MPI_Allreduce(MPI_IN_PLACE, &vec_global[0], 3 * this->nkstot_np, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+#include "source_base/parallel_reduce.h"
+
+    Parallel_Reduce::reduce_all(&vec_global[0], 3 * this->nkstot_np);
     return;
 }
 #endif

@@ -2,6 +2,7 @@
 #include "source_io/module_parameter/parameter.h"
 #include "source_base/constants.h"
 #include "source_base/global_function.h"
+#include "source_base/parallel_reduce.h"
 #include "source_pw/module_pwdft/global.h"
 #include "dftu.h"
 
@@ -46,10 +47,10 @@ void Plus_U::cal_yukawa_lambda(double** rho, const int& nrxx)
     double val1 = 0.0;
     double val2 = 0.0;
 
-#ifdef __MPI
-    MPI_Allreduce(&sum_rho, &val1, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    MPI_Allreduce(&sum_rho_lambda, &val2, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    val1 = sum_rho;
+    val2 = sum_rho_lambda;
+    Parallel_Reduce::reduce_all(val1);
+    Parallel_Reduce::reduce_all(val2);
 
     this->lambda = val2 / val1;
 
