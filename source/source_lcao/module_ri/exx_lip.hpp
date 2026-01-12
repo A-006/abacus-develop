@@ -10,6 +10,7 @@
 #include "exx_lip.h"
 #include "source_base/vector3.h"
 #include "source_base/global_function.h"
+#include "source_base/parallel_reduce.h"
 #include "source_base/vector3.h"
 #include "source_pw/module_pwdft/global.h"
 #include "source_cell/klist.h"
@@ -107,9 +108,8 @@ Exx_Lip<T, Device>::Exx_Lip(const Exx_Info::Exx_Info_Lip& info_in,
     int gzero_judge = -1;
     if (this->rho_basis->gg_uniq[0] < 1e-8)
         { gzero_judge = GlobalV::RANK_IN_POOL; }
-  #ifdef __MPI
-    MPI_Allreduce(&gzero_judge, &gzero_rank_in_pool, 1, MPI_INT, MPI_MAX, POOL_WORLD);
-  #endif
+    gzero_rank_in_pool = gzero_judge;
+    Parallel_Reduce::gather_max_int_pool(gzero_rank_in_pool);
     this->k_pack->wf_wg.create(this->k_pack->kv_ptr->get_nks(),PARAM.inp.nbands);
 
     this->k_pack->hvec_array = new psi::Psi<T, Device>(this->k_pack->kv_ptr->get_nks(), PARAM.inp.nbands, PARAM.globalv.nlocal, kv_ptr_in->ngk, true);
@@ -468,9 +468,10 @@ void Exx_Lip<T, Device>::exx_energy_cal()
                 for( int ib=0; ib<PARAM.inp.nbands; ++ib) {
                     exx_energy_tmp += (this->exx_matrix[ik][iw_l][iw_r] * conj((*this->k_pack->hvec_array)(ik, ib, iw_l)) * (*this->k_pack->hvec_array)(ik, ib, iw_r)).real() * this->k_pack->wf_wg(ik, ib);
     } } } }
-  #ifdef __MPI
-    MPI_Allreduce( &exx_energy_tmp, &this->exx_energy, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);				// !!! k_point parallel incompleted. different pools have different kv.set_nks(>) deadlock
-  #endif
+
+    this->exx_energy = exx_energy_tmp;
+    Parallel_Reduce::reduce_all(this->exx_energy); // !!! k_point parallel incompleted. different pools have different kv.set_nks(>) deadlock
+
     this->exx_energy *= (PARAM.inp.nspin==1) ? 2 : 1;
     this->exx_energy /= 2;										// ETOT = E_band - 1/2 E_exx
     ModuleBase::timer::tick("Exx_Lip", "exx_energy_cal");
