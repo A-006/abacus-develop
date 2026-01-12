@@ -5,8 +5,10 @@
 #include "source_base/name_angular.h"
 #include "source_base/module_external/scalapack_connector.h"
 #include "source_base/tool_quit.h"
+#include "source_base/parallel_reduce.h"
 
 #include <numeric>
+#include <algorithm>
 
 namespace ModuleIO
 {
@@ -569,9 +571,8 @@ void Output_Mulliken<std::complex<double>>::cal_orbMulP()
         this->collect_MW(MecMulP, mud, nw, this->isk_[ik]);
 #endif
     }
-#ifdef __MPI
-    MPI_Allreduce(MecMulP.c, this->orbMulP_.c, this->nspin_ * nlocal, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-#endif
+    std::copy(MecMulP.c, MecMulP.c + this->nspin_ * nlocal, this->orbMulP_.c);
+    Parallel_Reduce::reduce_all(this->orbMulP_.c, this->nspin_ * nlocal);
 }
 
 template <>

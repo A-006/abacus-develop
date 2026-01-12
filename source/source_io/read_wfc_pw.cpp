@@ -6,6 +6,8 @@
 #include "source_base/global_variable.h"
 #include "source_base/parallel_common.h"
 #include "source_base/parallel_global.h"
+#include "source_base/parallel_reduce.h"
+#include "source_base/parallel_global.h" // GlobalV
 #include "source_base/timer.h"
 #include "source_base/vector3.h"
 
@@ -70,8 +72,9 @@ void ModuleIO::read_wfc_pw(const std::string& filename,
 
     // get npwtot
 #ifdef __MPI
-    MPI_Allreduce(&pw_wfc->npwk[ik], &npwtot, 1, MPI_INT, MPI_SUM, POOL_WORLD);
-    MPI_Allreduce(&npwk_max, &max_dim, 1, MPI_INT, MPI_MAX, POOL_WORLD);
+    npwtot = pw_wfc->npwk[ik];
+    Parallel_Reduce::reduce_pool(npwtot);
+    Parallel_Reduce::gather_max_int_pool(GlobalV::NPROC_IN_POOL, max_dim);
 #else
     max_dim = npwk_max;
     npwtot = pw_wfc->npwk[ik];
