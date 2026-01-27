@@ -14,6 +14,7 @@
 #include "source_pw/module_pwdft/kernels/vnl_op.h"
 
 #include "source_base/parallel_comm.h" // use POOL_WORLD
+#include "source_base/parallel_reduce.h"
 
 
 pseudopot_cell_vnl::pseudopot_cell_vnl()
@@ -683,10 +684,8 @@ void pseudopot_cell_vnl::init_vnl(UnitCell& cell, const ModulePW::PW_Basis* rho_
         }
     }
 
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, this->qq_nt.ptr, this->qq_nt.getSize(), MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-    MPI_Allreduce(MPI_IN_PLACE, this->qq_so.ptr, this->qq_so.getSize(), MPI_DOUBLE_COMPLEX, MPI_SUM, POOL_WORLD);
-#endif
+    Parallel_Reduce::reduce_pool(this-poolnproc, this->qq_nt.getSize());
+    Parallel_Reduce::reduce_pool(this->poolnproc, this->qq_so.getSize());
 
     // set the atomic specific qq_at matrices
     for (int ia = 0; ia < cell.nat; ia++)
@@ -1510,9 +1509,7 @@ void pseudopot_cell_vnl::newq(const ModuleBase::matrix& veff, const ModulePW::PW
         }
     }
 
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, deeq.ptr, deeq.getSize(), MPI_DOUBLE, MPI_SUM, POOL_WORLD);
-#endif
+    Parallel_Reduce::reduce_pool(deeq.ptr, deeq.getSize());
 
     delete[] qnorm;
 }

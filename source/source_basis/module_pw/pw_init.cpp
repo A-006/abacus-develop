@@ -1,5 +1,6 @@
 #include "pw_basis.h"
 #include "source_base/constants.h"
+#include "source_base/parallel_reduce.h"
 
 namespace ModulePW
 {
@@ -199,9 +200,7 @@ void PW_Basis:: initgrids(
             }
         }
     }
-#ifdef __MPI
-    MPI_Allreduce(MPI_IN_PLACE, &this->gridecut_lat, 1, MPI_DOUBLE, MPI_MIN , this->pool_world);
-#endif
+    Parallel_Reduce::reduce_min_double_pool(this->poolnproc, this->gridecut_lat);
     this->gridecut_lat -= 1e-6;
 
     delete[] ibox;
